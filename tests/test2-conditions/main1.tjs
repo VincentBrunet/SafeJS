@@ -1,0 +1,15 @@
+
+
+fn containsConditions :Int {
+
+    if 42 {
+        return 42;
+    }
+    else if (false) {
+        return 55;
+    }
+    else {
+        return "4242";
+    }
+    
+}

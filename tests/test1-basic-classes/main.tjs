@@ -1,0 +1,33 @@
+
+class MyObject {
+
+    fn push(
+        value1 :Int,
+        value2,
+        value3 :Int,
+        value4 :Int,
+        value5,
+        value6
+    ) {
+
+    }
+
+    fn pop :Int {
+
+    }
+
+    var test = 42;
+    let tutu = 77;
+    
+    var arr = [
+        42,
+    ]
+    var bob = {
+        toto: 444,
+    }
+
+}
+
+let bob :Int = 222;
+
+var hop = (42, "Test");

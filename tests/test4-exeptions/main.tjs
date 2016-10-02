@@ -1,0 +1,15 @@
+
+try {
+    42
+}
+catch (exp1) {
+    444;
+}
+
+try {}
+catch exp2 {
+    6666;
+}
+finally {
+    4242;
+}

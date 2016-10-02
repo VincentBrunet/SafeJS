@@ -1,0 +1,83 @@
+
+/**
+ * Basic types:
+ *
+ * Void: Nothing (undefined?)
+ * Int: Integer?
+ * Float: Float?
+ * Double: Double?
+ * Dict: Base dictionary (is an :Object)
+ * Array: Base array (is an :Object)
+ * Function: Base function type (is an :Object)
+ * Tuple: Base tuple type (is an :Object)
+ * Object: Base Object for all
+ *    - when not specified, this is the default type
+ *    - even Void
+ *    - even javascript objects
+ */
+
+// Typed function declaration
+fn typed_fn :Int (p1 :Int, p2 :Object) {
+    
+}
+console.log(typed_fn);
+
+// Untyped function declaration
+fn untyped_fn (p1, p2) {
+    
+}
+console.log(untyped_fn);
+
+// Typed no param function declaration
+fn noparam_fn :Int {
+}
+fn noparam_notype_fn {
+}
+
+interface Interface {
+    fn sum :Int (a :Int, b :Int);
+    var non_static_var :Int;
+    var non_static_let :Int;
+}
+
+// Basic object declaration
+class Test :Object, :Interface {
+
+    // Constructor
+    constructor (a :Int, b :Int) {
+        this.nonstatic_var = a + b;
+        // this.nonstatic_let = a; // Should fail
+    }
+    
+    // Non-static stuff
+    var nonstatic_var :Int = 42;
+    let nonstatic_let :Int = 22;
+    fn sum :Int (a :Int, b :Int) {
+        return a
+            + b
+            + this.nonstatic_var
+            + this.nonstatic_let;
+    }
+
+    // Static stuff
+    static var static_var :Int = 42;
+    static fn static_fn :Int (a :Int, b :Int) {
+        return a + b;
+    }
+
+    /**
+     * Not to forget, private/public attributes
+     */
+
+}
+
+
+console.log(Test::static_var);
+console.log(Test::static_fn);
+console.log(Int::Max);
+
+var ttt = new Test(42, 44);
+console.log(ttt.sum(1, 2));
+console.log(ttt.nonstatic_var);
+console.log(ttt.nonstatic_let);
+

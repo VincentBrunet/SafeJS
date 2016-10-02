@@ -1,0 +1,28 @@
+
+if 42 {
+    
+}
+else if false {
+    
+}
+else {
+    
+    42
+}
+
+
+if true {}
+else {
+    true
+}
+
+
+42
+// Hop
+/* LOL */
+if 42 {
+    77; // BOOM
+    11 /* LE */
+    ;
+}
+//MOTHERF

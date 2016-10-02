@@ -1,0 +1,12 @@
+
+Parser:
+- Fix statement invalidity rollback problem
+- Fix expression left-recursion
+- Finish expression operators
+    - fn()
+    - obj.
+    - && || ...
+
+
+Later:
+    Add templated types

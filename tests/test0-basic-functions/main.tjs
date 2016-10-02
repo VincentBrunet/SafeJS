@@ -1,0 +1,31 @@
+
+
+function untyped_noparam_fn () {
+    
+    function nestedFunction () {
+
+    }
+
+}
+
+function untyped_oneparam_fn (param,) {
+
+}
+
+function untyped_oneparam_fn2 (param) {
+    
+}
+
+function untyped_twoparam_fn3 (param, param2) {
+    
+}
+
+function typed_oneparam_fn :Int (param1 :Int) {
+
+}
+
+function typed_twoparam_fn :Int (param1 :Int, param2 :String,) {
+    42;
+    return 42 + 22 / 23;
+    44;
+}

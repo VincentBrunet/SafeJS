@@ -1,0 +1,17 @@
+
+fn asyncFunc (next) {
+    setTimeout(fn {
+        next();
+    }, 1000)
+}
+
+fn syncFunc :Int (param1 :Int) {
+    
+    var yielder = Obj();
+
+    asyncFunc(fn {
+        yielder.done(param1)
+    });
+
+    return yielder.Valued();
+}
