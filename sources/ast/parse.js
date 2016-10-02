@@ -1,5 +1,6 @@
 var utils = require("../utils");
 var peg = require("pegjs");
+var backtrace = require('pegjs-backtrace');
 
 module.exports = function ast_parse(session, next) {
   var grammars = [
@@ -40,6 +41,7 @@ module.exports = function ast_parse(session, next) {
         output: "parser",
         optimize: "speed",
         cache: true,
+        trace: true,
       });
       session.profilingEnd("parser-build");
     }
@@ -53,18 +55,37 @@ module.exports = function ast_parse(session, next) {
         return next(false, error, "ReadSource");
       }
       session.setInputLines(contents.split(/\r?\n/));
+      var maxOff = undefined;
+      var maxEvent = undefined;
+      var backtracer = new backtrace(contents);
       try {
         session.profilingStart("parser-parse");
         var toParse = contents;
         var parsed = parser.parse(toParse, {
           startRule: "Block",
           cache: true,
+          tracer: backtracer,
+          tracer_: {
+            trace: function (event) {
+              if (event.type != "rule.fail") {
+                return;
+              }
+              if (maxOff == undefined || event.location.start.offset > maxOff) {
+                maxOff = event.location.start.offset;
+                maxEvent = event;
+              }
+              // console.log("Trace", a, b, c);
+            },
+          },
         });
         session.profilingEnd("parser-parse");
         session.setParsedAst(parsed);
         return next(true);
       }
       catch (error) {
+        console.log(backtracer.getBacktraceString());
+        // error.location = maxEvent.location;
+        // console.log("Parsed", maxOff, maxEvent);
         return next(false, error, "ParserTokens");
       }
     });

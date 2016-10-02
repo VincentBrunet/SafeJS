@@ -1,0 +1,29 @@
+{
+  "name": "safe-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "comp.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "colors": "^1.1.2",
+    "lodash": "^4.16.2",
+    "pegjs": "^0.10.0",
+    "pegjs-backtrace": "^0.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VincentBrunet/SafeJS.git"
+  },
+  "author": "Vincent Brunet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VincentBrunet/SafeJS/issues"
+  },
+  "homepage": "https://github.com/VincentBrunet/SafeJS#readme"
+}

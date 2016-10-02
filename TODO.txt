@@ -10,3 +10,4 @@ Parser:
 
 Later:
     Add templated types
+    Fix string litteral parsing

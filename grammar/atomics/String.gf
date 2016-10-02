@@ -1,7 +1,7 @@
 
 String "String" =
     '"'
-    content: [A-Za-z_-]*
+    content: [0-9A-Za-z_-]*
     '"'
 {
     return {

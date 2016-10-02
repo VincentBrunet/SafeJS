@@ -83,7 +83,7 @@ $utils.errorDisplay = function (error, reason, session) {
       if (i == location.start.line && j < location.start.column) {
         isError = false;
       }
-      if (i == location.end.line && j >= location.end.column) {
+      if (i == location.end.line && j > location.end.column) {
         isError = false;
       }
       if (isClose) {
