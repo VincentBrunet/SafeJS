@@ -1,10 +1,10 @@
 
 Operation "Operation" =
-    e1: Litteral
+    e1: (Identifier/Litteral)
     _
     op: Operator
     _
-    e2: (Operation/Litteral)
+    e2: (Expression/Litteral)
 {
     return {
         ast_type: "Operation",

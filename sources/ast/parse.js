@@ -37,7 +37,7 @@ module.exports = function ast_parse(session, next) {
     try {
       session.profilingStart("parser-build");
       var toBuild = contents;
-      var parser = peg.buildParser(toBuild, {
+      var parser = peg.generate(toBuild, {
         output: "parser",
         optimize: "speed",
         cache: true,

@@ -1,0 +1,14 @@
+
+fn fff (ii:Int) {
+    222;
+}
+
+var vInt :Int = 42 + 33;
+
+var vInt2 :Int = 42 + 22 * 11
+
+var vInt3 :Int = 42.2 + 222.22;
+
+var vInt4 :Int = vInt + 42.55;
+
+var vInt5 :Int = fff(42);

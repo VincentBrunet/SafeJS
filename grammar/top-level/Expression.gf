@@ -4,6 +4,7 @@ Expression "Expression" =
         Function
         / Operation
         / Litteral
+        / Identifier
     )
 {
     return {

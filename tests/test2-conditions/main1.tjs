@@ -1,6 +1,6 @@
 
 
-fn containsConditions :Int {
+var tttt :Function<(), Int> = fn containsConditions :Int {
 
     if 42 {
         42;
@@ -9,7 +9,54 @@ fn containsConditions :Int {
         55;
     }
     else {
-        return "4242";
+        "4242";
     }
     
+}
+
+
+var dddd :{} = {
+    42: "toto",
+};
+var dddd1 :{Int: Number} = {
+    42: "toto",
+};
+var dddd2 :{Int<Double>: (Help<Double>, Boolean)} = {
+    42: "toto",
+};
+
+var aaaa :[] = [
+    43232323,
+    222,
+];
+var aaaa1 :[[Int]] = [
+    43232323,
+    222,
+];
+var aaaa2 :[Int] = [
+    43232323,
+    222,
+];
+
+var tttt :() = (
+    42,
+    true,
+    "bobo",
+);
+
+
+var tttt2 :(Int, Boolean, String) = (
+    42,
+    true,
+    "bobo",
+);
+
+
+function Map(linkItems) {
+    //this.current = undefined;
+    //this.size = 0;
+
+    if /*linkItems === false*/42 {
+        //this.disableLinking();
+    }
 }

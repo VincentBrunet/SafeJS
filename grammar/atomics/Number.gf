@@ -1,8 +1,12 @@
 
 Number "Number" =
-    nb:[0-9]+
+    it:[0-9]+
+    dc:$("." [0-9]*)?
 {
-    var value = nb.join("");
+    var value = it.join("");
+    if (dc) {
+        value += dc;
+    }
     return {
         ast_type: "Number",
         ast_title: value,

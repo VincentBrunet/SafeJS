@@ -107,21 +107,33 @@ $utils.errorDisplay = function (error, reason, session) {
   console.log(error);
 }
 
-$utils.astDisplay = function (elem, type, depth) {
+$utils.astDisplay = function (elem, type, depths) {
   if (!elem) {
     return;
   }
   if (type === undefined) {
     type = "Root";
   }
-  if (depth === undefined) {
-    depth = 0;
+  if (depths === undefined) {
+    depths = [];
   }
   var line = "";
-  _.times(depth, function() {
-    line += " | ";
+  _.each(depths, function (depth, idx) {
+    if (idx == depths.length - 1) {
+      line += " \\-";
+    } else {
+      if (depth > 0) {
+        line += " | ";
+      } else {
+          line += "   ";
+      }
+    }
   });
-  line += " + ".yellow + ("[" + type + "] ").red;
+  if (!isNaN(parseInt(type))) {
+    line += " + ".yellow + ("[" + type + "] ").magenta;
+  } else {
+    line += " + ".yellow + ("[" + type + "] ").red;
+  }
   if (elem.ast_type) {
     line += elem.ast_type.green;
   } else {
@@ -131,8 +143,18 @@ $utils.astDisplay = function (elem, type, depth) {
     line += " " + elem.ast_title.blue;
   }
   console.log(line);
-  _.each(elem.ast_childs, function(value, key) {
-    $utils.astDisplay(value, key, depth + 1);
+  var nb = 0;
+  _.each(elem.ast_childs, function (value, key) {
+    if (value !== undefined) {
+      nb += 1;
+    }
+  });
+  var cnb = 0;
+  _.each(elem.ast_childs, function (value, key) {
+    if (value !== undefined) {
+      cnb += 1;
+      $utils.astDisplay(value, key, depths.concat(nb - cnb));
+    }
   });
 };
 
