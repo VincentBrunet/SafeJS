@@ -1,10 +1,8 @@
 
 Expression "Expression" =
     content:(
-        Function
+        ExpressionSimple
         / Operation
-        / Litteral
-        / Identifier
     )
 {
     return {
@@ -14,4 +12,14 @@ Expression "Expression" =
             Content: content,
         },
     };
+}
+
+ExpressionSimple =
+    content:(
+        Function
+        / Litteral
+        / Identifier
+    )
+{
+    return content;
 }
