@@ -1,12 +1,16 @@
 
 Class "Class" =
-    'class' __
-    _ name :Identifier?
+    "class"
+    p_name :(__ Identifier)?
     _ typed :Typed?
     _ '{'
     _ block: Block
     _ '}'
 {
+    var name;
+    if (p_name) {
+        name = p_name[1];
+    }
     return {
         ast_type: "Class",
         ast_title: "@",

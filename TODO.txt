@@ -1,12 +1,14 @@
 
 Parser:
 - Fix statement invalidity rollback problem
-- Fix expression left-recursion
-- Finish expression operators
-    - fn()
-    - obj.
-    - && || ...
+    - Better parsing error reporting
+- Object oriented stuffs
+    - Class types, inheritences + templates
+    - New ()
+
+- Module system
 
 
 Later:
     Fix string litteral parsing
+    Add Regex parsing ?? :()

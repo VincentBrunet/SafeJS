@@ -1,6 +1,6 @@
 
 Identifier "Identifier" =
-    i:[A-Za-z_0-9]+
+    i:[$A-Za-z0-9_]+
 {
     var value = i.join("");
     return {

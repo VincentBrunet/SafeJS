@@ -18,7 +18,7 @@ CommentMultiLine =
         _array.splice(0, _array.length);
         return true;
     }
-    content: (c:. &{
+    content: $(c:. &{
         var idx = _array.length - 1;
         if (_array[idx] == '/'
             && _array[idx - 1] == '*') {
@@ -28,7 +28,7 @@ CommentMultiLine =
         return true;
     })*
 {
-    var value = content.join("");
+    var value = content;
     return {
         ast_type: "CommentMultiLine",
         ast_title: value,

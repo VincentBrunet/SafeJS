@@ -23,6 +23,15 @@ $utils.fileContents = function(files, next) {
   _read(0);
 };
 
+$utils.fileWrite = function (file, content, next) {
+  fs.writeFile(file, content, 'utf8', function (error) {
+    if (error) {
+      return next(false, error, file);
+    }
+    return next(true);
+  });
+};
+
 $utils.lpad = function(num, size, prefixer) {
   var s = num + "";
   while (s.length < size) {
@@ -31,15 +40,15 @@ $utils.lpad = function(num, size, prefixer) {
   return s;
 };
 
-$utils.errorDisplay = function (error, reason, session) {
+$utils.errorDisplay = function (error, reason, filename, lines) {
   console.log("");
   console.log("-------------------------------------".red);
   console.log("Error:".red, error.message.yellow);
   if (reason) {
     console.log("Reason:".red, reason.yellow);
   }
-  if (session) {
-    console.log("File:".red, session.getInputFilename().blue);
+  if (filename) {
+    console.log("File:".red, filename.blue);
   }
   if (error.location) {
     console.log(
@@ -54,10 +63,6 @@ $utils.errorDisplay = function (error, reason, session) {
     return;
   }
   var border = 3;
-  var lines = session.getInputLines();
-  if (reason == "GrammarBuild") {
-    lines = session.getGrammarLines();
-  }
   var lineLog = Math.floor(Math.log10(lines.length));
   var location = {
     start: {

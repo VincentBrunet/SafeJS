@@ -1,8 +1,8 @@
 
 Expression "Expression" =
     content:(
-        ExpressionSimple
-        / Operation
+        Operation
+        / ExpressionSimple
     )
 {
     return {
@@ -17,9 +17,20 @@ Expression "Expression" =
 ExpressionSimple =
     content:(
         Function
+        / Class
         / Litteral
         / Identifier
+        / Native
     )
 {
     return content;
+}
+
+Native =
+    "#"
+{
+    return {
+        ast_type: "Native",
+        ast_title: "!",
+    };
 }

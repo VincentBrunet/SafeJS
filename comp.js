@@ -1,11 +1,10 @@
 
+var parser = require("./sources/parser");
+var compiler = require("./sources/compiler");
+var exporter = require("./sources/exporter");
+
 var s = require("./sources/session.js");
 var utils = require("./sources/utils.js");
-var ast = {
-  parse: require("./sources/ast/parse.js"),
-  compile: require("./sources/ast/compile.js"),
-  export: require("./sources/ast/export.js"),
-};
 
 // The whole pipeline
 function translator(filenameIn, filenameOut) {
@@ -13,27 +12,42 @@ function translator(filenameIn, filenameOut) {
   var session = new s.Session(filenameIn, filenameOut);
   // Log
   console.log(" ## ".blue + (filenameIn + " -> " + filenameOut).green);
+  //
   // Parser, .tjs to AST.tjs
-  session.profilingStart("parser");
-  ast.parse(session, function (success, error, reason) {
-    session.profilingEnd("parser");
+  //
+  parser.parse(session, function (success, error, reason) {
     // On parsing failure
     if (!success) {
-      return utils.errorDisplay(error, reason, session);
+      return utils.errorDisplay(
+        error,
+        "Parsing-" + reason,
+        filenameIn,
+        session.getInputLines()
+      );
     }
+    //
     // Compiler, AST.tjs to AST.js
-    session.profilingStart("compiler");
-    ast.compile(session, function (success, error, reason) {
-      session.profilingEnd("compiler");
+    //
+    compiler.compile(session, function (success, error, reason) {
       if (!success) {
-        throw error;
+        return utils.errorDisplay(
+          error,
+          "Compiling-" + reason,
+          filenameIn,
+          session.getInputLines()
+        );
       }
+      //
       // Exporter AST.js to .js
-      session.profilingStart("exporter");
-      ast.export(session, function (success, error, reason) {
-        session.profilingEnd("exporter");
+      //
+      exporter.export(session, function (success, error, reason) {
         if (!success) {
-          throw error;
+          return utils.errorDisplay(
+            error,
+            "Exporting-" + reason,
+            filenameIn,
+            session.getInputLines()
+          );
         }
         // We are done!
         session.profilingRecap();

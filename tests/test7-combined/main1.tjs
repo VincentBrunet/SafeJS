@@ -1,0 +1,23 @@
+
+#.console.log("")
+
+class Dict {
+
+    var _internal = [];
+
+    fn get(idx) {
+        return this._internal[idx];
+    }
+    fn set(idx, value) {
+        this._internal[idx] = value;
+        return value;
+    }
+    fn delete(idx) {
+        delete this._internal[idx];
+    }
+
+    fn op_ACCESS(idx) {
+        return _internal[idx];
+    }
+
+}

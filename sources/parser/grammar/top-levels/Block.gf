@@ -2,7 +2,7 @@
 Block =
     _ statements :(Statement Delimiter+)*
     _ lastStatement :Statement?
-    _ Delimiter* _
+    _ Delimiter*
 {
     var list = [];
     statements.forEach(function (statement) {

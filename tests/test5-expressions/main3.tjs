@@ -1,0 +1,10 @@
+var obj = {toto: toto};
+console.log(obj.toto() === objetGlobal); // true
+
+#.test();
+
+// Ici on utilise call
+console.log(toto.call(obj) === objetGlobal); // true
+// Là on utilise bind
+//toto = toto.bind(obj);
+console.log(toto() === objetGlobal); // true

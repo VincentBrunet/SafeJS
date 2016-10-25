@@ -1,6 +1,25 @@
+
 var utils = require("../utils");
 var peg = require("pegjs");
 var backtrace = require('pegjs-backtrace');
+
+/*
+test.abc(hop, fn {
+  return 42;
+});
+
+module.exports = function ast_parse(session:Int, next) {
+  var ttt = class {
+    var ttt = 42;
+    var lll = 22;
+  };
+  var hop = new ttt();
+  console.log(hop.ttt);
+  function taker(cc :Class, params :Tuple) {
+    return new cc();
+  }
+};
+*/
 
 module.exports = function ast_parse(session, next) {
   var grammars = [
@@ -12,12 +31,11 @@ module.exports = function ast_parse(session, next) {
     "grammar/statements/Variable.gf",
     "grammar/statements/Condition.gf",
     "grammar/statements/Loop.gf",
+    "grammar/statements/Return.gf",
     "grammar/statements/TryCatch.gf",
     "grammar/expressions/Function.gf",
     "grammar/expressions/Litteral.gf",
     "grammar/expressions/Operation.gf",
-    "grammar/expressions/Assignation.gf",
-    "grammar/expressions/Call.gf",
     "grammar/basics/Type.gf",
     "grammar/basics/Array.gf",
     "grammar/basics/Dict.gf",
@@ -35,7 +53,7 @@ module.exports = function ast_parse(session, next) {
     if (!success) {
       return next(false, error, "ReadGrammars");
     }
-    session.setGrammarLines(contents.split(/\r?\n/));
+    //session.setGrammarLines(contents.split(/\r?\n/));
     try {
       session.profilingStart("parser-build");
       var toBuild = contents;
@@ -56,10 +74,10 @@ module.exports = function ast_parse(session, next) {
       if (!success) {
         return next(false, error, "ReadSource");
       }
-      session.setInputLines(contents.split(/\r?\n/));
+      //session.setInputLines(contents.split(/\r?\n/));
       var maxOff = undefined;
       var maxEvent = undefined;
-      var backtracer = new backtrace(contents);
+      //var backtracer = new backtrace(contents);
       try {
         session.profilingStart("parser-parse");
         var toParse = contents;
@@ -76,7 +94,7 @@ module.exports = function ast_parse(session, next) {
                 maxOff = event.location.start.offset;
                 maxEvent = event;
               }
-              // console.log("Trace", a, b, c);
+              console.log("Trace", a, b, c);
             },
           },
         });
@@ -86,8 +104,8 @@ module.exports = function ast_parse(session, next) {
       }
       catch (error) {
         console.log(backtracer.getBacktraceString());
-        // error.location = maxEvent.location;
-        // console.log("Parsed", maxOff, maxEvent);
+        error.location = maxEvent.location;
+        console.log("Parsed", maxOff, maxEvent);
         return next(false, error, "ParserTokens");
       }
     });

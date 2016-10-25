@@ -1,6 +1,6 @@
 
 _ "Space"
-  = Comment* [ \t\n\r]* Comment*
+  = (Comment/([ \t\n\r]))*
 {
     return {
         ast_type: "Whitespace",
@@ -8,7 +8,7 @@ _ "Space"
 }
 
 __ "Space"
-  = Comment* [ \t\n\r]+ Comment*
+  = Comment* (([ \t\n\r]+) Comment*)+
 {
     return {
         ast_type: "Whitespace",

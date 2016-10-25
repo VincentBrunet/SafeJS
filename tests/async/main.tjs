@@ -15,3 +15,10 @@ fn syncFunc :Int (param1 :Int) {
 
     return yielder.Valued();
 }
+
+// 42
+
+/**
+ * Hop
+ */
+

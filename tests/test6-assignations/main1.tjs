@@ -1,0 +1,80 @@
+
+console.log("");
+console.log("-------------------------------------".red);
+
+console.log(42, 33, 33,);
+
+console.log("Error:".red, error.message.yellow);
+
+test.toto().lol;
+
+if (reason) {
+  console.log("Reason:".red, reason.yellow);
+}
+if (session) {
+  console.log("File:".red, session.getInputFilename().blue);
+}
+if (error.location) {
+  console.log(
+    "At:".red,
+    ("line " + error.location.start.line) + ",",
+    ("column " + error.location.start.column),
+  );
+}
+console.log("-------------------------------------".red);
+if (!error.location) {
+  console.log(error);
+  return;
+}
+var border = 3;
+var lines = session.getInputLines();
+if (reason == "GrammarBuild") {
+  lines = session.getGrammarLines();
+}
+var lineLog = Math.floor(Math.log10(lines.length));
+var location = {
+  start: {
+    line: error.location.start.line - 1,
+    column: error.location.start.column - 1,
+  },
+  end: {
+    line: error.location.end.line - 1,
+    column: error.location.end.column - 1,
+  },
+};
+var startLine = Math.max(location.start.line - border, 0);
+var endLine = Math.min(location.end.line + border, lines.length - 1);
+//for (var i = startLine; i <= endLine; i++) {
+  var line = lines[i];
+  var printed = "";
+  var isClose = true;
+  if (i < location.start.line || i > location.end.line) {
+    isClose = false;
+  }
+  //for (var j = 0; j < line.length; j++) {
+    var isError = isClose;
+    if (i == location.start.line && j < location.start.column) {
+      isError = false;
+    }
+    if (i == location.end.line && j > location.end.column) {
+      isError = false;
+    }
+    if (isClose) {
+      if (isError) {
+        printed += line[j].bgRed.black;
+      } else {
+        printed += line[j];
+      }
+    } else {
+      printed += line[j];
+    }
+  //}
+  var lNb = $utils.lpad(i + 1, lineLog + 1, "0");
+  if (isClose) {
+    console.log("#".yellow + lNb.yellow + " - ".red + printed);
+  } else {
+    console.log("#".green + lNb.green + " - ".red + printed);
+  }
+//}
+console.log("-------------------------------------".red);
+console.log(error);

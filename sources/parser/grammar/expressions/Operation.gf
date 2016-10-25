@@ -1,5 +1,15 @@
 
-Operation "Operation" = OperationP14
+Operation "Operation" = OperationP16
+
+OperationP16 =
+    head: (OperationP15/ExpressionSimple)
+    tails: (_ ("=" / "-=" / "+=" / "*=" / "/=" / "%=" / "<<=" / ">>>=" / ">>=" / "&=" / "|=" / "^=") _ (OperationP15/ExpressionSimple))*
+{
+    return RightToLeftOp(head, tails);
+}
+
+OperationP15 =
+    OperationP14
 
 OperationP14 =
     head: (OperationP13/ExpressionSimple)
@@ -126,30 +136,36 @@ OperationP3 =
     };
 }
 
-OperationP2 =
-    OperationP1
-/*
-    head: (OperationP1/ExpressionSimple)
-    tail: (_ "(" _ ")")?
-    OperationP1
+OperationP2PartParams =
+    params: (_ (Operation/ExpressionSimple) _ ",")*
+    lastParam: (_ Operation/ExpressionSimple)?
 {
-    if (!tail) {
-        return head;
+    var list = [];
+    params.forEach(function (param) {
+        list.push(param[1]);
+    });
+    if (lastParam) {
+        list.push(lastParam[1]);
     }
+    return {
+        ast_type: "OperationP2PartParams",
+        ast_title: "x" + list.length + "",
+        ast_childs: list,
+    };
 }
-*/
 
-OperationP1 =
-    head: (OperationP0/ExpressionSimple)
+OperationP2 =
+    head: (OperationP1/ExpressionSimple)
     tails: (
         (_ "[" _ (Operation/ExpressionSimple) _ "]")
         / ("" "." "" Identifier)
+        / (_ "(" _ OperationP2PartParams _ ")")
     )*
 {
     return LeftToRightOp(head, tails);
 }
 
-OperationP0 =
+OperationP1 =
     "("
     _ e :(Operation/ExpressionSimple)
     _ ")"

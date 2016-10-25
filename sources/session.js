@@ -9,9 +9,6 @@ $session.Session = function (filenameIn, filenameOut) {
 
   // Empty session
   self._internal = {
-    grammar: {
-      lines: [],
-    },
     input: {
       filename: filenameIn,
       lines: [],
@@ -31,14 +28,6 @@ $session.Session = function (filenameIn, filenameOut) {
       index: {},
     },
   };
-
-  // Generated grammar
-  self.getGrammarLines = function () {
-    return self._internal.grammar.lines;
-  }
-  self.setGrammarLines = function (lines) {
-    self._internal.grammar.lines = lines;
-  }
 
   // Basic input
   self.getInputFilename = function () {

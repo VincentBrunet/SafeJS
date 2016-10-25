@@ -1,12 +1,12 @@
 
 Statement =
     content:(
-        Class
-        / Variable
+        Variable
         / Condition
         / Loop
-        / Expression
         / TryCatch
+        / Return
+        / Expression
     )
 {
     return {

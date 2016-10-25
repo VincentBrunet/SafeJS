@@ -1,13 +1,17 @@
 
 Function "Function" =
-    ("fn"/"function") __
-    _ name :Identifier?
+    "fn" // ("fn"/"function")
+    p_name :(__ Identifier)?
     _ typed :Typed?
     _ params :FunctionPartParams?
     _ '{'
     _ block: Block
     _ '}'
 {
+    var name;
+    if (p_name) {
+        name = p_name[1];
+    }
     return {
         ast_type: "Function",
         ast_title: "function",
@@ -28,15 +32,14 @@ Function "Function" =
 
 
 FunctionPartParams "Function Params" =
-    _ '('
-    _ params: (FunctionPartParam ',')*
+    '('
+    _ params: (_ FunctionPartParam ',')*
     _ lastParam: FunctionPartParam?
     _ ')'
-    _
 {
     var list = [];
     params.forEach(function (param) {
-        list.push(param[0]);
+        list.push(param[1]);
     });
     if (lastParam) {
         list.push(lastParam);
@@ -49,7 +52,7 @@ FunctionPartParams "Function Params" =
 }
 
 FunctionPartParam = 
-    _ name :Identifier
+    name :Identifier
     _ typed :Typed?
 {
     return {
