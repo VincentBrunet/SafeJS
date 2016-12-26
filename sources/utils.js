@@ -2,8 +2,11 @@ var colors = require('colors');
 var _ = require("lodash");
 var fs = require("fs");
 var path = require('path');
+var lodash = require('lodash');
 
 var $utils = {};
+
+$utils._ = lodash;
 
 $utils.fileContents = function(files, next) {
   var _contents = "";

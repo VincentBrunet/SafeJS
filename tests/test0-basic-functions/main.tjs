@@ -1,4 +1,11 @@
 
+// Hello
+let test = 42;
+var test2 = 42;
+
+fn {
+    return 42;
+};
 
 function untyped_noparam_fn () {
     
@@ -26,6 +33,14 @@ function typed_oneparam_fn :Int (param1 :Int) {
 
 function typed_twoparam_fn :Int (param1 :Int, param2 :String,) {
     42;
-    return 42 + 22 / 23;
-    44;
+    //return 42 + 22 / 23;
+    return 44;
+}
+
+fn untyped_noparam_fn2 {
+    
+    fn nestedFunction2 {
+
+    }
+
 }

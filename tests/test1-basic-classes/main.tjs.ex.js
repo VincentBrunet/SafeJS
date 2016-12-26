@@ -32,4 +32,6 @@ var MyObject = function MyObject () {
 
 var bob = 222;
 
-var hop = [42, "Test"];
+var hop = [
+    42, "Test"
+];

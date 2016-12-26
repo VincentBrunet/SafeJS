@@ -1,7 +1,10 @@
 
+var arr :[Array];
 
-var f1 :Function = fn :Int (thisInt :Int) {
-    return thisInt;
-}
+var ttt :Int = 42;
 
-#.console.log(f1(42));
+//var f1 :Function = fn :Int (thisInt :Int) {
+//    return thisInt;
+//}
+
+//#.console.log(f1(42));

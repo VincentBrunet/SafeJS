@@ -1,22 +1,34 @@
-var utils = require("../utils");
 var peg = require("pegjs");
-var backtrace = require('pegjs-backtrace');
+var peg_utils = require('pegjs-util');
+var utils = require("../utils");
 var generated = require("./generated");
 
+var Ast = require("../ast");
+
 module.exports = function (session, next) {
+
   session.profilingStart("parser");
-  session.profilingStart("parser-input");
+
+  session.profilingStart("parser-load");
+
+  // Load translated file content
   utils.fileContents([session.getInputFilename()], function(success, contents, error) {
-    session.profilingEnd("parser-input");
+
+    // Profiler
+    session.profilingEnd("parser-load");
+
+    // On success
     if (!success) {
       return next(false, error, "ReadSource");
     }
+
+    // Save loaded content
     session.setInputLines(contents.split(/\r?\n/));
-    var backtracer = new backtrace(contents);
+
+    // Try to parse
     try {
       session.profilingStart("parser-parse");
-      var toParse = contents;
-      var parsed = generated.parse(toParse, {
+      var parsed = peg_utils.parse(generated, contents, {
         startRule: "Block",
         cache: true,
         //tracer: backtracer,
@@ -24,6 +36,7 @@ module.exports = function (session, next) {
             // var maxOff = undefined;
             // var maxEvent = undefined;
           trace: function(event) {
+            // console.log(event);
           /*
             if (event.type != "rule.fail") {
               return;
@@ -36,15 +49,48 @@ module.exports = function (session, next) {
           */
           },
         },
+        makeAST: function (line, column, offset, args) {
+          var arg = args[0];
+          arg.ast_pos = {
+            line: line,
+            column: column,
+            offset: offset,
+          };
+          return arg;
+        },
       });
-      session.setParsedAst(parsed);
       session.profilingEnd("parser-parse");
+
+      if (parsed.error) {
+        throw parsed.error;
+      }
+
+      var rawAst = parsed.ast;
+
+      utils.astDisplay(rawAst);
+
+      session.profilingStart("parser-hydrate");
+
+      try {
+        var objAst = new Ast.node("Block", rawAst);
+        session.setParsedAst(objAst);
+      } catch (error) {
+        console.log("Hydrate error");
+        console.log(error.stack);
+      }
+
+      session.profilingEnd("parser-hydrate");
+
       session.profilingEnd("parser");
+
       return next(true);
     }
     catch (error) {
-      console.log(backtracer.getBacktraceString());
+
+      console.log("Parse error", error);
+
       return next(false, error, "Tokens");
+
     }
   });
 };

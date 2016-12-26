@@ -14,14 +14,13 @@ $session.Session = function (filenameIn, filenameOut) {
       lines: [],
       ast: null,
     },
+    compile: {
+      ast: null,
+    },
     output: {
       filename: filenameOut,
       lines: [],
       ast: null,
-    },
-    ast: {
-      parsed: null,
-      structured: null,
     },
     profiles: {
       array: [],
@@ -46,6 +45,14 @@ $session.Session = function (filenameIn, filenameOut) {
   };
   self.getParsedAst = function () {
     return self._internal.input.ast;
+  };
+
+  // Compiled AST
+  self.setCompiledAst = function (ast) {
+    self._internal.compile.ast = ast;
+  };
+  self.getCompiledAst = function () {
+    return self._internal.compile.ast;
   };
 
   // Profiling
