@@ -27,6 +27,14 @@ module.exports = function (session, next) {
 
     // Try to parse
     try {
+      var trace_d = 0;
+      function trace_pp() {
+        var s = "";
+        utils._.times(trace_d, function () {
+          s += " ";
+        });
+        return s;
+      }
       session.profilingStart("parser-parse");
       var parsed = peg_utils.parse(generated, contents, {
         startRule: "Block",
@@ -36,17 +44,26 @@ module.exports = function (session, next) {
             // var maxOff = undefined;
             // var maxEvent = undefined;
           trace: function(event) {
-            // console.log(event);
-          /*
-            if (event.type != "rule.fail") {
-              return;
+            /*
+            if (event.type == "rule.enter") {
+              trace_d += 1;
+              console.log(trace_pp(), "ST".grey, event.rule.grey);
             }
-            if (maxOff == undefined || event.location.start.offset > maxOff) {
-              maxOff = event.location.start.offset;
-              maxEvent = event;
+            if (event.type == "rule.fail") {
+              console.log(trace_pp(), "FA".yellow, event.rule.yellow,
+                // event.location.start.line + ":" + event.location.start.column,
+                event.location.end.line + ":" + event.location.end.column
+              );
+              trace_d -= 1;
             }
-            // console.log("Trace", a, b, c);
-          */
+            if (event.type == "rule.match") {
+              console.log(trace_pp(), "OK".green, event.rule.green, event.result.ast_type.yellow,
+                event.location.start.line + ":" + event.location.start.column,
+                event.location.end.line + ":" + event.location.end.column
+              );
+              trace_d -= 1;
+            }
+            */
           },
         },
         makeAST: function (line, column, offset, args) {

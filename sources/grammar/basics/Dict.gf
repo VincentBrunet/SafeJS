@@ -1,26 +1,26 @@
 
 Dict "Dictionary" =
     "{"
-    _ values :(DictValue ",")*
-    _ lastValue :DictValue?
+    values :(_ DictValue _ ",")*
+    lastValue :(_ DictValue)?
     _ "}"
 {
     var elements = [];
     values.forEach(function (value) {
-        elements.push(value[0]);
+        elements.push(value[1]);
     });
     if (lastValue) {
-        elements.push(lastValue);
+        elements.push(lastValue[1]);
     }
     return ast({
         ast_type: "Dict",
-        ast_title: "{}",
+        ast_title: "{x" + elements.length + "}",
         ast_childs: elements,
     });
 }
 
 DictValue =
-    _ name :Identifier
+    name :Identifier
     _ ":"
     _ value :Expression
 {
@@ -29,6 +29,6 @@ DictValue =
         ast_childs: {
             Name: name,
             Value: value,
-        }
+        },
     };
 }

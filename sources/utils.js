@@ -8,6 +8,15 @@ var $utils = {};
 
 $utils._ = lodash;
 
+$utils.colors = colors;
+
+$utils.context = {};
+$utils.context.clone = function (context) {
+  var _context = $utils._.clone(context);
+  _context.identifiers = $utils._.clone(context.identifiers);
+  return _context;
+};
+
 $utils.fileContents = function(files, next) {
   var _contents = "";
   var _read = function(idx) {
@@ -151,19 +160,35 @@ $utils.astDisplay = function (elem, type, depths) {
     line += " " + elem.ast_title.blue;
   }
   console.log(line);
-  var nb = 0;
-  _.each(elem.ast_childs, function (value, key) {
-    if (value !== undefined) {
-      nb += 1;
-    }
-  });
-  var cnb = 0;
-  _.each(elem.ast_childs, function (value, key) {
-    if (value !== undefined) {
-      cnb += 1;
-      $utils.astDisplay(value, key, depths.concat(nb - cnb));
-    }
-  });
+  if (_.isArray(elem)) {
+    var nb = 0;
+    _.each(elem, function (value, key) {
+      if (value !== undefined) {
+        nb += 1;
+      }
+    });
+    var cnb = 0;
+    _.each(elem, function (value, key) {
+      if (value !== undefined) {
+        cnb += 1;
+        $utils.astDisplay(value, key, depths.concat(nb - cnb));
+      }
+    });
+  } else {
+    var nb = 0;
+    _.each(elem.ast_childs, function (value, key) {
+      if (value !== undefined) {
+        nb += 1;
+      }
+    });
+    var cnb = 0;
+    _.each(elem.ast_childs, function (value, key) {
+      if (value !== undefined) {
+        cnb += 1;
+        $utils.astDisplay(value, key, depths.concat(nb - cnb));
+      }
+    });
+  }
 };
 
 module.exports = $utils;

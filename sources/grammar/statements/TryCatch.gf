@@ -1,17 +1,46 @@
 
+
+Catch =
+    _ "catch"
+    error: (
+        (_ '(' _ Identifier (_ Typed)?)
+        / (__ Identifier (_ Typed)?)
+    )
+    _ '{'
+    _ block :Block
+    _ '}'
+{
+    var identifier;
+    var type;
+    if (error.length == 5) {
+        identifier = error[3];
+        if (error[4]) {
+            type = error[4][1];
+        }
+    }
+    if (error.length == 3) {
+        identifier = error[1];
+        if (error[2]) {
+            type = error[2][1];
+        }
+    }
+    return ast({
+        ast_type: "Catch",
+        ast_childs: {
+            Identifier: identifier,
+            Type: type,
+            Block: block,
+        },
+    })
+}
+
+
 TryCatch "Try-Catch" =
     'try'
     _ '{'
     _ tryBlock: Block
     _ '}'
-    _ 'catch'
-    error :(
-        (_ '(' _ Identifier _ ')')
-        / (__ Identifier)
-    )
-    _ '{'
-    _ catchBlock: Block
-    _ '}'
+    catches :Catch*
     finallyB :(
         _ 'finally'
         _ '{'
@@ -19,13 +48,6 @@ TryCatch "Try-Catch" =
         _ '}'
     )?
 {
-    var catchLabel;
-    if (error.length == 6) {
-        catchLabel = error[3];
-    }
-    else {
-        catchLabel = error[1];
-    }
     var finallyBlock;
     if (finallyB) {
         finallyBlock = finallyB[5];
@@ -34,9 +56,8 @@ TryCatch "Try-Catch" =
         ast_type: "TryCatch",
         ast_childs: {
             TryBlock: tryBlock,
-            CatchLabel: catchLabel,
-            CatchBlock: catchBlock,
+            Catches: catches,
             FinallyBlock: finallyBlock,
-        }
+        },
     });
 }

@@ -14,6 +14,7 @@ var grammars = [
     grammarPrefix + "/statements/Loop.gf",
     grammarPrefix + "/statements/Return.gf",
     grammarPrefix + "/statements/TryCatch.gf",
+    grammarPrefix + "/expressions/Async.gf",
     grammarPrefix + "/expressions/Function.gf",
     grammarPrefix + "/expressions/Litteral.gf",
     grammarPrefix + "/expressions/Operation.gf",

@@ -9,7 +9,7 @@ OperationP16 =
 }
 
 OperationP15 =
-    OperationP14
+    OperationP14 // FIX-ME add ternary?
 
 OperationP14 =
     head: (OperationP13/ExpressionSimple)
@@ -136,38 +136,103 @@ OperationP3 =
     });
 }
 
-OperationP2PartParams =
-    params: (_ (Operation/ExpressionSimple) _ ",")*
-    lastParam: (_ Operation/ExpressionSimple)?
+OperationPTuple =
+    params: (_ (Expression) _ ",")*
+    lastParam: (_ Expression)?
 {
-    var list = [];
+    var elements = [];
     params.forEach(function (param) {
-        list.push(param[1]);
+        elements.push(param[1]);
     });
     if (lastParam) {
-        list.push(lastParam[1]);
+        elements.push(lastParam[1]);
     }
     return ast({
-        ast_type: "OperationP2PartParams",
-        ast_title: "x" + list.length + "",
-        ast_childs: list,
+        ast_type: "Litteral",
+        ast_childs: {
+            Content: ast({
+                ast_type: "Tuple",
+                ast_title: "(x" + elements.length + ")",
+                ast_childs: elements,
+            }),
+        },
     });
 }
 
 OperationP2 =
     head: (OperationP1/ExpressionSimple)
     tails: (
-        (_ "[" _ (Operation/ExpressionSimple) _ "]")
+        (_ "[" _ (Expression) _ "]")
         / ("" "." "" Identifier)
-        / (_ "(" _ OperationP2PartParams _ ")")
+        / (_ "(" _ OperationPTuple _ ")")
     )*
 {
-    return LeftToRightOp(head, tails);
+    return LeftToRightOp(head, tails, {
+        "[": "ACCESS",
+        ".": ".",
+        "(": "CALL",
+    });
+}
+
+OperationNew = 
+    "new"
+    __ expression :(OperationP1/ExpressionSimple)
+    p_params :(_ "(" _ OperationPTuple _ ")")?
+{
+    var params;
+    if (p_params) {
+        params = p_params[3];
+    }
+    return ast({
+        ast_type: "Operation",
+        ast_title: "new",
+        ast_childs: {
+            E1: expression,
+            E2: params,
+        },
+        ast_datas: {
+            op: "new",
+        },
+    });
 }
 
 OperationP1 =
+    e: (
+        OperationNew
+        / (OperationP0_5/ExpressionSimple)
+    )
+{
+    return e;
+}
+
+OperationDeasync =
+    "@"
+    _ expression: (OperationP0_5/ExpressionSimple)
+{
+    return ast({
+        ast_type: "Operation",
+        ast_title: "@",
+        ast_childs: {
+            E1: expression,
+        },
+        ast_datas: {
+            op: "@",
+        },
+    });
+}
+
+OperationP0_5 =
+    e: (
+        OperationDeasync
+        / (OperationP0/ExpressionSimple)
+    )
+{
+    return e;
+}
+
+OperationP0 =
     "("
-    _ e :(Operation/ExpressionSimple)
+    _ e :ExpressionContent
     _ ")"
 {
     return e;

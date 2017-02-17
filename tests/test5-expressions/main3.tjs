@@ -1,7 +1,7 @@
 var obj = {toto: toto};
 console.log(obj.toto() === objetGlobal); // true
 
-#.test();
+//#.test();
 
 // Ici on utilise call
 console.log(toto.call(obj) === objetGlobal); // true

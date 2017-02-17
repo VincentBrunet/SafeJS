@@ -26,8 +26,15 @@ Ast.register("Function", function (node) {
   node.params = new Ast.node("FunctionParams", node_params || Ast.predefined("FunctionParams:Empty"));
   node.block = new Ast.node("Block", node_block);
 
+  // Check async
+  node.isAsyncOnCall = false;
+  if (node.block.isAsync) {
+    node.isAsyncOnCall = true;
+  }
+
   // Node export
-  node.export = function () {
+  node.export = function (context) {
+    var _context = utils.context.clone(context);
     var str = "";
     str += "function ";
     if (node_name) {
@@ -35,10 +42,10 @@ Ast.register("Function", function (node) {
     } else {
       str += "/* ANONYMOUS */";
     }
-    str += " " + node.params.export();
+    str += " " + node.params.export(_context);
     str += " {";
     str += "\n";
-    str += node.block.export();
+    str += node.block.export(_context);
     str += "}";
     return str;
   };
@@ -86,10 +93,11 @@ Ast.register("FunctionParams", function (node) {
   });
 
   // Node export
-  node.export = function () {
+  node.export = function (context) {
+    var _context = utils.context.clone(context);
     var results = [];
     utils._.each(node.params, function (param) {
-      results.push(param.export());
+      results.push(param.export(_context));
     });
     return "(" + results.join(", ") + ")";
   };

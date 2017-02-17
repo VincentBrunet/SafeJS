@@ -13,12 +13,16 @@ Ast.node = function (type, node) {
   // console.log("ReadRegister", type);
   node.type = node.ast_type;
   node.pos = node.ast_pos;
-  Ast._registered[type](node);
+  var ctr = Ast._registered[type];
+  if (!ctr) {
+    console.log("Unknown type", type);
+  }
+  ctr(node);
   delete node.ast_type;
   delete node.ast_title;
   delete node.ast_childs;
   delete node.ast_datas;
-  delete node.ast_pos;
+  //delete node.ast_pos;
   return node;
 };
 

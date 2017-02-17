@@ -21,7 +21,8 @@
 
 // Typed function declaration
 fn typed_fn :Int (p1 :Int, p2 :Object) {
-    return (42 + 1, false, [32, 43]);
+    return (42 + 1, false, [32, 43])[0];
+    return (42 + 1, false, [32, 43]).0;
 }
 
 42;

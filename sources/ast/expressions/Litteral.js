@@ -28,18 +28,41 @@ Ast.register("Litteral", function (node) {
   else if (node_content.ast_type == "Null") {
     node.content = new Ast.node("Null", node_content);
   }
+  else if (node_content.ast_type == "Tuple") {
+    node.content = new Ast.node("Tuple", node_content);
+  }
+  else if (node_content.ast_type == "Array") {
+    node.content = new Ast.node("Array", node_content);
+  }
+  else if (node_content.ast_type == "Dict") {
+    node.content = new Ast.node("Dict", node_content);
+  }
+  else if (node_content.ast_type == "Boolean") {
+    node.content = new Ast.node("Boolean", node_content);
+  }
   else {
     throw new Ast.NodeUnexpectedType(node_content, [
       "Number",
       "String",
       "Undefined",
       "Null",
+      "Tuple",
+      "Array",
+      "Dict",
+      "Boolean",
     ]);
   }
 
+  // Check async
+  node.isAsync = false;
+  if (node.content.isAsync) {
+    node.isAsync = true;
+  }
+
   // Node export
-  node.export = function () {
-    return node.content.export();
+  node.export = function (context) {
+    var _context = utils.context.clone(context);
+    return node.content.export(_context);
   };
 
 });

@@ -11,7 +11,7 @@ Statement =
 {
     return ast({
         ast_type: "Statement",
-        ast_title: "#",
+        ast_title: "_",
         ast_childs: {
             Content: content,
         },

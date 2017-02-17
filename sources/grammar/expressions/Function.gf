@@ -21,19 +21,13 @@ Function "Function" =
             Params: params,
             Block: block,
         },
-        //ast_datas: {
-        //},
-        //name: name,
-        //params: params,
-        //block: block,
     });
 }
 
-
 FunctionParams "Function Params" =
     '('
-    _ params: (_ FunctionParam ',')*
-    _ lastParam: FunctionParam?
+    params: (_ FunctionParam _ ',')*
+    lastParam: (_ FunctionParam)?
     _ ')'
 {
     var list = [];
@@ -41,7 +35,7 @@ FunctionParams "Function Params" =
         list.push(param[1]);
     });
     if (lastParam) {
-        list.push(lastParam);
+        list.push(lastParam[1]);
     }
     return ast({
         ast_type: "FunctionParams",
@@ -53,12 +47,20 @@ FunctionParams "Function Params" =
 FunctionParam = 
     name :Identifier
     _ type :Typed?
+    p_variadic: (_ "...")?
 {
+    var variadic = false;
+    if (p_variadic) {
+        variadic = true;
+    }
     return ast({
         ast_type: "FunctionParam",
         ast_childs: {
             Name: name,
             Type: type,
+        },
+        ast_datas: {
+            variadic: variadic,
         },
     });
 }

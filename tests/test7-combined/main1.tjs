@@ -1,9 +1,9 @@
 
-#.console.log("")
+//#.console.log("")
 
 class Dict {
 
-    var _internal = [];
+    var _internal = {};
 
     fn get(idx) {
         return this._internal[idx];
@@ -21,3 +21,15 @@ class Dict {
     }
 
 }
+
+
+let top :Class = class :Int {
+
+    fn get {
+        return 42;
+    }
+
+}
+
+
+//let obj = new top();

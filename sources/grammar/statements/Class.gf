@@ -13,7 +13,7 @@ Class "Class" =
     }
     return ast({
         ast_type: "Class",
-        ast_title: "@",
+        ast_title: "$",
         ast_childs: {
             Name: name,
             Type: type,

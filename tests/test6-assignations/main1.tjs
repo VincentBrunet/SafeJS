@@ -26,12 +26,14 @@ if (!error.location) {
   console.log(error);
   return;
 }
+
 var border = 3;
 var lines = session.getInputLines();
 if (reason == "GrammarBuild") {
   lines = session.getGrammarLines();
 }
 var lineLog = Math.floor(Math.log10(lines.length));
+
 var location = {
   start: {
     line: error.location.start.line - 1,
@@ -40,8 +42,9 @@ var location = {
   end: {
     line: error.location.end.line - 1,
     column: error.location.end.column - 1,
-  },
+  }
 };
+
 var startLine = Math.max(location.start.line - border, 0);
 var endLine = Math.min(location.end.line + border, lines.length - 1);
 //for (var i = startLine; i <= endLine; i++) {
@@ -78,3 +81,4 @@ var endLine = Math.min(location.end.line + border, lines.length - 1);
 //}
 console.log("-------------------------------------".red);
 console.log(error);
+

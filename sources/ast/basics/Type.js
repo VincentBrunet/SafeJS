@@ -40,9 +40,10 @@ Ast.register("Type", function (node) {
   */
 
   // Node export
-  node.export = function () {
-    return "[type]" + node.content;
-    return node.content.export();
+  node.export = function (context) {
+    var _context = utils.context.clone(context);
+    return "/* [type]" + node.content + "*/";
+    return node.content.export(_context);
   };
 
 });

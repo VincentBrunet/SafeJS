@@ -1,4 +1,62 @@
 
+
+
+fn asyncGet (url, call) {
+    setTimeout(fn {
+        call(url + ":Response");
+    });
+}
+
+fn route (url) {
+
+}
+
+var response = route(url);
+
+
+
+fn route :String<Int, Double> () {
+    var body = asyncGet("www.google.fr");
+    return body.content;
+}
+
+fn ttt {
+    var result = asyncGet("url");
+    var result = async (done) {
+        asyncGet("url", done);
+    };
+    return result;
+}
+
+fn abs {
+    route(fn (r) {
+        var r1 = r;
+        route(fn (r) {
+            var r2 = r;
+            if (r1 && r2) {
+
+            }
+        });
+    });
+    if (route() && route()) {
+        return 42;
+    } else if (route()) {
+
+    }
+}
+
+// abs(fn (r) {
+//     var r1 = r;
+//     abs(r1, fn (r) {
+//         var r2 = r;
+//         console.log(r2);
+//     });
+// });
+console.log(abs(async (a) {
+    abs(a);
+}));
+
+/*
 fn asyncFunc (next) {
     setTimeout(fn {
         next();
@@ -15,6 +73,7 @@ fn syncFunc :Int (param1 :Int) {
 
     return yielder.Valued();
 }
+*/
 
 // 42
 

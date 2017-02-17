@@ -11,7 +11,7 @@ Ast.register("Number", function (node) {
   }
 
   // Datas check
-  if (!node.ast_datas.value) {
+  if (node.ast_datas.value === undefined) {
     throw new Ast.NodeMissingData(node, "value");
   }
 

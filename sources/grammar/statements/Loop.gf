@@ -40,10 +40,5 @@ Loop "Loop" =
         / For
     )
 {
-    return ast({
-        ast_type: "Loop",
-        ast_childs: {
-            loop: loop,
-        }
-    });
+    return loop;
 }

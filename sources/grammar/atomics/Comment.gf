@@ -1,7 +1,7 @@
 
 CommentOneLine =
     "//"
-    content : [^\r^\n]*
+    content :[^\r^\n]*
     ("\n"/"\r"/!.)
 {
     var value = content.join("");
@@ -13,7 +13,7 @@ CommentOneLine =
 
 CommentMultiLine =
     "/*"
-    _array: "\0"* // Artificially create an array
+    _array: "\0"* // Artificially create an empty array usable as variable
     &{
         _array.splice(0, _array.length);
         return true;

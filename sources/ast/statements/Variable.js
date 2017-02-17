@@ -26,13 +26,20 @@ Ast.register("Variable", function (node) {
   node.type = new Ast.node("Type", node_type || Ast.predefined("Type:Generic"));
   node.value = new Ast.node("Expression", node_value || Ast.predefined("Expression:Undefined"));
 
+  // Check async
+  node.isAsync = false;
+  if (node.value.isAsync) {
+    node.isAsync = true;
+  }
+
   // Node export
-  node.export = function () {
+  node.export = function (context) {
+    var _context = utils.context.clone(context);
     var str = "";
     str += "var ";
     str += node.name;
     str += " = ";
-    str += node.value.export();
+    str += node.value.export(_context);
     if (node.readonly) {
       str += " // READ ONLY";
     }

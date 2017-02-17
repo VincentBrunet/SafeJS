@@ -88,12 +88,29 @@ TypeArray =
     };
 }
 
+TypePromise =
+    '@'
+    p_type: (_ Type)?
+{
+    var type;
+    if (p_type) {
+        type = p_type[1];
+    }
+    return {
+        ast_type: "TypePromise",
+        ast_childs: {
+            Type: type,
+        },
+    };
+}
+
 Type "Type" =
     content :(
         TypeRegular
         / TypeArray
         / TypeDict
         / TypeTuple
+        / TypePromise
     )
 {
     return {

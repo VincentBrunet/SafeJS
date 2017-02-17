@@ -1,6 +1,14 @@
 
+_x "NoCutSpace"
+  = (([ \t]+)/(Comment+))*
+{
+    return ast({
+        ast_type: "Whitespace",
+    });
+}
+
 _ "Space"
-  = (Comment/([ \t\n\r]))*
+  = (([ \t\n\r]+)/(Comment+))*
 {
     return ast({
         ast_type: "Whitespace",
@@ -8,7 +16,7 @@ _ "Space"
 }
 
 __ "Space"
-  = Comment* (([ \t\n\r]+) Comment*)+
+  = (Comment*) (([ \t\n\r]+) (Comment*))+
 {
     return ast({
         ast_type: "Whitespace",

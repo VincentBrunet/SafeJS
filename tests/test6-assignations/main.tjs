@@ -7,3 +7,8 @@ a = b = c = 2;
 
 
 42 -= 3;
+
+var test = {
+    test: console.log("Hop"),
+    tutu: 42,
+};

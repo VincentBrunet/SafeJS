@@ -1,9 +1,6 @@
 
 Expression "Expression" =
-    content:(
-        Operation
-        / ExpressionSimple
-    )
+    content: ExpressionContent
 {
     return ast({
         ast_type: "Expression",
@@ -14,9 +11,19 @@ Expression "Expression" =
     });
 }
 
+ExpressionContent =
+    content:(
+        Operation
+        / ExpressionSimple
+    )
+{
+    return content;
+};
+
 ExpressionSimple =
     content:(
         Function
+        / Async
         / Class
         / Litteral
         / Identifier
@@ -31,6 +38,6 @@ Native =
 {
     return ast({
         ast_type: "Native",
-        ast_title: "!",
+        ast_title: "#",
     });
 }

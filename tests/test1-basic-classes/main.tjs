@@ -1,4 +1,12 @@
 
+class MySubNumber :Number<Int> {
+
+    fn _op_ :String {
+
+    }
+
+}
+
 class MyObject {
 
     fn hop {

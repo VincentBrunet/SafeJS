@@ -47,6 +47,10 @@ module.exports = function ast_parse(session, next) {
     "grammar/atomics/Whitespace.gf",
     "grammar/atomics/Comment.gf",
   ];
+  var grrr = [
+    "test",
+    "test2"
+  ];
   session.profilingStart("parser-grammar");
   utils.fileContents(grammars, function(success, contents, error, reason) {
     session.profilingEnd("parser-grammar");
