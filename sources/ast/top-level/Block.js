@@ -32,32 +32,53 @@ Ast.register("Block", function (node) {
   };
 
   // Node export
+  node.exportAsFunction = function (context) {
+    var str = node.export(context);
+    if (node.isAsync) {
+      return str;
+    }
+    else {
+      var f = "";
+      f += "function (next) {\n";
+      f += str;
+      f += "next()\n";
+      f += "}\n";
+      return f;
+    }
+  };
   node.export = function (context) {
     var _context = utils.context.clone(context);
     // Async block
     if (node.isAsync) {
-      var callOnFinish = _context.callOnFinish || "next";
-      var result = "";
-      result += "_tjs._block([";
-      var needNewPromise = true;
-      var promises = [];
+      var calls = [];
       utils._.each(node.statements, function (statement) {
-        if (needNewPromise) {
-          needNewPromise = false;
-          promises.push(
-            "new Promise(")
+        if (statement.isAsync) {
+          calls.push(statement.export(_context));
+        }
+        else {
+          var st = "function (next) {";
+          st += statement.export(_context) + ";\n";
+          st += "next()";
+          st += "}";
+          calls.push(st);
         }
       });
-      result += "])";
+      var result = "";
+      result += "function (next) {\n";
+      result += "_tjs._async._block([\n";
+      result += calls.join(",");
+      result += "], next);\n";
+      result += "}\n";
+      return result;
     }
     // Sync block
     else {
       var result = "";
       utils._.each(node.statements, function (statement) {
-        result += statement.export(_context);
+        result += statement.export(_context) + ";\n";
       });
+      return result;
     }
-    return result;
   };
 
 });

@@ -52,6 +52,19 @@ Ast.register("Expression", function (node) {
   }
 
   // Node export
+  node.exportAsFunction = function (context) {
+    var str = node.export(context);
+    if (node.isAsync) {
+      return str;
+    } else {
+      var f = "";
+      f += "function (next) {\n";
+      f += "next(" + str + ");\n";
+      f += "}\n";
+      return f;
+    }
+  };
+
   node.export = function (context) {
     var _context = utils.context.clone(context);
     return node.content.export(_context);

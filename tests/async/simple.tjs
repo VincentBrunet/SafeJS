@@ -1,0 +1,28 @@
+
+var ttt : @String;
+
+try {
+
+    console.log("Pre");
+
+    console.log("Cur", @ttt);
+
+    console.log("Post");
+
+}
+
+catch e :ErrorType {
+
+    console.log("ErrorType", e);
+
+}
+
+catch e {
+
+    console.log("Error", e);
+
+}
+
+finally {
+    console.log("Finally");
+}

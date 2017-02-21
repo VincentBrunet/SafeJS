@@ -1,0 +1,10 @@
+
+var base = "Hellow Frer"
+
+var baseLength = base.length
+
+console.log(baseLength);
+
+while (true) {
+    return 42;
+}

@@ -1,0 +1,14 @@
+
+var ttt = new Test(
+    a,
+    b,
+)
+
+var ttt2 = new new Test()(op);
+
+var hophop = new Test()(42, 42);
+
+return new Test;
+
+return Test(42);
+return new Test(42);

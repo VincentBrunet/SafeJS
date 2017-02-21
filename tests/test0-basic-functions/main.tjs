@@ -41,6 +41,26 @@ fn untyped_noparam_fn2 {
     
     fn nestedFunction2 {
 
+        console.log("ABC", "BCD");
+        console.log("ABC", "BCD");
+
+        console.log("test", @ttt);
+
+        console.log("ABC", "BCD");
+
+        console.log("ABC", "BCD");
+        console.log("ABC", "BCD");
+
+        console.log("ABC", "BCD");
+        console.log("ABC", "BCD");
+
+        console.log("ABC", "BCD");
+        console.log("ABC", "BCD");
+
+        console.log("ABC", "BCD");
+        console.log("ABC", "BCD");
+        console.log("ABC", "BCD");
+        console.log("ABC", "BCD");
     }
 
 }

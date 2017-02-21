@@ -58,13 +58,7 @@ Ast.register("Statement", function (node) {
   // Node export
   node.export = function (context) {
     var _context = utils.context.clone(context);
-    var str = "";
-    if (node.isAsync) {
-      str += "/* ASYNC */";
-    }
-    str += node.content.export(_context);
-    str += ";\n";
-    return str;
+    return "/* " + node_content.ast_type + " */" + node.content.export(_context);
   };
 
 });

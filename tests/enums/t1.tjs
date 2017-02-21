@@ -1,0 +1,14 @@
+
+enum Direction {
+  Up = 0,
+  Down,
+  Left,
+  Right
+};
+
+var test = enum {
+    Up,
+    Down,
+    Left,
+    Right,
+};

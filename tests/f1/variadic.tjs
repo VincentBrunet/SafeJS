@@ -1,0 +1,26 @@
+
+var tt = fn (a, b, c ...) {
+
+}
+
+var tt2 = fn (a:Int, b:Int ...) {
+
+    var testVar = 42 + 22 * testVar;
+    let testVar = 55;
+
+    console.log(
+        testVar + 999,
+        888 + 999,
+        [42, 42],
+        "hello",
+        ("hello", bip),
+        {hop: 42},
+        //{"hello": bèèèm},
+    );
+}
+
+// tt2(4242, "TEST");
+
+var bbb = fn (lol ...) {
+
+};

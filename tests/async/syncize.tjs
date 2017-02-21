@@ -1,0 +1,65 @@
+
+fn getAsync (url, next :Function<String>) {
+    return setTimeout(function (response) {
+        return next(url);
+    }, 1000);
+}
+
+
+var idx = 0;
+
+fn getSync :String (url) {
+    console.log("Pre", url);
+    var preval :@String;
+    preval = async :String (resolve, reject) {
+        getAync(url, fn (content: String) {
+            idx += 1
+            if (idx % 7 == 5) {
+                return reject(new Error());
+            }
+            else {
+                return resolve(content);
+            }
+        });
+    };
+    console.log("Post", url);
+    return @preval;
+    /*
+    try {
+        return @preval;
+    }
+    */
+    /*
+    catch (e :CustomError) {
+        return "custom";
+    }
+    */
+    /*
+    catch e {
+        return "error";
+    }
+    */
+    /*
+    finally {
+        return "hello?";
+    }
+    */
+}
+
+console.log("First", getSync("www.google.fr"));
+
+if getSync("www.google.us") || getSync("www.google.com") {
+    console.log("Google US", getSync("www.google.us"));
+}
+else if getSync.get("www.google.cn") && getSync("www.google.co.cn") {
+    console.log("Google CN", getSync("www.google.cn"), getSync("www.google.cn").length);
+}
+else if getSync.get("www.google.hop") && getSync("www.google.co.lol") {
+    console.log("Google LOL", getSync("www.google.lol"), getSync("www.google.cn").length);
+}
+else {
+    console.log("Google OTHER", getSync("www.google.misc"));
+}
+
+console.log("Last", getSync("TADA"));
+

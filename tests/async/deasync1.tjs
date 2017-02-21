@@ -1,0 +1,14 @@
+
+fn testDeasync (hop) {
+
+    var prep :@Int;
+
+    var val = (@prep + 42) + 88;
+
+    if (val) {
+        return val;
+    } else {
+        return -1;
+    }
+
+}

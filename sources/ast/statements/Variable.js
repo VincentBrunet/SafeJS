@@ -35,15 +35,30 @@ Ast.register("Variable", function (node) {
   // Node export
   node.export = function (context) {
     var _context = utils.context.clone(context);
-    var str = "";
-    str += "var ";
-    str += node.name;
-    str += " = ";
-    str += node.value.export(_context);
-    if (node.readonly) {
-      str += " // READ ONLY";
+    if (node.isAsync) {
+      var str = "";
+      str += "function (next) {";
+      str += "_tjs._async._assign(";
+      str += node.value.exportAsFunction(_context);
+      str += ",";
+      str += "function (val) {";
+      str += node.name + "= val";
+      str += "}";
+      str += ", next)";
+      str += "}";
+      return str;
     }
-    return str;
+    else {
+      var str = "";
+      str += "var ";
+      str += node.name;
+      str += " = ";
+      str += node.value.export(_context);
+      if (node.readonly) {
+        str += " // READ ONLY";
+      }
+      return str;
+    }
   };
 
 });
