@@ -34,4 +34,4 @@ if (tt(false) && tt(true)) {
 
 console.log("OR stop, ex");
 var ttt = tt(false) || tt(true);
-var ttt = tt(true) || tt(false);
+var ttt2 = tt(true) || tt(false);

@@ -31,6 +31,16 @@ Ast.register("Block", function (node) {
     return node;
   };
 
+  node.variables = function () {
+    var vars = [];
+    utils._.each(node.statements, function (statement) {
+      if (statement.isVariable) {
+        vars.push(statement.content.name);
+      }
+    });
+    return vars;
+  };
+
   // Node export
   node.exportAsFunction = function (context) {
     var str = node.export(context);
@@ -39,15 +49,16 @@ Ast.register("Block", function (node) {
     }
     else {
       var f = "";
-      f += "function (next) {\n";
+      f += "function(___n){";
       f += str;
-      f += "next()\n";
-      f += "}\n";
+      f += "___n();";
+      f += "}";
       return f;
     }
   };
   node.export = function (context) {
     var _context = utils.context.clone(context);
+    var vars = node.variables();
     // Async block
     if (node.isAsync) {
       var calls = [];
@@ -56,26 +67,32 @@ Ast.register("Block", function (node) {
           calls.push(statement.export(_context));
         }
         else {
-          var st = "function (next) {";
-          st += statement.export(_context) + ";\n";
-          st += "next()";
+          var st = "function(___n){";
+          st += statement.export(_context) + ";";
+          st += "___n();";
           st += "}";
           calls.push(st);
         }
       });
       var result = "";
-      result += "function (next) {\n";
+      result += "function(___n){";
+      if (vars.length > 0) {
+        result += "var " + vars.join(",") + ";";
+      }
       result += "_tjs._async._block([\n";
-      result += calls.join(",");
-      result += "], next);\n";
-      result += "}\n";
+      result += calls.join(",\n");
+      result += "],___n);\n";
+      result += "}";
       return result;
     }
     // Sync block
     else {
       var result = "";
+      if (vars.length > 0) {
+        result += "var " + vars.join(",") + ";";
+      }
       utils._.each(node.statements, function (statement) {
-        result += statement.export(_context) + ";\n";
+        result += statement.export(_context) + ";";
       });
       return result;
     }

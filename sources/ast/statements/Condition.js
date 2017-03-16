@@ -72,20 +72,20 @@ Ast.register("Condition", function (node) {
         checks.push(node.else);
       }
       var calls = [];
-      utils._.each(calls, function (call) {
-        var exp = "undefined";
+      utils._.each(checks, function (call) {
+        var exp = "null";
         if (call.expression) {
           exp = call.expression.exportAsFunction(_context);
         }
         var blk = call.block.exportAsFunction(_context);
         calls.push("[" + exp + "," + blk + "]");
       });
-      var str;
-      str += "function (next) {\n";
-      str += "_tjs._condition([\n";
-      str += calls.join(",\n");
-      str += "], next);\n";
-      str += "}\n";
+      var str = "";
+      str += "function(___n){";
+      str += "_tjs._condition([";
+      str += calls.join(",");
+      str += "],___n);";
+      str += "}";
       return str;
     }
     else {

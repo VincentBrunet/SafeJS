@@ -22,8 +22,11 @@ fn route :String<Int, Double> () {
 
 fn ttt {
     var result = asyncGet("url");
-    var result = async (done) {
-        asyncGet("url", done);
+    var result = async {
+        asyncGet("url", function (resp) {
+            resolve new Error();
+            throw new Error();
+        });
     };
     return result;
 }
@@ -52,8 +55,10 @@ fn abs {
 //         console.log(r2);
 //     });
 // });
-console.log(abs(async (a) {
-    abs(a);
+console.log(abs(@@ async {
+    resolve @{
+        resolve abs(a);
+    }
 }));
 
 /*

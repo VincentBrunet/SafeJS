@@ -6,6 +6,8 @@ Statement =
         / Loop
         / TryCatch
         / Return
+        / Resolve
+        / Throw
         / Expression
     )
 {

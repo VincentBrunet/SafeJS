@@ -7,6 +7,8 @@ require("./top-level/Statement");
 require("./statements/Expression");
 require("./statements/Variable");
 require("./statements/Return");
+require("./statements/Resolve");
+require("./statements/Throw");
 require("./statements/Condition");
 require("./statements/TryCatch");
 require("./statements/For");

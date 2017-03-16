@@ -34,12 +34,24 @@ Ast.register("While", function (node) {
   // Node export
   node.export = function (context) {
     var _context = utils.context.clone(context);
-    var str = "";
-    str += "while (" + node.condition.export(_context) + ") {";
-    str += "\n";
-    str += node.block.export(_context);
-    str += "}";
-    return str;
+    if (node.isAsync) {
+      var str = "";
+      str += "function(___n){";
+      str += "_tjs._async._while(";
+      str += node.condition.exportAsFunction(_context);
+      str += ",";
+      str += node.block.exportAsFunction(_context);
+      str += ",___n)";
+      str += "}";
+      return str;
+    }
+    else {
+      var str = "";
+      str += "while(" + node.condition.export(_context) + "){";
+      str += node.block.export(_context);
+      str += "}";
+      return str;
+    }
   };
 
 });

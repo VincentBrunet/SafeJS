@@ -1,6 +1,4 @@
 var utils = require("../../utils");
-
-var utils = require("../../utils");
 var Ast = require("../Ast");
 
 Ast.register("Boolean", function (node) {

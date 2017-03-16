@@ -18,9 +18,19 @@ Ast.register("Statement", function (node) {
   node.content = undefined;
   if (node_content.ast_type == "Variable") {
     node.content = new Ast.node("Variable", node_content);
+    node.isVariable = true;
   }
   else if (node_content.ast_type == "Return") {
     node.content = new Ast.node("Return", node_content);
+    node.isReturn = true;
+  }
+  else if (node_content.ast_type == "Resolve") {
+    node.content = new Ast.node("Resolve", node_content);
+    node.isResolve = true;
+  }
+  else if (node_content.ast_type == "Throw") {
+    node.content = new Ast.node("Throw", node_content);
+    node.isThrow = true;
   }
   else if (node_content.ast_type == "Expression") {
     node.content = new Ast.node("Expression", node_content);
@@ -41,6 +51,8 @@ Ast.register("Statement", function (node) {
     throw new Ast.NodeUnexpectedType(node_content, [
       "Variable",
       "Return",
+      "Resolve",
+      "Throw",
       "Expression",
       "Condition",
       "TryCatch",
@@ -58,7 +70,7 @@ Ast.register("Statement", function (node) {
   // Node export
   node.export = function (context) {
     var _context = utils.context.clone(context);
-    return "/* " + node_content.ast_type + " */" + node.content.export(_context);
+    return node.content.export(_context);
   };
 
 });

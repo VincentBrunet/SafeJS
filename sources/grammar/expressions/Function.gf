@@ -2,7 +2,7 @@
 Function "Function" =
     ("fn"/"function")
     p_name :(__ Identifier)?
-    _ type :Typed?
+    p_type :(_ Typed)?
     _ params :FunctionParams?
     _ '{'
     _ block: Block
@@ -11,6 +11,10 @@ Function "Function" =
     var name;
     if (p_name) {
         name = p_name[1];
+    }
+    var type;
+    if (p_type) {
+        type = p_type[1];
     }
     return ast({
         ast_type: "Function",

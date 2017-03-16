@@ -27,15 +27,15 @@ Ast.register("Tuple", function (node) {
     var _context = utils.context.clone(context);
     if (node.isAsync) {
       var str = "";
-      str += "function (next) {\n";
-      str += "_tjs._async._tuple([\n";
+      str += "function(___n){";
+      str += "_tjs._async._tuple([";
       var els = [];
       utils._.each(node.elements, function (element) {
         els.push(element.exportAsFunction(_context));
       });
       str += els.join(",");
-      str += "], next);\n";
-      str += "}\n";
+      str += "],___n);";
+      str += "}";
       return str;
     }
     else {

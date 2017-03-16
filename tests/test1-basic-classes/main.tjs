@@ -9,7 +9,25 @@ class MySubNumber :Number<Int> {
 
 class MyObject {
 
-    fn hop {
+    fn @init {
+
+    }
+    fn @delete {
+
+    }
+
+    fn $_add:String (a:String) {
+        return a;
+    }
+    fn $_access (key: String) {
+
+    }
+
+    fn $_op_add (a :MyObject, b :MyObject) {
+
+    }
+
+    static fn hop {
       console.log("Hmm");
     }
 
@@ -24,7 +42,7 @@ class MyObject {
 
     }
 
-    fn pop :Int {
+    static fn pop :Int {
 
     }
 

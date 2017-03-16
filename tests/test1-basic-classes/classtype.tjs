@@ -1,0 +1,20 @@
+
+var Tutu = class :Object {}
+
+var test = class :Tutu {
+    fn summary: Int {
+    }
+};
+
+
+var abc = new test(42);
+
+abc.summary();
+
+var ttt = enum {
+    bob,
+    toto,
+};
+
+ttt.bob;
+toto.bob;

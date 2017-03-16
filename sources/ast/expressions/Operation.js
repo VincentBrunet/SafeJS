@@ -47,17 +47,17 @@ Ast.register("Operation", function (node) {
     var _context = utils.context.clone(context);
     if (node.isAsync) {
       var str = "";
-      str += "function (next) {\n";
-      str += "_tjs._async._op(\n";
-      str += "'" + node.op + "',\n";
-      str += node.e1.exportAsFunction(_context) + ",\n";
+      str += "function(___n){";
+      str += "_tjs._async._op(";
+      str += "'" + node.op + "',";
+      str += node.e1.exportAsFunction(_context) + ",";
       if (node.e2) {
-        str += node.e2.exportAsFunction(_context) + "\n";
+        str += node.e2.exportAsFunction(_context) + "";
       }
       else {
-        str += "undefined";
+        str += "null";
       }
-      str += ", next);\n";
+      str += ",___n);";
       str += "}";
       return str;
     }

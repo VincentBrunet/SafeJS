@@ -58,9 +58,9 @@ Ast.register("Expression", function (node) {
       return str;
     } else {
       var f = "";
-      f += "function (next) {\n";
-      f += "next(" + str + ");\n";
-      f += "}\n";
+      f += "function(___n){";
+      f += "___n(" + str + ");";
+      f += "}";
       return f;
     }
   };

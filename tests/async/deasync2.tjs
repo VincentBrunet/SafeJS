@@ -1,18 +1,36 @@
 
+fn testDeasync (hop) {
+
+  var prep :Int;
+
+  while 1 {
+    if 42 {
+      if false {
+          return (prep + 42) + 88;
+      } else {
+          return -1;
+      }
+    } else {
+      return -2;
+    }
+  }
+
+}
+
 fn testDeasync2 (hop) {
 
-    var prep :@Int;
+  var prep :@Int;
 
-    while 1 {
-        if true {
-            if false {
-                return (@prep + 42) + 88;
-            } else {
-                return -1;
-            }
-        } else {
-            return -2;
-        }
+  while 1 {
+    if 42 {
+      if false {
+        return (@prep + 42) + 88;
+      } else {
+        return -1;
+      }
+    } else {
+      return -2;
     }
+  }
 
 }

@@ -48,43 +48,43 @@ Ast.register("TryCatch", function (node) {
     var _context = utils.context.clone(context);
     if (node.isAsync) {
       var result = "";
-      result += "function (next) {\n";
-      result += "_tjs._try(\n";
+      result += "function(___n){";
+      result += "_tjs._async._try(";
       result += node.try.exportAsFunction(_context) + ",";
       if (node.finally) {
         result += node.finally.exportAsFunction(_context) + ",";
       } else {
-        result += "undefined,";
+        result += "null,";
       }
       var catches = [];
       utils._.each(node.catches, function (_catch) {
         var cc = "";
-        cc += "function (" + _catch.identifier.name + ") {\n";
-        cc += "return " + _catch.block.exportAsFunction(_context) + ";\n";
-        cc += "}\n";
+        cc += "function (" + _catch.identifier.name + ") {";
+        cc += "return " + _catch.block.exportAsFunction(_context) + ";";
+        cc += "}";
         catches.push(cc);
       });
       result += "[" + catches.join(",") + "]";
-      result += ", next);\n";
-      result += "}\n";
+      result += ", ___n);";
+      result += "}";
       return result;
     }
     else {
       var str = "";
-      str += "try {\n"
+      str += "try {"
       str += node.try.export(_context);
-      str += "}\n";
+      str += "}";
       utils._.each(node.catches, function (_catch) {
         str += "catch ";
         str += "(" + _catch.identifier.name + ")";
-        str += "{\n";
+        str += "{";
         str += _catch.block.export(_context);
-        str += "}\n";
+        str += "}";
       });
       if (node.finally) {
-        str += "finally {\n";
+        str += "finally {";
         str += node.finally.export(_context);
-        str += "}\n";
+        str += "}";
       }
       return str;
     }

@@ -37,26 +37,26 @@ Ast.register("Variable", function (node) {
     var _context = utils.context.clone(context);
     if (node.isAsync) {
       var str = "";
-      str += "function (next) {";
+      str += "function(___n){";
       str += "_tjs._async._assign(";
       str += node.value.exportAsFunction(_context);
       str += ",";
-      str += "function (val) {";
-      str += node.name + "= val";
+      str += "function(v){";
+      str += node.name + "=v";
       str += "}";
-      str += ", next)";
+      str += ",___n)";
       str += "}";
       return str;
     }
     else {
       var str = "";
-      str += "var ";
+      // str += "var ";
       str += node.name;
-      str += " = ";
+      str += "=";
       str += node.value.export(_context);
-      if (node.readonly) {
-        str += " // READ ONLY";
-      }
+      // if (node.readonly) {
+      //   str += " // READ ONLY";
+      // }
       return str;
     }
   };
