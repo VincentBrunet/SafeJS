@@ -13,6 +13,9 @@ require("./statements/Condition");
 require("./statements/TryCatch");
 require("./statements/For");
 require("./statements/While");
+require("./statements/Break");
+require("./statements/For");
+require("./statements/Enum");
 
 require("./expressions/Function");
 require("./expressions/Async");

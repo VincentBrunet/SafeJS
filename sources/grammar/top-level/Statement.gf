@@ -8,6 +8,8 @@ Statement =
         / Return
         / Resolve
         / Throw
+        / Break
+        / Continue
         / Expression
     )
 {

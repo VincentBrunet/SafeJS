@@ -10,7 +10,8 @@
     "colors": "^1.1.2",
     "lodash": "^4.16.2",
     "pegjs": "^0.10.0",
-    "pegjs-backtrace": "^0.1.1"
+    "pegjs-backtrace": "^0.1.1",
+    "pegjs-util": "~1.4.1"
   },
   "devDependencies": {},
   "scripts": {
