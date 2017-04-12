@@ -2,13 +2,7 @@ var utils = require("../../../../utils");
 var Ast = require("../Ast");
 
 Ast.register("For", function (node) {
-
-  // Basic checks
-  if (node.ast_type != "For") {
-    throw new Ast.NodeTypeError(node, "For");
-  }
-
-
+  return node;
   // Node export
   node.export = function (context) {
     var _context = utils.context.clone(context);

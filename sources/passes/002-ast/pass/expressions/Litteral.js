@@ -34,7 +34,7 @@ Ast.register("Litteral", function (node) {
     node.content = Ast.node("Boolean", node_content);
   }
   else {
-    throw Ast.error.("NodeUnexpectedType", node_content, [
+    throw Ast.error("NodeUnexpectedType", node_content, [
       "Number",
       "String",
       "Undefined",

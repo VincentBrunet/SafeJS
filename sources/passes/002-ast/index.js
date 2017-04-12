@@ -9,7 +9,7 @@ var Ast = require("./pass");
  */
 module.exports = function(session, rawParsed, next) {
   try {
-    var objAst = new Ast.node("Block", rawParsed);
+    var objAst = Ast.do(rawParsed);
     return next(true, objAst);
   } catch (error) {
     return next(false, undefined, utils.trace.make(error));

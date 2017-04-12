@@ -1,4 +1,4 @@
 
 module.exports = {
-  pass: require("./pass"),
+  Pass: require("./pass"),
 };

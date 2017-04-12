@@ -2,34 +2,11 @@ var utils = require("../../../../utils");
 var Ast = require("../Ast");
 
 Ast.register("Block", function (node) {
-
-  // Basic checks
-  if (node.ast_type != "Block") {
-    throw new Ast.NodeTypeError(node, "Block");
-  }
-
   // Node logic
   node.statements = [];
   utils._.each(node.ast_childs, function (statement) {
-    node.statements.push(new Ast.node("Statement", statement));
+    node.statements.push(Ast.node("Statement", statement));
   });
-
-  // Check async
-  node.isAsync = false;
-  utils._.each(node.statements, function (statement) {
-    if (statement.isAsync) {
-      node.isAsync = true;
-    }
-  });
-
-  // Node compile
-  node.compile = function (context) {
-    var _context = utils.context.clone(context);
-    utils._.each(node.statements, function (statement) {
-      //statement.compile(_context);
-    });
-    return node;
-  };
 
   node.variables = function () {
     var vars = [];

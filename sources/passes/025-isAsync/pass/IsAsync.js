@@ -1,5 +1,5 @@
-var utils = require("../../../../utils");
-var core = require("../core");
+var utils = require("../../../utils");
+var core = require("../../core");
 
 var IsAsync = new core.Pass("IsAsync");
 
