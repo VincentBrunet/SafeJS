@@ -14,7 +14,7 @@ require("./statements/TryCatch");
 require("./statements/For");
 require("./statements/While");
 require("./statements/Break");
-require("./statements/For");
+require("./statements/Continue");
 
 //require("./expressions/Enum");
 require("./expressions/Function");

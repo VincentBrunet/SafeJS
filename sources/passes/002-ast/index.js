@@ -15,4 +15,3 @@ module.exports = function(session, rawParsed, next) {
     return next(false, undefined, utils.trace.make(error));
   }
 };
-

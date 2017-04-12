@@ -8,10 +8,9 @@ var IsAsync = require("./pass");
  */
 module.exports = function(session, astBefore, next) {
   try {
-    var astIsAsync = IsAsync.do(astBefore);
-    return next(true, astIsAsync);
+    IsAsync.do(astBefore);
+    return next(true, astBefore);
   } catch (error) {
     return next(false, undefined, utils.trace.make(error));
   }
 };
-

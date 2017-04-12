@@ -16,7 +16,7 @@ Export.register("TryCatch", function (node) {
     utils._.each(node.catches, function (_catch) {
       var cc = "";
       cc += "function (" + _catch.identifier.name + ") {";
-      cc += "return " + Export.node("Block", _catch.block, true)) + ";";
+      cc += "return " + Export.node("Block", _catch.block, true) + ";";
       cc += "}";
       catches.push(cc);
     });

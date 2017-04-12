@@ -4,7 +4,7 @@ var trace = {};
 trace.make = function (error) {
     return {
         error: error,
-    }
+    };
 };
 
 trace.next = function (trace) {
