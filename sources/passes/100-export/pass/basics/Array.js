@@ -8,7 +8,7 @@ Export.register("Array", function (node) {
     str += "_tjs._async._array([";
     var els = [];
     utils._.each(node.elements, function (element) {
-      els.push(element.exportAsFunction(_context));
+      els.push(Export.node("Expression", element, true));
     });
     str += els.join(",");
     str += "],___n);";
@@ -18,7 +18,7 @@ Export.register("Array", function (node) {
   else {
     var els = [];
     utils._.each(node.elements, function (element) {
-      els.push(element.export(_context));
+      els.push(Export.node("Expression", element));
     });
     return "[" + els.join(",") + "]";
   }

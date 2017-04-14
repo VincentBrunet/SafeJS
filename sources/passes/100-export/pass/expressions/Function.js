@@ -3,13 +3,13 @@ var Export = require("../Export");
 
 Export.register("Function", function (node) {
   var str = "";
-  str += "function ";
-  if (node_name) {
-    str += node.name;
+  str += "function";
+  if (node.name) {
+    str += " " + node.name;
   } else {
-    str += "/* ANONYMOUS */";
+    //str += "/* ANONYMOUS */";
   }
-  str += " " + Export.node("FunctionParams", node.params);
+  str += Export.node("FunctionParams", node.params);
   str += " {";
   str += "\n";
   str += Export.node("Block", node.block);
