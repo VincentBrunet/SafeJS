@@ -27,14 +27,29 @@ Export.register("Block", function (node, asFunction) {
     });
     // Async block
     if (node.isAsync) {
-      var calls = [];
+      var groups = [];
       utils._.each(node.statements, function (statement) {
-        if (statement.isAsync) {
-          calls.push(Export.node("Statement", statement));
+        var gl = groups.length;
+        if (gl <= 0 || groups[gl - 1].isAsync != statement.isAsync) {
+          groups.push({
+            isAsync: statement.isAsync,
+            statements: []
+          });
+        }
+        groups[groups.length - 1].statements.push(statement);
+      });
+      var calls = [];
+      utils._.each(groups, function (group) {
+        if (group.isAsync) {
+          utils._.each(group.statements, function (statement) {
+            calls.push(Export.node("Statement", statement));
+          });
         }
         else {
           var st = "function(___n){";
-          st += Export.node("Statement", statement) + ";";
+          utils._.each(group.statements, function (statement) {
+           st += Export.node("Statement", statement) + ";";
+          });
           st += "___n();";
           st += "}";
           calls.push(st);
