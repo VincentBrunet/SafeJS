@@ -11,6 +11,7 @@ module.exports = function(session, astBefore, next) {
     var astExport = Export.do(astBefore);
     return next(true, astExport);
   } catch (error) {
+    console.log("Export error", error);
     return next(false, undefined, utils.trace.make(error));
   }
 };

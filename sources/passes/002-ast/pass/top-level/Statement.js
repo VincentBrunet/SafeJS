@@ -55,5 +55,4 @@ Ast.register("Statement", function (node) {
   }
   // Done
   return node;
-
 });

@@ -4,7 +4,7 @@ var Export = require("../Export");
 Export.register("Class", function (node) {
   var str = "";
   str += "class ";
-  if (node_name) {
+  if (node.name) {
     str += node.name;
   } else {
     str += "/* ANONYMOUS */";

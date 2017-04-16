@@ -9,7 +9,7 @@ Export.register("Dict", function (node) {
     str += "_tjs._async._dict([";
     var els = [];
     utils._.each(node.elements, function (element) {
-      els.push(Export.node("Expression", element, true));
+      // els.push(Export.node("Expression", element, true));
     });
     str += els.join(",");
     str += "],___n);";
@@ -19,7 +19,7 @@ Export.register("Dict", function (node) {
   else {
     var els = [];
     utils._.each(node.elements, function (element) {
-      els.push(Export.node("Expression", element));
+      //els.push(Export.node("Expression", element));
     });
     return "[" + els.join(",") + "]";
   }
