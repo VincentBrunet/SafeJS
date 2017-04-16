@@ -53,11 +53,6 @@ Ast.register("Statement", function (node) {
       "While",
     ]);
   }
-  // Node export
-  node.export = function (context) {
-    var _context = utils.context.clone(context);
-    return node.content.export(_context);
-  };
   // Done
   return node;
 

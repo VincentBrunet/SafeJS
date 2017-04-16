@@ -9,7 +9,7 @@ Export.register("Variable", function (node) {
     str += Export.node("Expression", node.value, true);
     str += ",";
     str += "function(v){";
-    str += node.name + "=v";
+    str += node.name + "=v;";
     str += "}";
     str += ",___n)";
     str += "}";
