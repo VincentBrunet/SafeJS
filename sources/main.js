@@ -13,6 +13,10 @@ function translator(filenameIn, filenameOut) {
         console.log("asyncAst", asyncAst, trace);
         passExport(session, asyncAst, function(success, jsCode, trace) {
           console.log("JS CODE FINAL", jsCode);
+          var fs = require("fs");
+          fs.writeFile(filenameOut, jsCode, function (err) {
+            console.log("Done", filenameOut);
+          });
         });
       });
     });
@@ -20,6 +24,6 @@ function translator(filenameIn, filenameOut) {
 }
 
 var filenameIn = process.argv[2];
-var filenameOut = filenameIn + ".js";
+var filenameOut = filenameIn + ".out.js";
 
 translator(filenameIn, filenameOut);
