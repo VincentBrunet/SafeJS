@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "colors": "^1.1.2",
+    "js-beautify": "^1.6.12",
     "lodash": "^4.16.2",
     "pegjs": "^0.10.0",
     "pegjs-backtrace": "^0.1.1",
