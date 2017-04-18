@@ -10,6 +10,7 @@ var Pass = function(name) {
     name: name,
     types: {},
     predefined: {},
+    handler: undefined,
   };
 
   self.register = function(type, call) {
@@ -21,6 +22,11 @@ var Pass = function(name) {
   };
 
   self.node = function (type, obj) {
+    var call = self._internals.types[type];
+    var handler = self._internals.handler;
+    if (handler) {
+      return handler(type, obj, call);
+    }
     if (!obj) {
       console.log(name, "Pass empty node instead of:", type);
       return undefined;
@@ -29,12 +35,15 @@ var Pass = function(name) {
       console.log(name, "Pass wrong node type", obj.ast_type, type)
       return undefined;
     }
-    var call = self._internals.types[type];
     if (!call) {
       console.log(name, "Unknown node type", type);
       return undefined;
     }
     return call(obj);
+  };
+
+  self.handler = function (call) {
+    self._internals.handler = call;
   };
 
   self.do = function (obj) {

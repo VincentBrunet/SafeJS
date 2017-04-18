@@ -4,6 +4,12 @@ var core = require("../../core");
 var Ast = new core.Pass("Ast");
 
 /*
+Ast.handler(function (type, obj, call) {
+
+});
+*/
+
+/*
 Ast._registered = {};
 
 Ast.register = function (type, ctr) {
