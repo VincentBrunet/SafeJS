@@ -30,16 +30,16 @@ Export.register("Condition", function (node) {
   }
   else {
     var str = "";
-    str += "if (" + Export.node("Expression", node.if.expression) + ") {\n";
+    str += "if(" + Export.node("Expression", node.if.expression) + "){";
     str += Export.node("Block", node.if.block);
     str += "}";
     utils._.each(node.else_ifs, function (else_if) {
-      str += "\nelse if (" + Export.node("Expression", else_if.expression) + ") {\n";
+      str += "else if(" + Export.node("Expression", else_if.expression) + "){";
       str += Export.node("Block", else_if.block);
       str += "}";
     });
     if (node.else) {
-      str += "\nelse {\n";
+      str += "else{";
       str += Export.node("Block", node.else.block);
       str += "}";
     }

@@ -60,9 +60,9 @@ Export.register("Block", function (node, asFunction) {
       if (vars.length > 0) {
         result += "var " + vars.join(",") + ";";
       }
-      result += "_tjs._async._block([\n";
-      result += calls.join(",\n");
-      result += "],___n);\n";
+      result += "_tjs._async._block([";
+      result += calls.join(",");
+      result += "],___n);";
       result += "}";
       return result;
     }
