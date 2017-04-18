@@ -1,3 +1,7 @@
+/*
+import module as test
+import best.toto as lolo
+*/
 
 fn testDeasync (hop) {
 

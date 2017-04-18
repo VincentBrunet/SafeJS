@@ -10,8 +10,7 @@ Export.register("Function", function (node) {
     //str += "/* ANONYMOUS */";
   }
   str += Export.node("FunctionParams", node.params);
-  str += " {";
-  str += "\n";
+  str += "{";
   str += Export.node("Block", node.block);
   str += "}";
   return str;
@@ -22,7 +21,7 @@ Export.register("FunctionParams", function (node) {
   utils._.each(node.params, function (param) {
     results.push(Export.node("FunctionParam", param));
   });
-  return "(" + results.join(", ") + ")";
+  return "(" + results.join(",") + ")";
 });
 
 Export.register("FunctionParam", function (node) {

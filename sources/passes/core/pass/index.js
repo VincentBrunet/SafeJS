@@ -20,7 +20,7 @@ var Pass = function(name) {
     inter.types[type] = call;
   };
 
-  self.node = function (type, obj) {
+  self.node = function (type, obj, a, b, c, d) {
     if (!obj) {
       console.log(name, "Pass empty node instead of:", type);
       return undefined;
@@ -34,7 +34,7 @@ var Pass = function(name) {
       console.log(name, "Unknown node type", type);
       return undefined;
     }
-    return call(obj);
+    return call(obj, a, b, c, d);
   };
 
   self.do = function (obj) {
