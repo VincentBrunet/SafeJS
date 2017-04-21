@@ -15,6 +15,7 @@ function translator(filenameIn, filenameOut) {
         passExport(session, asyncAst, function (success, jsCode, trace) {
           console.log("JS Code", jsCode);
           passPrettify(session, jsCode, function (success, prettyCode, trace) {
+            console.log("Pretty Code", prettyCode);
             var fs = require("fs");
             fs.writeFile(filenameOut, prettyCode, function (err) {
               console.log("Done", filenameOut);

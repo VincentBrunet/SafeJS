@@ -11,7 +11,6 @@ Export.register("Class", function (node) {
   }
   // str += " " + node.params.export(_context);
   str += " {";
-  str += "\n";
   str += Export.node("Block", node.block);
   str += "}";
   return str;
