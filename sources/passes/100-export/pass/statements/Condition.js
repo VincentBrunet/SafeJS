@@ -15,7 +15,12 @@ Export.register("Condition", function (node) {
     utils._.each(checks, function (call) {
       var exp = "null";
       if (call.expression) {
-        exp = Export.node("Expression", call.expression, true);
+        if (call.expression.isAsync) {
+          exp = "[1," + Export.node("Expression", call.expression) + "]";
+        }
+        else {
+          exp = "[0," + Export.node("Expression", call.expression) + "]";
+        }
       }
       var blk = Export.node("Block", call.block, true);
       calls.push("[" + exp + "," + blk + "]");

@@ -6,7 +6,12 @@ Export.register("Variable", function (node) {
     var str = "";
     str += "function(___n){";
     str += "_tjs._async._assign(";
-    str += Export.node("Expression", node.value, true);
+    if (node.value.isAsync) {
+      str += "[1," + Export.node("Expression", node.value) + "]";
+    }
+    else {
+      str += "[0," + Export.node("Expression", node.value) + "]";
+    }
     str += ",";
     str += "function(v){";
     str += node.name + "=v;";

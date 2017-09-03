@@ -10,7 +10,12 @@ fn debug :Void (hop :String, test :Int)
 
 while @test {
     var value = 42;
-    debug(value, @test)
+    var other = 'hello';
+    debug(value, hello, @test)
     break
 }
-
+/*
+while 42 {
+    console.log("test", @test);
+}
+*/

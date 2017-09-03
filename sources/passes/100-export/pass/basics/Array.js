@@ -8,7 +8,12 @@ Export.register("Array", function (node) {
     str += "_tjs._async._array([";
     var els = [];
     utils._.each(node.elements, function (element) {
-      els.push(Export.node("Expression", element, true));
+      if (element.isAsync) {
+        els.push("[1," + Export.node("Expression", element) + "]");        
+      }
+      else {
+        els.push("[0," + Export.node("Expression", element) + "]");
+      }
     });
     str += els.join(",");
     str += "],___n);";

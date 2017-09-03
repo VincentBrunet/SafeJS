@@ -42,16 +42,17 @@ Export.register("Block", function (node, asFunction) {
       utils._.each(groups, function (group) {
         if (group.isAsync) {
           utils._.each(group.statements, function (statement) {
-            calls.push(Export.node("Statement", statement));
+            calls.push("[1," + Export.node("Statement", statement) + "]");
           });
         }
         else {
-          var st = "function(___n){";
+          var st = "[0,function(){";
+          //var st = "function(___n){";
           utils._.each(group.statements, function (statement) {
            st += Export.node("Statement", statement) + ";";
           });
-          st += "___n();";
-          st += "}";
+          //st += "___n();";
+          st += "}]";
           calls.push(st);
         }
       });
