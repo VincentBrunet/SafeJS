@@ -18,4 +18,5 @@ while @test {
 while (((42)))
 {
     console.log("::" + @test, "::");
+    console.log("Damn", "::");
 }
