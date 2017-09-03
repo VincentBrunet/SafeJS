@@ -15,10 +15,10 @@ Export.register("Operation", function (node) {
     }
     if (node.e2) {
       if (node.e2.isAsync) {
-        str += "[1," + Export.node("Expression", node.e2) + "],";
+        str += "[1," + Export.node("Expression", node.e2) + "]";
       }
       else {
-        str += "[0," + Export.node("Expression", node.e2) + "],";
+        str += "[0," + Export.node("Expression", node.e2) + "]";
       }
     }
     else {

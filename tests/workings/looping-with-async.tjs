@@ -15,3 +15,7 @@ while @test {
     break
 }
 
+while (((42)))
+{
+    console.log("::" + @test, "::");
+}
