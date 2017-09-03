@@ -4,14 +4,17 @@ var passIsAsync = require("./passes/025-isAsync");
 var passExport = require("./passes/100-export");
 var passPrettify = require("./passes/200-prettify");
 
+var utils = require("./_utils");
+
 function translator(filenameIn, filenameOut) {
   var session = {};
   passParser(session, filenameIn, function (success, rawAst, trace) {
-    console.log("rawAst", rawAst, trace);
+    //console.log("rawAst", rawAst, trace);
+    utils.astDisplay(rawAst);
     passAst(session, rawAst, function (success, objAst, trace) {
       console.log("objAst", objAst, trace);
       passIsAsync(session, objAst, function (success, asyncAst, trace) {
-        console.log("asyncAst", asyncAst, trace);
+        //console.log("asyncAst", asyncAst, trace);
         passExport(session, asyncAst, function (success, jsCode, trace) {
           console.log("JS Code", jsCode);
           passPrettify(session, jsCode, function (success, prettyCode, trace) {

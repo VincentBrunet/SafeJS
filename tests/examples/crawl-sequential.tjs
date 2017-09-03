@@ -1,0 +1,24 @@
+
+import Web.Http;
+import Console;
+
+var urls = [
+    "https://www.google.com",
+    "https://www.cnn.com",
+    "https://www.wikipedia.com",
+];
+
+// For every URL, fetch the content synchronously
+for url in urls
+{
+    // Get the url in an async value
+    var asyncValue = Web.Http.get(url);
+    // Block until value is resolved
+    var result = @(asyncValue);
+    Console.log(
+        "Download done",
+        result.url,
+        result.code,
+        result.text.length,
+    );
+}

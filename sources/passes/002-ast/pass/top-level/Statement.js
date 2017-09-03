@@ -40,6 +40,12 @@ Ast.register("Statement", function (node) {
   else if (node_content.ast_type == "While") {
     node.content = new Ast.node("While", node_content);
   }
+  else if (node_content.ast_type == "Break") {
+    node.content = new Ast.node("Break", node_content);
+  }
+  else if (node_content.ast_type == "Continue") {
+    node.content = new Ast.node("Continue", node_content);
+  }
   else {
     throw new Ast.error("NodeUnexpectedType", node_content, [
       "Variable",
@@ -51,6 +57,8 @@ Ast.register("Statement", function (node) {
       "TryCatch",
       "For",
       "While",
+      "Break",
+      "Continue",
     ]);
   }
   // Done

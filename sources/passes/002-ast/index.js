@@ -12,6 +12,7 @@ module.exports = function(session, rawParsed, next) {
     var objAst = Ast.do(rawParsed);
     return next(true, objAst);
   } catch (error) {
+    console.log("Ast ERROR", error);
     return next(false, undefined, utils.trace.make(error));
   }
 };

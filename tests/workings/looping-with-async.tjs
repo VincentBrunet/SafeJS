@@ -1,0 +1,16 @@
+
+var test = @ {
+    resolve 42;
+}
+
+fn debug :Void (hop :String, test :Int)
+{
+    // hop
+}
+
+while @test {
+    var value = 42;
+    debug(value, @test)
+    break
+}
+

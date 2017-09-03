@@ -1,6 +1,6 @@
 
 Null "Null" =
-    'null'
+    'null'/'NULL'
 {
     return ast({
         ast_type: "Null",

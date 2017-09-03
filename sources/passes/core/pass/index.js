@@ -21,24 +21,31 @@ var Pass = function(name) {
     inter.types[type] = call;
   };
 
+  self._last = undefined;
+
   self.node = function (type, obj, a, b, c, d) {
     var call = self._internals.types[type];
     var handler = self._internals.handler;
     if (handler) {
+      self._last = [type, obj];
       return handler(type, obj, call, a, b, c, d);
     }
     if (!obj) {
       console.log(name, "Pass empty node instead of:", type);
+      console.log("Last", self._last);
       return undefined;
     }
     if (obj.ast_type != type) {
       console.log(name, "Pass wrong node type", obj.ast_type, type)
+      console.log("Last", self._last);
       return undefined;
     }
     if (!call) {
       console.log(name, "Unknown node type", type);
+      console.log("Last", self._last);
       return undefined;
     }
+    self._last = [type, obj];
     return call(obj, a, b, c, d);
   };
 
@@ -51,7 +58,7 @@ var Pass = function(name) {
   };
 
   self.error = function (type, obj1, obj2) {
-
+    return new Error(type + "::" + obj1 + "::" + obj2);
   };
 
   self.predefine = function (name, ctr) {

@@ -4,9 +4,13 @@ var IsAsync = require("../IsAsync");
 // For IsAsync
 IsAsync.register("For", function (node) {
   // Check async
-  // IsAsync.node(node.value.ast_type, node.value);
-  // node.isAsync = false;
-  // if (node.value.isAsync) {
-  //   node.isAsync = true;
-  // }
+  IsAsync.node("Expression", node.condition);
+  IsAsync.node("Block", node.block);
+  node.isAsync = false;
+  if (node.condition.isAsync) {
+    node.isAsync = true;
+  }
+  if (node.block.isAsync) {
+    node.isAsync = true;
+  }
 });

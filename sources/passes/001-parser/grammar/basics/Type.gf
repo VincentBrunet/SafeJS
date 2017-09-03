@@ -57,7 +57,7 @@ TypeTuple =
 
 TypeDict =
     '{'
-    _ types :(Type _ ':' _ Type)?
+    _ types :(Type? _ ':' _ Type?)?
     _ '}'
 {
     var keys;
