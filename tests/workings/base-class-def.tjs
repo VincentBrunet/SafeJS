@@ -17,7 +17,7 @@ namespace Test.Namespace
             this.tutu = a;
         }
 
-        op + :Int (a :Test1, :Int)
+        op + :Int (a :test1, :Int)
         {
         }
 
@@ -36,8 +36,7 @@ namespace Test.Namespace
 }
 
 
-var test2 = class :Test.Namespace.Test1
-{
+var test2 = class :Test.Namespace.Test1 {
 
     op new (a :int)
     {
