@@ -1,41 +1,39 @@
 function(___n) {
   var test;
-  _tjs._async._block([function(___n) {
-    test = function() {
-      resolve 42;
-    };
+  _tjs._async._block([
+    [0, function() {
+      test = function() {
+        resolve 42;
+      };
 
-    function debug(hop, test) {};
-    ___n();
-  }, function(___n) {
-    _tjs._async._while(function(___n) {
-      _tjs._async._op('@', function(___n) {
-        ___n(test);
-      }, null, ___n);
-    }, function(___n) {
-      var value, hello;
-      _tjs._async._block([function(___n) {
-        value = 42;
-        hello = "hello";
-        ___n();
-      }, function(___n) {
-        _tjs._async._op('CALL', function(___n) {
-          ___n(debug);
-        }, function(___n) {
-          _tjs._async._tuple([function(___n) {
-            ___n(value);
-          }, function(___n) {
-            _tjs._async._op('@', function(___n) {
-              ___n(test);
-            }, null, ___n);
-          }, function(___n) {
-            ___n(hello);
-          }], ___n);
-        }, ___n);
-      }, function(___n) {
-        break;
-        ___n();
-      }], ___n);
-    }, ___n)
-  }], ___n);
+      function debug(hop, test) {};
+    }],
+    [1, function(___n) {
+      _tjs._async._while([1, function(___n) {
+        _tjs._async._op('@', [0, test], null, ___n);
+      }], function(___n) {
+        var value, hello;
+        _tjs._async._block([
+          [0, function() {
+            value = 42;
+            hello = "hello";
+          }],
+          [1, function(___n) {
+            _tjs._async._op('CALL', [0, debug], [1, function(___n) {
+              _tjs._async._tuple([
+                [0, value],
+                [1, function(___n) {
+                  _tjs._async._op('@', [0, test], null, ___n);
+                }],
+                [0, hello]
+              ], ___n);
+            }], , ___n);
+          }],
+          [0, function() {
+            break;
+          }]
+        ], ___n);
+      }, ___n)
+    }]
+  ], ___n);
 }
