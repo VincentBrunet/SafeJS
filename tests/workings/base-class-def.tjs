@@ -1,43 +1,47 @@
 
-namespace Test.Namespace
+class Simple : Object
 {
 
-    class Test1
+}
+
+class Test1 : Object
+{
+
+    var tutu :Int = 42;
+
+    /*
+    op new ()
     {
-
-        var tutu :Int = 42;
-
-        op new ()
-        {
-            this.tutu = 41;
-        }
-
-        op new (a :int)
-        {
-            this.tutu = a;
-        }
-
-        op + :Int (a :test1, :Int)
-        {
-        }
-
-        op [] :Int (idx :Int)
-        {
-            return tutu;
-        }
-
-        op del ()
-        {
-            
-        }
-
+        this.tutu = 41;
     }
+
+    op new (a :int)
+    {
+        this.tutu = a;
+    }
+
+    op + :Int (a :test1, :Int)
+    {
+    }
+
+    op [] :Int (idx :Int)
+    {
+        return tutu;
+    }
+
+    op del ()
+    {
+        
+    }
+    */
 
 }
 
 
-var test2 = class :Test.Namespace.Test1 {
+var test2 = class :Test1
+{
 
+    /*
     op new (a :int)
     {
         base.<new>(a);
@@ -50,11 +54,12 @@ var test2 = class :Test.Namespace.Test1 {
         return base.<[]>(idx) + 1;
         return base[idx] + 1;
     }
+    */
 
 };
 
-var obj1 = new Test.Namespace.Test1();
-var obj2 = new test2(10);
+var obj1 = new Test1();
+var obj2 = new test2(10); // Should throw is not a class if failed
 
-console.log(obj1[42]);
-console.log(obj2[42]);
+Debug.log(obj1[42]);
+Debug.log(obj2[42]);

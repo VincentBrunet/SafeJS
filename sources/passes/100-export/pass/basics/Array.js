@@ -4,8 +4,8 @@ var Export = require("../Export");
 Export.register("Array", function (node) {
   if (node.isAsync) {
     var str = "";
-    str += "function(___n){";
-    str += "_tjs._async._array([";
+    str += "function(" + Export.std.next + "){";
+    str += Export.std.async + "._array([";
     var els = [];
     utils._.each(node.elements, function (element) {
       if (element.isAsync) {
@@ -16,7 +16,7 @@ Export.register("Array", function (node) {
       }
     });
     str += els.join(",");
-    str += "],___n);";
+    str += "]," + Export.std.next + ");";
     str += "}";
     return str;
   }

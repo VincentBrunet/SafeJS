@@ -125,6 +125,41 @@ $utils.errorDisplay = function (error, reason, filename, lines) {
 }
 
 $utils.astDisplay = function (elem, type, depths) {
+  function hasChildsDeep(testedElem, depth) {
+    if (testedElem == undefined) {
+      return 0;
+    }
+    var curDepth = depth;
+    if (depth == undefined) {
+      curDepth = 0;
+    }
+    if (_.isArray(testedElem)) {
+      _.each(testedElem, function (value, key) {
+        curDepth = Math.max(curDepth, hasChildsDeep(value, depth));
+      });
+    }
+    else {
+      _.each(testedElem.ast_childs, function (value, key) {
+        curDepth = Math.max(curDepth, hasChildsDeep(value, depth));
+      });
+    }
+    return curDepth + 1;
+  }
+  function prelinePrint(prelineDepth, noCur) {
+    var line = "";
+    _.each(prelineDepth, function (depth, idx) {
+      if (idx == depths.length - 1 && !noCur) {
+        line += " \\-";
+      } else {
+        if (depth > 0) {
+          line += " | ";
+        } else {
+            line += "   ";
+        }
+      }
+    });
+    return line;
+  }
   if (!elem) {
     return;
   }
@@ -135,17 +170,8 @@ $utils.astDisplay = function (elem, type, depths) {
     depths = [];
   }
   var line = "";
-  _.each(depths, function (depth, idx) {
-    if (idx == depths.length - 1) {
-      line += " \\-";
-    } else {
-      if (depth > 0) {
-        line += " | ";
-      } else {
-          line += "   ";
-      }
-    }
-  });
+  line += prelinePrint(depths);
+  var hasPrintedEmpty = false;
   if (!isNaN(parseInt(type))) {
     line += " + ".yellow + ("[" + type + "] ").magenta;
   } else {
@@ -160,6 +186,8 @@ $utils.astDisplay = function (elem, type, depths) {
     line += " " + elem.ast_title.blue;
   }
   console.log(line);
+  var childDeep = hasChildsDeep(elem) > 2;
+  //console.log("ChildDeep", childDeep);
   if (_.isArray(elem)) {
     var nb = 0;
     _.each(elem, function (value, key) {
@@ -171,7 +199,19 @@ $utils.astDisplay = function (elem, type, depths) {
     _.each(elem, function (value, key) {
       if (value !== undefined) {
         cnb += 1;
-        $utils.astDisplay(value, key, depths.concat(nb - cnb));
+        var childDepths = depths.concat(nb - cnb);
+        if (childDeep) {
+          if (cnb == 1 && nb > 1) {
+            console.log(prelinePrint(childDepths, true));
+          }
+        }
+        var childPrintedEndline = $utils.astDisplay(value, key, childDepths);
+        if (childDeep) {
+          if (!childPrintedEndline) {
+            console.log(prelinePrint(childDepths, true));
+          }
+          hasPrintedEmpty = true;
+        }
       }
     });
   } else {
@@ -185,10 +225,23 @@ $utils.astDisplay = function (elem, type, depths) {
     _.each(elem.ast_childs, function (value, key) {
       if (value !== undefined) {
         cnb += 1;
-        $utils.astDisplay(value, key, depths.concat(nb - cnb));
+        var childDepths = depths.concat(nb - cnb);
+        if (childDeep) {
+          if (cnb == 1 && nb > 1) {
+            console.log(prelinePrint(childDepths, true));
+          }
+        }
+        var childPrintedEndline = $utils.astDisplay(value, key, childDepths);
+        if (childDeep) {
+          if (!childPrintedEndline) {
+            console.log(prelinePrint(childDepths, true));
+          }
+          hasPrintedEmpty = true;
+        }
       }
     });
   }
+  return hasPrintedEmpty;
 };
 
 module.exports = $utils;

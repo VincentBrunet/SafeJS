@@ -26,10 +26,10 @@ Export.register("Condition", function (node) {
       calls.push("[" + exp + "," + blk + "]");
     });
     var str = "";
-    str += "function(___n){";
-    str += "_tjs._condition([";
+    str += "function(" + Export.std.next + "){";
+    str += Export.std.async + "._condition([";
     str += calls.join(",");
-    str += "],___n);";
+    str += "]," + Export.std.next + ");";
     str += "}";
     return str;
   }

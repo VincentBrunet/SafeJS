@@ -14,7 +14,8 @@ module.exports = function(session, uglyJs, next) {
       brace_style: "collapse",
     });
     return next(true, prettyJs);
-  } catch (error) {
+  }
+  catch (error) {
     console.log("Prettify error", error);
     return next(false, undefined, utils.trace.make(error));
   }

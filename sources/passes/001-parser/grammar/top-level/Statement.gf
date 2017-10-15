@@ -1,4 +1,12 @@
 
+BlockStatement =
+    "{"
+    _ block :Block
+    _ "}"
+{
+    return block;
+}
+
 Statement =
     content:(
         Variable
@@ -11,6 +19,7 @@ Statement =
         / Break
         / Continue
         / Expression
+        / BlockStatement
     )
 {
     return ast({

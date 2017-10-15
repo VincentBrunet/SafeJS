@@ -8,15 +8,21 @@ var passPrettify = require("./passes/200-prettify");
 
 var utils = require("./_utils");
 
+var errors = require("./errors");
+
 function translator(filenameIn, filenameOut, filenamePretty) {
   var session = {};
-  passParser(session, filenameIn, function (success, rawAst, trace) {
-    //console.log("rawAst", rawAst, trace);
+  // PARSE pass, read file and parse to raw AST
+  passParser(session, filenameIn, function (success, rawAst, error, reason) {
+    if (!success) {
+      return errors.parsing.explain(reason, error);
+    }
     utils.astDisplay(rawAst);
+    // AST pass, read AST and do basic verifications
     passAst(session, rawAst, function (success, objAst, trace) {
-      // console.log("objAst", objAst, trace);
+      // ASYNC pass, check every node for async needs
       passIsAsync(session, objAst, function (success, asyncAst, trace) {
-        console.log("asyncAst", asyncAst, trace);
+        // EXPORT pass, read ast and generate JS
         passExport(session, asyncAst, function (success, jsCode, trace) {
           //console.log("JS Code", jsCode);
           fs.writeFile(filenameOut, jsCode, function (err) {

@@ -4,8 +4,8 @@ var Export = require("../Export");
 Export.register("While", function (node) {
   if (node.isAsync) {
     var str = "";
-    str += "function(___n){";
-    str += "_tjs._async._while(";
+    str += "function(" + Export.std.next + "){";
+    str += Export.std.async + "._while(";
     if (node.condition.isAsync) {
       str += "[1," + Export.node("Expression", node.condition) + "]";
     }
@@ -14,7 +14,7 @@ Export.register("While", function (node) {
     }
     str += ",";
     str += Export.node("Block", node.block, true);
-    str += ",___n)";
+    str += "," + Export.std.next + ");";
     str += "}";
     return str;
   }

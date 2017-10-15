@@ -4,6 +4,7 @@ var utils = require("../../utils");
 // PEG lib used for parsing
 var peg = require("pegjs");
 var peg_utils = require('pegjs-util');
+var peg_tracer = require('pegjs-backtrace');
 var peg_generated = require("./generated");
 
 /**
@@ -11,10 +12,11 @@ var peg_generated = require("./generated");
  */
 module.exports = function (session, filename, next) {
   // Read file content
-  utils.files.read(filename, function (success, content, trace) {
+  utils.files.read(filename, function (success, content, error) {
     // On failure
     if (!success) {
-      return next(false, undefined, utils.trace.next(trace));
+      error.filename = filename;
+      return next(false, undefined, error, "ReadError");
     }
     // Try to parse
     var parsed = undefined;
@@ -32,15 +34,12 @@ module.exports = function (session, filename, next) {
       parsed = peg_utils.parse(peg_generated, content, {
         startRule: "Block",
         cache: true,
-        //tracer: backtracer,
         tracer: {
-          // var maxOff = undefined;
-          // var maxEvent = undefined;
           trace: function(event) {
-            /*
+            return;
             if (event.type == "rule.enter") {
               trace_d += 1;
-              console.log(trace_pp(), "ST".grey, event.rule.grey);
+              console.log(trace_pp(), "EN".grey, event.rule.grey);
             }
             if (event.type == "rule.fail") {
               console.log(trace_pp(), "FA".yellow, event.rule.yellow,
@@ -56,7 +55,6 @@ module.exports = function (session, filename, next) {
               );
               trace_d -= 1;
             }
-            */
           },
         },
         makeAST: function (line, column, offset, args) {
@@ -72,11 +70,15 @@ module.exports = function (session, filename, next) {
     }
     // Parse error
     catch (error) {
-      return next(false, undefined, utils.trace.make(error));
+      error.filename = filename;
+      error.content = content;
+      return next(false, undefined, error, "ParsingException");
     }
     // On parsing error
     if (parsed.error) {
-      return next(false, undefined, utils.trace.make(parsed.error));
+      parsed.error.filename = filename;
+      parsed.error.content = content;
+      return next(false, undefined, parsed.error, "ParsingError");
     }
     // On parsing success
     var rawParsed = parsed.ast;

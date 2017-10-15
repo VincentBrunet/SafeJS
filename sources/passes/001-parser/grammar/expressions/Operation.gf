@@ -2,8 +2,8 @@
 Operation "Operation" = OperationP16
 
 OperationP16 =
-    head: (OperationP15/ExpressionSimple)
-    tails: (_ ("=" / "-=" / "+=" / "*=" / "/=" / "%=" / "<<=" / ">>>=" / ">>=" / "&=" / "|=" / "^=") _ (OperationP15/ExpressionSimple))*
+    head: (OperationP15)
+    tails: (_ ("=" / "-=" / "+=" / "*=" / "/=" / "%=" / "<<=" / ">>>=" / ">>=" / "&=" / "|=" / "^=") _ (OperationP15))*
 {
     return RightToLeftOp(head, tails);
 }
@@ -12,74 +12,74 @@ OperationP15 =
     OperationP14 // FIX-ME add ternary?
 
 OperationP14 =
-    head: (OperationP13/ExpressionSimple)
-    tails: (_ ("||") _ (OperationP13/ExpressionSimple))*
+    head: (OperationP13)
+    tails: (_ ("||") _ (OperationP13))*
 {
     return LeftToRightOp(head, tails);
 }
 
 OperationP13 =
-    head: (OperationP12/ExpressionSimple)
-    tails: (_ ("&&") _ (OperationP12/ExpressionSimple))*
+    head: (OperationP12)
+    tails: (_ ("&&") _ (OperationP12))*
 {
     return LeftToRightOp(head, tails);
 }
 
 OperationP12 =
-    head: (OperationP11/ExpressionSimple)
-    tails: (_ ("|") _ (OperationP11/ExpressionSimple))*
+    head: (OperationP11)
+    tails: (_ ("|") _ (OperationP11))*
 {
     return LeftToRightOp(head, tails);
 }
 
 OperationP11 =
-    head: (OperationP10/ExpressionSimple)
-    tails: (_ ("^") _ (OperationP10/ExpressionSimple))*
+    head: (OperationP10)
+    tails: (_ ("^") _ (OperationP10))*
 {
     return LeftToRightOp(head, tails);
 }
 
 OperationP10 =
-    head: (OperationP9/ExpressionSimple)
-    tails: (_ ("&") _ (OperationP9/ExpressionSimple))*
+    head: (OperationP9)
+    tails: (_ ("&") _ (OperationP9))*
 {
     return LeftToRightOp(head, tails);
 }
 
 OperationP9 =
-    head: (OperationP8/ExpressionSimple)
-    tails: (_ ("==="/ "==" / "!==" / "!=") _ (OperationP8/ExpressionSimple))*
+    head: (OperationP8)
+    tails: (_ ("==="/ "==" / "!==" / "!=") _ (OperationP8))*
 {
     return LeftToRightOp(head, tails);
 }
 
 OperationP8 =
-    head: (OperationP7/ExpressionSimple)
+    head: (OperationP7)
     tails: (
         _ ("<=" / "<" / ">=" / ">" / $("instanceof" __) / $("in" __))
-        _ (OperationP7/ExpressionSimple)
+        _ (OperationP7)
     )*
 {
     return LeftToRightOp(head, tails);
 }
 
 OperationP7 =
-    head: (OperationP6/ExpressionSimple)
-    tails: (_ (">>>" / ">>" / "<<") _ (OperationP6/ExpressionSimple))*
+    head: (OperationP6)
+    tails: (_ (">>>" / ">>" / "<<") _ (OperationP6))*
 {
     return LeftToRightOp(head, tails);
 }
 
 OperationP6 =
-    head: (OperationP5/ExpressionSimple)
-    tails: (_ ("+" / "-") _ (OperationP5/ExpressionSimple))*
+    head: (OperationP5)
+    tails: (_ ("+" / "-") _ (OperationP5))*
 {
     return LeftToRightOp(head, tails);
 }
 
 OperationP5 =
-    head: (OperationP4/ExpressionSimple)
-    tails: (_ ("*" / "%" / "/") _ (OperationP4/ExpressionSimple))*
+    head: (OperationP4)
+    tails: (_ ("*" / "%" / "/") _ (OperationP4))*
 {
     return LeftToRightOp(head, tails);
 }
@@ -92,7 +92,7 @@ OperationP4 =
         / ($("void" __))
         / ($("delete" __))
     ) _)*
-    tail: (OperationP3/ExpressionSimple)
+    tail: (OperationP3)
 {
     if (heads.length <= 0) {
         return tail;
@@ -117,7 +117,7 @@ OperationP4 =
 }
 
 OperationP3 =
-    head: (OperationP2/ExpressionSimple)
+    head: (OperationP2)
     tail: (_ ("++" / "--"))?
 {
     if (!tail) {
@@ -160,7 +160,7 @@ OperationPTuple =
 }
 
 OperationP2 =
-    head: (OperationP1/ExpressionSimple)
+    head: (OperationP1)
     tails: (
         (_ "[" _ (Expression) _ "]")
         / ("" "." "" Identifier)
@@ -176,7 +176,7 @@ OperationP2 =
 
 OperationNew = 
     "new"
-    __ expression :(OperationP1/ExpressionSimple)
+    __ expression :(OperationP1)
     p_params :(_ "(" _ OperationPTuple _ ")")?
 {
     var params;
@@ -199,24 +199,31 @@ OperationNew =
 OperationP1 =
     e: (
         OperationNew
-        / (OperationP0_5/ExpressionSimple)
+        / (OperationP0_5)
     )
 {
     return e;
 }
 
 OperationDeasync =
-    "@"
-    _ expression: (OperationP0_5/ExpressionSimple)
+    word: (("@" _) / ("wait" __))
+    p_mode: (("any" / "all") __)?
+    expression: (OperationP0_5)
 {
+    var mode = null;
+    if (p_mode) {
+        mode = p_mode[0];
+    }
+    var op = "@";
     return ast({
         ast_type: "Operation",
-        ast_title: "@",
+        ast_title: op,
         ast_childs: {
             E1: expression,
         },
         ast_datas: {
-            op: "@",
+            mode: mode,
+            op: op,
         },
     });
 }

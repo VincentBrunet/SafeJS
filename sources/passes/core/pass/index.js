@@ -31,18 +31,18 @@ var Pass = function(name) {
       return handler(type, obj, call, a, b, c, d);
     }
     if (!obj) {
-      console.log(name, "Pass empty node instead of:", type);
-      console.log("Last", self._last);
+      //console.log(name, "Pass empty node instead of:", type);
+      //console.log("Last", self._last);
       return undefined;
     }
     if (obj.ast_type != type) {
-      console.log(name, "Pass wrong node type", obj.ast_type, type)
-      console.log("Last", self._last);
+      //console.log(name, "Pass wrong node type", obj.ast_type, type)
+      //console.log("Last", self._last);
       return undefined;
     }
     if (!call) {
-      console.log(name, "Unknown node type", type);
-      console.log("Last", self._last);
+      //console.log(name, "Unknown node type", type);
+      //console.log("Last", self._last);
       return undefined;
     }
     self._last = [type, obj];
@@ -53,8 +53,8 @@ var Pass = function(name) {
     self._internals.handler = call;
   };
 
-  self.do = function (obj) {
-    return self.node("Block", obj);
+  self.do = function (obj, a, b, c) {
+    return self.node("Block", obj, a, b, c);
   };
 
   self.error = function (type, obj1, obj2) {

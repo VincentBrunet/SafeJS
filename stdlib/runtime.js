@@ -1,5 +1,6 @@
 
 var _ = {};
+
 _.race = function (jobs, next) {
   var _won = false;
   _.each(jobs, function (job) {
@@ -120,4 +121,13 @@ _tjs._async._block = function (statements, next) {
 };
 _tjs._async._op = function (op, r1, r2, next) {
 
+};
+
+var Δ = {
+  Ω: { // Sync (loop)
+
+  },
+  Ψ: { // Async (branches)
+
+  },
 };

@@ -50,9 +50,13 @@ FunctionParams "Function Params" =
 
 FunctionParam = 
     name :Identifier
-    _ type :Typed?
+    p_type :(_ Typed)?
     p_variadic: (_ "...")?
 {
+    var type = null;
+    if (p_type) {
+        type = p_type[1];
+    }
     var variadic = false;
     if (p_variadic) {
         variadic = true;

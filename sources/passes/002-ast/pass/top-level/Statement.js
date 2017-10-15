@@ -40,11 +40,17 @@ Ast.register("Statement", function (node) {
   else if (node_content.ast_type == "While") {
     node.content = new Ast.node("While", node_content);
   }
+  else if (node_content.ast_type == "Repeat") {
+    node.content = new Ast.node("Repeat", node_content);
+  }
   else if (node_content.ast_type == "Break") {
     node.content = new Ast.node("Break", node_content);
   }
   else if (node_content.ast_type == "Continue") {
     node.content = new Ast.node("Continue", node_content);
+  }
+  else if (node_content.ast_type == "Block") {
+    node.content = new Ast.node("Block", node_content);
   }
   else {
     throw new Ast.error("NodeUnexpectedType", node_content, [
@@ -57,8 +63,10 @@ Ast.register("Statement", function (node) {
       "TryCatch",
       "For",
       "While",
+      "Repeat",
       "Break",
       "Continue",
+      "Block",
     ]);
   }
   // Done

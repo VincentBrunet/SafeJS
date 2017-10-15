@@ -8,8 +8,8 @@ Export.register("Expression", function (node, asFunction) {
       return str;
     } else {
       var f = "";
-      f += "function(___n){";
-      f += "___n(" + str + ");";
+      f += "function(" + Export.std.next + "){";
+      f += Export.std.next + "(" + str + ");";
       f += "}";
       return f;
     }

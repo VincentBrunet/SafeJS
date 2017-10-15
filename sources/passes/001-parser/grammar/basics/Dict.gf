@@ -1,8 +1,8 @@
 
 Dict "Dictionary" =
     "{"
-    values :(_ DictValue _ ",")*
-    lastValue :(_ DictValue)?
+    values :(_ DictElement _ ",")*
+    lastValue :(_ DictElement)?
     _ "}"
 {
     var elements = [];
@@ -19,16 +19,63 @@ Dict "Dictionary" =
     });
 }
 
-DictValue =
-    name :Identifier
+DictElement =
+    key :(DictKeyString/DictKeyExpression/DictKeyIdentifier)
     _ ":"
-    _ value :Expression
+    _ value :DictValue
+{
+    return {
+        ast_type: "DictElement",
+        ast_title: "{:}",
+        ast_childs: {
+            Key: key,
+            Value: value,
+        },
+    };
+}
+
+DictKeyIdentifier =
+    identifier :Identifier
+{
+    return {
+        ast_type: "DictKeyIdentifier",
+        ast_childs: {
+            Identifier: identifier,
+        },
+    }
+}
+
+DictKeyString =
+    string :String
+{
+    return {
+        ast_type: "DictKeyString",
+        ast_childs: {
+            String: string,
+        },
+    };
+}
+
+DictKeyExpression =
+    "<"
+    _ expression :Expression
+    ">"
+{
+    return {
+        ast_type: "DictKeyExpression",
+        ast_childs: {
+            Expression: expression,
+        },
+    };
+}
+
+DictValue =
+    expression :Expression
 {
     return {
         ast_type: "DictValue",
         ast_childs: {
-            Name: name,
-            Value: value,
+            Expression: expression,
         },
     };
 }

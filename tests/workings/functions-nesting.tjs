@@ -1,0 +1,17 @@
+
+var root_name = fn root_named_fn() {}
+var root_anon_fn = fn () {}
+
+while (@test)
+{
+
+    var while_name = fn while_named_fn() {}
+    var while_anon_fn = fn () {}
+
+    if (@test)
+    {
+        var if_name = fn if_named_fn() {}
+        var if_anon_fn = fn () {}
+    }
+
+}

@@ -1,5 +1,5 @@
 
-var test = @ {
+var test = async :Int {
     resolve 42;
 }
 
@@ -8,15 +8,51 @@ fn debug :Void (hop :String, test :Int)
     // hop
 }
 
-while @test {
-    var value = 42;
-    var hello = "hello";
-    debug(value, @test, hello);
-    break
+var ttt = fn debug2 :Void (a:String, b:Int)
+{
+
 }
 
-while (((42)))
+while @ test {
+
+    var test = wait tutu;
+
+    var value = 42;
+
+    fn lol {
+        return value;
+    }
+
+    var hello = "hello";
+    debug(value, @(test), hello);
+    break
+
+}
+
 {
-    console.log("::" + @test, "::");
-    console.log("Damn", "::");
+    {
+        Debug.log("Hello", @test);
+    }
+}
+
+while (((42))) {
+
+    Debug.log("::" + @(test), "::");
+    Debug.log("Damn", "::");
+
+}
+
+while (42) {
+    Debug.log("Hop");
+}
+
+var idx = 10;
+repeat 10 {
+    idx-=1;
+    Debug.log("Hello", @test, idx);
+
+}
+
+repeat 10 {
+    Debug.log("Hop");
 }

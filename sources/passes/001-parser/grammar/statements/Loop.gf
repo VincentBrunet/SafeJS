@@ -1,4 +1,20 @@
 
+Repeat =
+    "repeat"
+    __ iterations :Expression
+    _ '{'
+    _ block: Block
+    _ '}'
+{
+    return ast({
+        ast_type: "Repeat",
+        ast_childs: {
+            Iterations: iterations,
+            Block: block,
+        },
+    });
+}
+
 While =
     "while"
     __ condition :Expression
@@ -37,6 +53,7 @@ For =
 Loop "Loop" = 
     loop :(
         While
+        / Repeat
         / For
     )
 {

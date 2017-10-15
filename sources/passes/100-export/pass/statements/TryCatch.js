@@ -4,8 +4,8 @@ var Export = require("../Export");
 Export.register("TryCatch", function (node) {
   if (node.isAsync) {
     var str = "";
-    str += "function(___n){";
-    str += "_tjs._async._try(";
+    str += "function(" + Export.std.next + "){";
+    str += Export.std.async + "._try(";
     str += Export.node("Block", node.try, true) + ",";
     if (node.finally) {
       str += Export.node("Block", node.finally, true) + ",";
@@ -21,7 +21,7 @@ Export.register("TryCatch", function (node) {
       catches.push(cc);
     });
     str += "[" + catches.join(",") + "]";
-    str += ", ___n);";
+    str += "," + Export.std.next + ");";
     str += "}";
     return str;
   }

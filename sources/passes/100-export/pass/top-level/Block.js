@@ -10,9 +10,9 @@ Export.register("Block", function (node, asFunction) {
     }
     else {
       var f = "";
-      f += "function(___n){";
+      f += "function(" + Export.std.next + "){";
       f += str;
-      f += "___n();";
+      f += Export.std.next + "();";
       f += "}";
       return f;
     }
@@ -48,24 +48,27 @@ Export.register("Block", function (node, asFunction) {
         }
         else {
           // var st = "[0,function(){";
-          var st = "function(___n){";
+          var st = "";
+          st += "function(" + Export.std.next + "){";
           utils._.each(group.statements, function (statement) {
            st += Export.node("Statement", statement) + ";";
           });
-          st += "___n();";
+          st += Export.std.next + "();";
           st += "}";
           // st += "}]";
           calls.push(st);
         }
       });
       var result = "";
-      result += "function(___n){";
+      result += "function(" + Export.std.next + "){";
       if (vars.length > 0) {
         result += "var " + vars.join(",") + ";";
       }
-      result += "_tjs._async._block([";
+      result += Export.std.async + "._block(";
+      result += "[";
       result += calls.join(",");
-      result += "],___n);";
+      result += "]";
+      result += "," + Export.std.next + ");";
       result += "}";
       return result;
     }

@@ -3,7 +3,7 @@ var Export = require("../Export");
 
 Export.register("Class", function (node) {
   var str = "";
-  str += "class ";
+  str += "function ";
   if (node.name) {
     str += node.name;
   } else {

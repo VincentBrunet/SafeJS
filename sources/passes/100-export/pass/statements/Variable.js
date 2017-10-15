@@ -4,8 +4,8 @@ var Export = require("../Export");
 Export.register("Variable", function (node) {
   if (node.isAsync) {
     var str = "";
-    str += "function(___n){";
-    str += "_tjs._async._assign(";
+    str += "function(" + Export.std.next + "){";
+    str += Export.std.async + "._assign(";
     if (node.value.isAsync) {
       str += "[1," + Export.node("Expression", node.value) + "]";
     }
@@ -13,10 +13,10 @@ Export.register("Variable", function (node) {
       str += "[0," + Export.node("Expression", node.value) + "]";
     }
     str += ",";
-    str += "function(v){";
-    str += node.name + "=v;";
+    str += "function(" + Export.std.tmp1 + "){";
+    str += node.name + "=" + Export.std.tmp1 + ";";
     str += "}";
-    str += ",___n)";
+    str += "," + Export.std.next + ");";
     str += "}";
     return str;
   }

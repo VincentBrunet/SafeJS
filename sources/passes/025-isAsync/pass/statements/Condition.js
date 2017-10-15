@@ -23,8 +23,8 @@ IsAsync.register("Condition", function (node) {
       node.isAsync = true;
     }
   });
-  IsAsync.node("Block", node.else.block);
   if (node.else) {
+    IsAsync.node("Block", node.else.block);
     if (node.else.block.isAsync) {
       node.isAsync = true;
     }

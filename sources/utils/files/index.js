@@ -1,5 +1,4 @@
 var _ = require("../_");
-var trace = require("../trace");
 var fs = require("fs");
 
 var files = {}
@@ -7,7 +6,7 @@ var files = {}
 files.read = function(filename, next) {
   fs.readFile(filename, 'utf8', function(error, content) {
     if (error) {
-      return next(false, undefined, trace.make(error));
+      return next(false, undefined, error, "ReadError");
     }
     return next(true, content);
   });
@@ -15,29 +14,29 @@ files.read = function(filename, next) {
 
 files.readSeq = function (filenames, next) {
   var finalSuccess = true;
-  var finalTrace;
+  var finalError;
   var contents = "";
   _.eachSeq(filenames, function (iterate, filename) {
-    files.read(filename, function (success, content, trace) {
+    files.read(filename, function (success, content, error) {
       if (success) {
         contents += content;
       } else {
         if (finalSuccess) {
           finalSuccess = false;
-          finalTrace = trace;
+          finalError = error;
         }
       }
       iterate();
     });
   }, function () {
-    return next(finalSuccess, contents, trace.next(finalTrace));
+    return next(finalSuccess, contents, finalError, "SeqRead");
   });
 };
 
 files.write = function (filename, content, next) {
   fs.writeFile(filename, content, 'utf8', function (error) {
     if (error) {
-      return next(false, undefined, trace.make(error));
+      return next(false, undefined, error, "WriteError");
     }
     return next(true, {});
   });

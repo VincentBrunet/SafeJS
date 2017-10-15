@@ -13,6 +13,7 @@ require("./statements/Condition");
 require("./statements/TryCatch");
 require("./statements/For");
 require("./statements/While");
+require("./statements/Repeat");
 require("./statements/Break");
 require("./statements/Continue");
 

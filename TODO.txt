@@ -12,3 +12,15 @@ Parser:
 Later:
     Fix string litteral parsing
     Add Regex parsing ?? :()
+
+Return flow control
+Continue flow control
+Break flow control
+
+Exceptions flow control
+
+How to better handle OP
+
+Make file smaller (use unicode ? :))
+
+Fix variable scope
