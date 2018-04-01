@@ -11,6 +11,7 @@ var stdEmoji = {
     tmp2: "⏱2",
     tmp3: "⏱3",
     tmp4: "⏱4",
+    this: "",
 };
 
 var stdSign = {
@@ -31,6 +32,7 @@ var stdAscii = {
     tmp2: "_$2",
     tmp3: "_$3",
     tmp4: "_$4",
+    this: "_$T",
 };
 
 Export.std = stdAscii;

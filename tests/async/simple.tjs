@@ -1,6 +1,11 @@
 
 var ttt : @String;
 
+fn hello
+{
+    console.log("Say Hello");
+}
+
 try {
 
     console.log("Pre");

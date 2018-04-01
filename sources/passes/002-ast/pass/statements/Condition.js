@@ -1,32 +1,67 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-Ast.register("Condition", function (node) {
-  // Childs check
-  var node_if = node.ast_childs.If;
-  if (!node_if) {
-    throw Ast.error("NodeMissingChild", "If");
-  }
-  var node_else_ifs = node.ast_childs.ElseIfs;
-  var node_else = node.ast_childs.Else;
-  // Node logic
-  node.if = {
-    expression: Ast.node("Expression", node_if.ast_childs.Expression),
-    block: Ast.node("Block", node_if.ast_childs.Block),
-  };
-  node.else_ifs = [];
-  utils._.each(node_else_ifs, function (else_if) {
-    node.else_ifs.push({
-      expression: Ast.node("Expression", else_if.ast_childs.Expression),
-      block: Ast.node("Block", else_if.ast_childs.Block),
-    });
+// Current pass
+var pass = require("../../pass");
+
+// Condition ast structure
+module.exports = function Condition(jsonCondition) {
+  // Check if it indeed a Condition
+  pass.check.type(jsonCondition, "Condition");
+  // Check if has at least an If
+  pass.check.child(jsonCondition, "If");
+  // Read if content
+  var jsonIf = pass.read.child(jsonCondition, "If");
+  // Check if "If" has both an expression and a block
+  pass.check.child(jsonIf, "Expression");
+  pass.check.child(jsonIf, "Block");
+  // Get if expression and block
+  var jsonIfExpression = pass.read.child(jsonIf, "Expression");
+  var jsonIfBlock = pass.read.child(jsonIf, "Block");
+  // Make AST Condition node
+  var astCondition = new ast.Condition();
+  // Save if expression
+  astCondition.ifExpression = pass.make.Expression(jsonIfExpression);
+  astCondition.ifExpression.parent = astCondition;
+  // Save if block
+  astCondition.ifBlock = pass.make.Block(jsonIfBlock);
+  astCondition.ifBlock.parent = astCondition;
+  // Loop over optional else ifs
+  var jsonElseIfs = pass.read.child("ElseIfs");
+  utils._.each(jsonElseIfs, function (jsonElseIf) {
+    // Check if "ElseIf" has both expression and block
+    pass.check.child(jsonElseIf, "Expression");
+    pass.check.child(jsonElseIf, "Block");
+    // Get else if expression and block
+    var jsonElseIfExpression = pass.read.child(jsonElseIf, "Expression");
+    var jsonElseIfBlock = pass.read.child(jsonElseIf, "Block");
+    // Make else if
+    var astElseIf = {};
+    // Read expression
+    astElseIf.expression = pass.make.Expression(jsonElseIfExpression);
+    astElseIf.expression.parent = astCondition;
+    // Read block
+    astElseIf.block = pass.make.Block(jsonElseIfBlock);
+    astElseIf.block.parent = astCondition;
+    // Save else if
+    astCondition.elseIfs.push(astElseIf);
   });
-  node.else = undefined;
-  if (node_else) {
-    node.else = {
-      block: Ast.node("Block", node_else.ast_childs.Block),
-    };
+  // If condition has an "else"
+  if (pass.read.hasChild(jsonCondition, "Else")) {
+    // Read else content
+    var jsonElse = pass.read.child(jsonCondition, "Else");
+    // Check if else has a block
+    pass.check.child(jsonElse, "Block");
+    // Read else block content
+    var jsonElseBlock = pass.read.child(jsonElse, "Block");
+    // Make block
+    astCondition.elseBlock = pass.make.Block(jsonElseBlock);
+    astCondition.elseBlock.parent = astCondition;
   }
+  // Save original json
+  astCondition.json = jsonCondition;
   // Done
-  return node;
-});
+  return astCondition;
+};
+

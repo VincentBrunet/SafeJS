@@ -7,7 +7,7 @@ class Simple : Object
 class Test1 : Object
 {
 
-    var tutu :Int = 42;
+    public var tutu :Int = 42;
 
     /*
     op new ()

@@ -38,6 +38,7 @@ ClassExpression "ClassExpression" =
 }
 
 ClassStatement =
+    isPublic: ("public" __)?
     isStatic: ("static" __)?
     content:(
         Variable
@@ -51,6 +52,7 @@ ClassStatement =
             Content: content,
         },
         ast_datas: {
+            isPublic: !!isPublic,
             isStatic: !!isStatic,
         },
     });

@@ -11,7 +11,11 @@ Export.register("Class", function (node) {
   }
   // str += " " + node.params.export(_context);
   str += " {";
+
+  str += "var " + Export.std.this + "=this";
   str += Export.node("Block", node.block);
+
+
   str += "}";
   return str;
 });

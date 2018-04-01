@@ -6,7 +6,7 @@ var grammars = [
   grammarPrefix + "/top-level/Globals.gf",
   grammarPrefix + "/top-level/Block.gf",
   grammarPrefix + "/top-level/Statement.gf",
-  grammarPrefix + "/top-level/Expression.gf",
+  grammarPrefix + "/statements/Expression.gf",
   grammarPrefix + "/statements/Variable.gf",
   grammarPrefix + "/statements/Condition.gf",
   grammarPrefix + "/statements/Loop.gf",

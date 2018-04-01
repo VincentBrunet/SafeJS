@@ -1,65 +1,41 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-Ast.register("Expression", function (node) {
-  // Childs check
-  var node_content = node.ast_childs.Content;
-  if (!node_content) {
-    throw Ast.error("NodeMissingChild", "Content");
-  }
-  // Node logic
-  node.content = undefined;
-  if (node_content.ast_type == "Litteral") {
-    node.content = Ast.node("Litteral", node_content);
-  }
-  else if (node_content.ast_type == "Function") {
-    node.content = Ast.node("Function", node_content);
-  }
-  else if (node_content.ast_type == "Async") {
-    node.content = Ast.node("Async", node_content);
-  }
-  else if (node_content.ast_type == "Class") {
-    node.content = Ast.node("Class", node_content);
-  }
-  else if (node_content.ast_type == "Operation") {
-    node.content = Ast.node("Operation", node_content);
-  }
-  else if (node_content.ast_type == "Identifier") {
-    node.content = Ast.node("Identifier", node_content);
-  }
-  else {
-    throw Ast.error("NodeUnexpectedType", node_content, [
-      "Class",
-      "Litteral",
-      "Function",
-      "Async",
-      "Operation",
-      "Identifier",
-    ]);
-  }
+// Current pass
+var pass = require("../../pass");
+
+// Possible Expressions content types
+var contentTypes = {
+  "Litteral": pass.make.Litteral,
+  "Function": pass.make.Function,
+  "Async": pass.make.Async,
+  "Class": pass.make.Class,
+  "Operation": pass.make.Operation,
+  "Identifier": pass.make.Identifier,
+};
+
+// Expression ast structure
+module.exports = function (jsonExpression) {
+  // Check if it indeed a Expression
+  pass.check.type(jsonExpression, "Expression");
+  // Check if has a content child
+  pass.check.child(jsonExpression, "Content");
+  // Read content data
+  var jsonContent = pass.read.child(jsonExpression, "Content")
+  // Check if content is correctly typed
+  pass.check.type(jsonContent, utils._.keys(contentTypes));
+  // Make AST Expression node
+  var astExpression = new ast.Expression();
+  // Save content type
+  astExpression.type = pass.read.type(jsonContent);
+  // Read content object, depending on type
+  astExpression.content = contentTypes[astExpression.type](jsonContent);
+  // Mark content as child
+  astExpression.content.parent = astExpression;
+  // Save original json
+  astExpression.json = jsonExpression;
   // Done
-  return node;
-});
-
-
-Ast.predefine("Expression", function (content) {
-  if (!content) {
-    return undefined;
-  }
-  if (content.ast_type == "Expression") {
-    return content;
-  }
-  return {
-    ast_type: "Expression",
-    ast_childs: {
-      Content: content,
-    },
-  };
-});
-
-
-Ast.predefine("Expression:Undefined", function () {
-  var nundefined = Ast.predefined("Litteral", Ast.predefined("Undefined"))
-  return Ast.predefined("Expression", nundefined);
-});
+  return astExpression;
+};
 

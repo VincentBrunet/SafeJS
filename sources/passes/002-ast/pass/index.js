@@ -1,39 +1,81 @@
 
-var Ast = require("./Ast");
+module.exports = {
 
-require("./top-level/Block");
-require("./top-level/Statement");
+  make: {
 
-require("./statements/Expression");
-require("./statements/Variable");
-require("./statements/Return");
-require("./statements/Resolve");
-require("./statements/Throw");
-require("./statements/Condition");
-require("./statements/TryCatch");
-require("./statements/For");
-require("./statements/While");
-require("./statements/Repeat");
-require("./statements/Break");
-require("./statements/Continue");
+    Block: require("./top-level/Block"),
+    Statement: require("./top-level/Statement"),
 
-//require("./expressions/Enum");
-require("./expressions/Function");
-require("./expressions/Async");
-require("./expressions/Litteral");
-require("./expressions/Operation");
-require("./expressions/Class");
+    Break: require("./statements/Break"),
+    Condition: require("./statements/Condition"),
+    Continue: require("./statements/Continue"),
+    Expression: require("./statements/Expression"),
 
-require("./basics/Type");
-require("./basics/Tuple");
-require("./basics/Array");
-require("./basics/Dict");
+    /*
+    For: require("./statements/For"),
+    Repeat: require("./statements/Repeat"),
+    Resolve: require("./statements/Resolve"),
+    Variable: require("./statements/Variable"),
+    Return: require("./statements/Return"),
+    Throw: require("./statements/Throw"),
+    TryCatch: require("./statements/TryCatch"),
+    While: require("./statements/While"),
 
-require("./atomics/Identifier");
-require("./atomics/Null");
-require("./atomics/Number");
-require("./atomics/String");
-require("./atomics/Boolean");
-require("./atomics/Undefined");
+    //Enum: require("./expressions/Enum"),
+    Function: require("./expressions/Function"),
+    Async: require("./expressions/Async"),
+    Litteral: require("./expressions/Litteral"),
+    Operation: require("./expressions/Operation"),
+    Class: require("./expressions/Class"),
 
-module.exports = Ast;
+    Type: require("./basics/Type"),
+    Tuple: require("./basics/Tuple"),
+    Array: require("./basics/Array"),
+    Dict: require("./basics/Dict"),
+
+    Identifier: require("./atomics/Identifier"),
+    Null: require("./atomics/Null"),
+    Number: require("./atomics/Number"),
+    String: require("./atomics/String"),
+    Boolean: require("./atomics/Boolean"),
+    Undefined: require("./atomics/Undefined"),
+    */
+  },
+
+  read: {
+
+    type: function (currentJson) {
+      return currentJson.ast_type;
+    },
+
+    child: function (currentJson, expectedName) {
+      return currentJson.ast_childs[expectedName];
+    },
+
+    hasChild: function (currentJson, expectedName) {
+      return !!currentJson.ast_childs[expectedName];
+    },
+
+    childList: function (currentJson) {
+      return currentJson.ast_childs;
+    },
+
+  },
+
+  check: {
+
+    type: function (currentJson, expectedType) {
+      // TODO
+    },
+
+    child: function (currentJson, expectedName) {
+      // TODO
+    },
+
+    childList: function (currentJson) {
+      // TODO
+    },
+
+  },
+
+};
