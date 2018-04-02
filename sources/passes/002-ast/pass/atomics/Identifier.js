@@ -1,15 +1,23 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-// Identifier from AST
-Ast.register("Identifier", function (node) {
-  // Datas check
-  if (!node.ast_datas.value) {
-    throw Ast.error("NodeMissingData", "value");
-  }
-  // Node logic
-  node.name = node.ast_datas.value;
-  node.value = node.ast_datas.value;
+// Identifier ast structure
+module.exports = function Identifier(jsonIdentifier) {
+  // Current pass
+  var pass = require("../../pass");
+  // Check if it indeed a Identifier
+  pass.check.type(jsonIdentifier, "Identifier");
+  // Make AST Identifier node
+  var astIdentifier = new ast.Identifier();
+  // Check value
+  pass.check.data(jsonIdentifier, "Value");
+  // Read value
+  var jsonValue = pass.read.data(jsonIdentifier, "Value");
+  // Save value
+  astIdentifier.value = jsonValue;
+  // Save original json
+  astIdentifier.json = jsonIdentifier;
   // Done
-  return node;
-});
+  return astIdentifier;
+};

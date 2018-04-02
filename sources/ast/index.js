@@ -9,7 +9,6 @@ module.exports = {
   Continue: require("./statements/Continue"),
   Expression: require("./statements/Expression"),
 
-  /*
   For: require("./statements/For"),
   Repeat: require("./statements/Repeat"),
   Resolve: require("./statements/Resolve"),
@@ -19,12 +18,16 @@ module.exports = {
   TryCatch: require("./statements/TryCatch"),
   While: require("./statements/While"),
 
+  /*
   //Enum: require("./expressions/Enum"),
   Function: require("./expressions/Function"),
+  */
   Async: require("./expressions/Async"),
   Litteral: require("./expressions/Litteral"),
+  /*
   Operation: require("./expressions/Operation"),
   Class: require("./expressions/Class"),
+  */
 
   Type: require("./basics/Type"),
   Tuple: require("./basics/Tuple"),
@@ -36,7 +39,6 @@ module.exports = {
   Number: require("./atomics/Number"),
   String: require("./atomics/String"),
   Boolean: require("./atomics/Boolean"),
-  Undefined: require("./atomics/Undefined"),
-  */
+  //Undefined: require("./atomics/Undefined"),
 
 };

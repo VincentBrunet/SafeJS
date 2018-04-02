@@ -2,11 +2,10 @@
 var utils = require("../../../../utils");
 var ast = require("../../../../ast");
 
-// Current pass
-var pass = require("../../pass");
-
 // Continue ast structure
 module.exports = function Continue(jsonContinue) {
+    // Current pass
+    var pass = require("../../pass");
     // Check if it indeed a Continue
     pass.check.type(jsonContinue, "Continue");
     // Make AST Continue node

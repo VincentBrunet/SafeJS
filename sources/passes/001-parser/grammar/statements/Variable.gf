@@ -17,9 +17,9 @@ Variable "Variable" =
         ast_type: "Variable",
         ast_title: mode,
         ast_childs: {
-            Name: name,
+            Identifier: name,
             Type: t,
-            Value: val,
+            Expression: val,
         },
         ast_datas: {
             mode: mode,

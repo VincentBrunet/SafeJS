@@ -1,23 +1,23 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-// String in AST
-Ast.register("String", function (node) {
-  // Datas check
-  if (node.ast_datas.value === undefined) {
-    throw Ast.error("NodeMissingData", "value");
-  }
-  // Node logic
-  node.value = node.ast_datas.value;
+// String ast structure
+module.exports = function String(jsonString) {
+  // Current pass
+  var pass = require("../../pass");
+  // Check if it indeed a String
+  pass.check.type(jsonString, "String");
+  // Make AST String node
+  var astString = new ast.String();
+  // Check value
+  pass.check.data(jsonString, "Value");
+  // Read value
+  var jsonValue = pass.read.data(jsonString, "Value");
+  // Save value
+  astString.value = jsonValue;
+  // Save original json
+  astString.json = jsonString;
   // Done
-  return node;
-});
-
-Ast.predefine("String", function (value) {
-  return {
-    ast_type: "String",
-    ast_datas: {
-      value: value,
-    },
-  };
-});
+  return astString;
+};

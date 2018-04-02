@@ -1,13 +1,30 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-// Javascript array AST
-Ast.register("Array", function (node) {
-  // Node logic
-  node.elements = [];
-  utils._.each(node.ast_childs, function (expression, idx) {
-    node.elements.push(Ast.node("Expression", expression));
+// Array ast structure
+module.exports = function Array(jsonArray) {
+  // Current pass
+  var pass = require("../../pass");
+  // Check if it indeed a Array
+  pass.check.type(jsonArray, "Array");
+  // Check if we do have a list of Expression here
+  pass.check.childList(jsonArray);
+  // Read the Array Expressions
+  var jsonExpressions = pass.read.childList(jsonArray);
+  // Make AST Array node
+  var astArray = new ast.Array();
+  // Create the Array Expressions
+  utils._.each(jsonExpressions, function (jsonExpression) {
+    // Make Expression
+    var astExpression = pass.make.Expression(jsonExpression);
+    // Mark as child
+    astExpression.parent = astArray;
+    // Save Expression
+    astArray.Expressions.push(astExpression);
   });
+  // Save original json
+  astArray.json = jsonArray;
   // Done
-  return node;
-});
+  return astArray;
+};

@@ -2,11 +2,10 @@
 var utils = require("../../../../utils");
 var ast = require("../../../../ast");
 
-// Current pass
-var pass = require("../../pass");
-
 // Block ast structure
 module.exports = function Block(jsonBlock) {
+  // Current pass
+  var pass = require("../../pass");
   // Check if it indeed a block
   pass.check.type(jsonBlock, "Block");
   // Check if we do have a list of statement here

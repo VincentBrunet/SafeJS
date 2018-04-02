@@ -6,7 +6,7 @@ Boolean "Boolean" =
         ast_type: "Boolean",
         ast_title: value,
         ast_datas: {
-            value: value,
+            Value: value,
         },
     });
 }

@@ -290,9 +290,9 @@ function peg$parse(input, options) {
               ast_type: "Variable",
               ast_title: mode,
               ast_childs: {
-                  Name: name,
+                  Identifier: name,
                   Type: t,
-                  Value: val,
+                  Expression: val,
               },
               ast_datas: {
                   mode: mode,
@@ -351,11 +351,11 @@ function peg$parse(input, options) {
       },
       peg$c41 = "repeat",
       peg$c42 = peg$literalExpectation("repeat", false),
-      peg$c43 = function(iterations, block) {
+      peg$c43 = function(expression, block) {
           return ast({
               ast_type: "Repeat",
               ast_childs: {
-                  Iterations: iterations,
+                  Expression: expression,
                   Block: block,
               },
           });
@@ -1020,7 +1020,7 @@ function peg$parse(input, options) {
               ast_type: "Boolean",
               ast_title: value,
               ast_datas: {
-                  value: value,
+                  Value: value,
               },
           });
       },
@@ -1036,7 +1036,7 @@ function peg$parse(input, options) {
               ast_type: "Number",
               ast_title: value,
               ast_datas: {
-                  value: value,
+                  Value: value,
               },
           });
       },
@@ -1047,7 +1047,7 @@ function peg$parse(input, options) {
               ast_type: "String",
               ast_title: value,
               ast_datas: {
-                  value: value,
+                  Value: value,
               },
           });
       },
@@ -1068,7 +1068,7 @@ function peg$parse(input, options) {
               ast_type: "Identifier",
               ast_title: value,
               ast_datas: {
-                  value: value,
+                  Value: value,
               },
           });
       },

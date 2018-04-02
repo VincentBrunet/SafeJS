@@ -1,19 +1,29 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-Ast.register("While", function (node) {
-  // Child checks
-  var node_condition = node.ast_childs.Condition;
-  if (!node_condition) {
-    throw Ast.error("NodeMissingChild", "Condition");
-  }
-  var node_block = node.ast_childs.Block;
-  if (!node_block) {
-    throw Ast.error("NodeMissingChild", "Block");
-  }
-  // Node
-  node.condition = Ast.node("Expression", node_condition);
-  node.block = Ast.node("Block", node_block);
+// While ast structure
+module.exports = function While(jsonWhile) {
+  // Current pass
+  var pass = require("../../pass");
+  // Check if it indeed a While
+  pass.check.type(jsonWhile, "While");
+  // Check if we do have an expression and a block
+  pass.check.child(jsonWhile, "Expression");
+  pass.check.child(jsonWhile, "Block");
+  // Read the While contents
+  var jsonExpression = pass.read.child(jsonWhile, "Expression");
+  var jsonBlock = pass.read.child(jsonWhile, "Block");
+  // Make AST While node
+  var astWhile = new ast.While();
+  // Make expression child
+  astWhile.expression = pass.make.Expression(jsonExpression);
+  astWhile.expression.parent = astWhile;
+  // Make block child
+  astWhile.block = pass.make.Block(jsonBlock);
+  astWhile.block.parent = astWhile;
+  // Save original json
+  astWhile.json = jsonWhile;
   // Done
-  return node;
-});
+  return astWhile;
+};

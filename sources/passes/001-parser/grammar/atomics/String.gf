@@ -6,7 +6,7 @@ StringChars =
         ast_type: "String",
         ast_title: value,
         ast_datas: {
-            value: value,
+            Value: value,
         },
     });
 }

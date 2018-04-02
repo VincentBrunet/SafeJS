@@ -2,30 +2,26 @@
 var utils = require("../../../../utils");
 var ast = require("../../../../ast");
 
-// Current pass
-var pass = require("../../pass");
-
-console.log("Pass", pass);
-
-// Possible statements content types
-var contentTypes = {
-  "Block": pass.make.Block,
-  "Break": pass.make.Break,
-  "Condition": pass.make.Condition,
-  "Continue": pass.make.Continue,
-  "Expression": pass.make.Expression,
-  "For": pass.make.For,
-  "Repeat": pass.make.Repeat,
-  "Resolve": pass.make.Resolve,
-  "Return": pass.make.Return,
-  "Throw": pass.make.Throw,
-  "TryCatch": pass.make.TryCatch,
-  "Variable": pass.make.Variable,
-  "While": pass.make.While,
-};
-
 // Statement ast structure
 module.exports = function (jsonStatement) {
+  // Current pass
+  var pass = require("../../pass");
+  // Possible statements content types
+  var contentTypes = {
+    "Block": pass.make.Block,
+    "Break": pass.make.Break,
+    "Condition": pass.make.Condition,
+    "Continue": pass.make.Continue,
+    "Expression": pass.make.Expression,
+    "For": pass.make.For,
+    "Repeat": pass.make.Repeat,
+    "Resolve": pass.make.Resolve,
+    "Return": pass.make.Return,
+    "Throw": pass.make.Throw,
+    "TryCatch": pass.make.TryCatch,
+    "Variable": pass.make.Variable,
+    "While": pass.make.While,
+  };
   // Check if it indeed a statement
   pass.check.type(jsonStatement, "Statement");
   // Check if has a content child

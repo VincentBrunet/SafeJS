@@ -7,7 +7,7 @@ Identifier "Identifier" =
         ast_type: "Identifier",
         ast_title: value,
         ast_datas: {
-            value: value,
+            Value: value,
         },
     });
 }

@@ -64,6 +64,11 @@ module.exports = function (session, filename, next) {
             column: column,
             offset: offset,
           };
+          /*
+          utils._.each(arg.ast_childs, function (ast_child) {
+            ast_child.ast_parent = arg;
+          });
+          */
           return arg;
         },
       });

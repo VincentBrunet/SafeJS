@@ -1,10 +1,25 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-Ast.register("Throw", function (node) {
-  // Childs check
-  var node_value = node.ast_childs.Expression;
-  node.value = Ast.node("Expression", node_value || Ast.predefined("Expression:Undefined"));
-  // Done
-  return node;
-});
+// Throw ast structure
+module.exports = function Throw(jsonThrow) {
+    // Current pass
+    var pass = require("../../pass");
+    // Check if it indeed a Throw
+    pass.check.type(jsonThrow, "Throw");
+    // Make AST Throw node
+    var astThrow = new ast.Throw();
+    // Check if it has a value
+    if (pass.read.hasChild(jsonThrow, "Expression")) {
+        // Read expression content
+        var jsonExpression = pass.read.child(jsonThrow, "Expression");
+        // Make expression node
+        astThrow.expression = pass.make.Expression(jsonExpression);
+        astThrow.expression.parent = astThrow;
+    }
+    // Save original json
+    astThrow.json = jsonThrow;
+    // Done
+    return astThrow;
+};

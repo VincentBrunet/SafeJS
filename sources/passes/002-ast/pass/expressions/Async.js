@@ -1,16 +1,32 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-Ast.register("Async", function (node) {
-  // Childs check
-  var node_type = node.ast_childs.Type;
-  var node_block = node.ast_childs.Block;
-  if (!node_block) {
-    throw Ast.error("NodeMissingChild", "Block");
-  }
-  // Node logic
-  node.type = Ast.node("Type", node_type || Ast.predefined("Type:Generic"));
-  node.block = Ast.node("Block", node_block);
-  // Done
-  return node;
-});
+// Async ast structure
+module.exports = function Async(jsonAsync) {
+    // Current pass
+    var pass = require("../../pass");
+    // Check if it indeed a Async
+    pass.check.type(jsonAsync, "Async");
+    // Make AST Async node
+    var astAsync = new ast.Async();
+    // Check if variable has a name
+    pass.check.child(jsonVariable, "Block");
+    // Read name
+    var jsonBlock = pass.read.child(jsonVariable, "Block");
+    // Save name
+    astAsync.block = pass.make.Block(jsonBlock);
+    astAsync.block.parent = jsonVariable;
+    // Check if it has a value
+    if (pass.read.hasChild(jsonAsync, "Type")) {
+        // Read Type content
+        var jsonType = pass.read.child(jsonAsync, "Type");
+        // Make Type node
+        astAsync.type = pass.make.Type(jsonType);
+        astAsync.type.parent = astAsync;
+    }
+    // Save original json
+    astAsync.json = jsonAsync;
+    // Done
+    return astAsync;
+};

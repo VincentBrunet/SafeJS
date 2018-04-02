@@ -1,20 +1,29 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-Ast.register("For", function (node) {
-  // Child checks
-  var node_expression = node.ast_childs.Expression;
-  if (!node_expression) {
-    throw Ast.error("NodeMissingChild", "Expression");
-  }
-  var node_block = node.ast_childs.Block;
-  if (!node_block) {
-    throw Ast.error("NodeMissingChild", "Block");
-  }
-  // Node
-  //node.identifier = Ast.node("Identitifier", node_condition);
-  node.expression = Ast.node("Expression", node_condition);
-  node.block = Ast.node("Block", node_block);
+// For ast structure
+module.exports = function For(jsonFor) {
+  // Current pass
+  var pass = require("../../pass");
+  // Check if it indeed a For
+  pass.check.type(jsonFor, "For");
+  // Check if we do have an expression and a block
+  pass.check.child(jsonFor, "Expression");
+  pass.check.child(jsonFor, "Block");
+  // Read the For contents
+  var jsonExpression = pass.read.child(jsonFor, "Expression");
+  var jsonBlock = pass.read.child(jsonFor, "Block");
+  // Make AST For node
+  var astFor = new ast.For();
+  // Make expression child
+  astFor.expression = pass.make.Expression(jsonExpression);
+  astFor.expression.parent = astFor;
+  // Make block child
+  astFor.block = pass.make.Block(jsonBlock);
+  astFor.block.parent = astFor;
+  // Save original json
+  astFor.json = jsonFor;
   // Done
-  return node;
-});
+  return astFor;
+};

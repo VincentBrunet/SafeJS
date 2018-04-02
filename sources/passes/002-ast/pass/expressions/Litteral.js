@@ -1,59 +1,40 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-Ast.register("Litteral", function (node) {
-  // Childs check
-  var node_content = node.ast_childs.Content;
-  if (!node_content) {
-    throw Ast.error("NodeMissingChild", "Content");
-  }
-  // Node logic
-  node.content = undefined;
-  if (node_content.ast_type == "Number") {
-    node.content = Ast.node("Number", node_content);
-  }
-  else if (node_content.ast_type == "String") {
-    node.content = Ast.node("String", node_content);
-  }
-  else if (node_content.ast_type == "Undefined") {
-    node.content = Ast.node("Undefined", node_content);
-  }
-  else if (node_content.ast_type == "Null") {
-    node.content = Ast.node("Null", node_content);
-  }
-  else if (node_content.ast_type == "Tuple") {
-    node.content = Ast.node("Tuple", node_content);
-  }
-  else if (node_content.ast_type == "Array") {
-    node.content = Ast.node("Array", node_content);
-  }
-  else if (node_content.ast_type == "Dict") {
-    node.content = Ast.node("Dict", node_content);
-  }
-  else if (node_content.ast_type == "Boolean") {
-    node.content = Ast.node("Boolean", node_content);
-  }
-  else {
-    throw Ast.error("NodeUnexpectedType", node_content, [
-      "Number",
-      "String",
-      "Undefined",
-      "Null",
-      "Tuple",
-      "Array",
-      "Dict",
-      "Boolean",
-    ]);
-  }
-  // Done
-  return node;
-});
-
-Ast.predefine("Litteral", function (content) {
-  return {
-    ast_type: "Litteral",
-    ast_childs: {
-      Content: content,
-    },
+// Litteral ast structure
+module.exports = function (jsonLitteral) {
+  // Current pass
+  var pass = require("../../pass");
+  // Possible Litterals content types
+  var contentTypes = {
+    "Number": pass.make.Number,
+    "String": pass.make.String,
+    "Undefined": pass.make.Undefined,
+    "Null": pass.make.Null,
+    "Tuple": pass.make.Tuple,
+    "Array": pass.make.Array,
+    "Dict": pass.make.Dict,
+    "Boolean": pass.make.Boolean,
   };
-});
+  // Check if it indeed a Litteral
+  pass.check.type(jsonLitteral, "Litteral");
+  // Check if has a content child
+  pass.check.child(jsonLitteral, "Content");
+  // Read content data
+  var jsonContent = pass.read.child(jsonLitteral, "Content")
+  // Check if content is correctly typed
+  pass.check.type(jsonContent, utils._.keys(contentTypes));
+  // Make AST Litteral node
+  var astLitteral = new ast.Litteral();
+  // Save content type
+  astLitteral.type = pass.read.type(jsonContent);
+  // Read content object, depending on type
+  astLitteral.content = contentTypes[astLitteral.type](jsonContent);
+  // Mark content as child
+  astLitteral.content.parent = astLitteral;
+  // Save original json
+  astLitteral.json = jsonLitteral;
+  // Done
+  return astLitteral;
+};

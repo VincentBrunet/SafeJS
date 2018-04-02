@@ -1,7 +1,7 @@
 
 Repeat =
     "repeat"
-    __ iterations :Expression
+    __ expression :Expression
     _ '{'
     _ block: Block
     _ '}'
@@ -9,7 +9,7 @@ Repeat =
     return ast({
         ast_type: "Repeat",
         ast_childs: {
-            Iterations: iterations,
+            Expression: expression,
             Block: block,
         },
     });
@@ -50,7 +50,7 @@ For =
     });
 }
 
-Loop "Loop" = 
+Loop "Loop" =
     loop :(
         While
         / Repeat

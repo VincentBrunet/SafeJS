@@ -1,23 +1,40 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-Ast.register("Variable", function (node) {
-  // Childs check
-  var node_name = node.ast_childs.Name;
-  var node_type = node.ast_childs.Type;
-  var node_value = node.ast_childs.Value;
-  if (!node_name) {
-    throw Ast.error("NodeMissingChild", "Name");
-  }
-  var node_mode = node.ast_datas.mode;
-  // Node logic
-  node.readonly = false;
-  if (node_mode == "let") {
-    node.readonly = true;
-  }
-  node.name = (Ast.node("Identifier", node_name)).name;
-  node.type = Ast.node("Type", node_type || Ast.predefined("Type:Generic"));
-  node.value = Ast.node("Expression", node_value || Ast.predefined("Expression:Undefined"));
-  // Done
-  return node;
-});
+// Variable ast structure
+module.exports = function Variable(jsonVariable) {
+    // Current pass
+    var pass = require("../../pass");
+    // Check if it indeed a Variable
+    pass.check.type(jsonVariable, "Variable");
+    // Make AST Variable node
+    var astVariable = new ast.Variable();
+    // Check if variable has a name
+    pass.check.child(jsonVariable, "Identifier");
+    // Read name
+    var jsonIdentifier = pass.read.child(jsonVariable, "Identifier");
+    // Save name
+    astVariable.Identifier = pass.make.Identifier(jsonIdentifier);
+    astVariable.Identifier.parent = jsonVariable;
+    // Check if it has a type
+    if (pass.read.hasChild(jsonVariable, "Type")) {
+        // Read type content
+        var jsonType = pass.read.child(jsonVariable, "Type");
+        // Make type node
+        astVariable.type = pass.make.Type(jsonType);
+        astVariable.type.parent = astVariable;
+    }
+    // Check if it has a value
+    if (pass.read.hasChild(jsonVariable, "Expression")) {
+        // Read expression content
+        var jsonExpression = pass.read.child(jsonVariable, "Expression");
+        // Make expression node
+        astVariable.expression = pass.make.Expression(jsonExpression);
+        astVariable.expression.parent = astVariable;
+    }
+    // Save original json
+    astVariable.json = jsonVariable;
+    // Done
+    return astVariable;
+};

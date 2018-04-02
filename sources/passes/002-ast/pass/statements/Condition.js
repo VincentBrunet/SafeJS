@@ -2,13 +2,14 @@
 var utils = require("../../../../utils");
 var ast = require("../../../../ast");
 
-// Current pass
-var pass = require("../../pass");
-
 // Condition ast structure
 module.exports = function Condition(jsonCondition) {
+  // Current pass
+  var pass = require("../../pass");
   // Check if it indeed a Condition
   pass.check.type(jsonCondition, "Condition");
+  // Make AST Condition node
+  var astCondition = new ast.Condition();
   // Check if has at least an If
   pass.check.child(jsonCondition, "If");
   // Read if content
@@ -19,8 +20,6 @@ module.exports = function Condition(jsonCondition) {
   // Get if expression and block
   var jsonIfExpression = pass.read.child(jsonIf, "Expression");
   var jsonIfBlock = pass.read.child(jsonIf, "Block");
-  // Make AST Condition node
-  var astCondition = new ast.Condition();
   // Save if expression
   astCondition.ifExpression = pass.make.Expression(jsonIfExpression);
   astCondition.ifExpression.parent = astCondition;

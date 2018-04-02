@@ -2,21 +2,19 @@
 var utils = require("../../../../utils");
 var ast = require("../../../../ast");
 
-// Current pass
-var pass = require("../../pass");
-
-// Possible Expressions content types
-var contentTypes = {
-  "Litteral": pass.make.Litteral,
-  "Function": pass.make.Function,
-  "Async": pass.make.Async,
-  "Class": pass.make.Class,
-  "Operation": pass.make.Operation,
-  "Identifier": pass.make.Identifier,
-};
-
 // Expression ast structure
 module.exports = function (jsonExpression) {
+  // Current pass
+  var pass = require("../../pass");
+  // Possible Expressions content types
+  var contentTypes = {
+    "Litteral": pass.make.Litteral,
+    "Function": pass.make.Function,
+    "Async": pass.make.Async,
+    //"Class": pass.make.Class,
+    "Operation": pass.make.Operation,
+    "Identifier": pass.make.Identifier,
+  };
   // Check if it indeed a Expression
   pass.check.type(jsonExpression, "Expression");
   // Check if has a content child

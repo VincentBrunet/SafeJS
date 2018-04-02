@@ -11,7 +11,7 @@ Number "Number" =
         ast_type: "Number",
         ast_title: value,
         ast_datas: {
-            value: value,
+            Value: value,
         },
     });
 }

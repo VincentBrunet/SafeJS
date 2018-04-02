@@ -1,0 +1,8 @@
+
+var hello;
+
+var hello2 :Int;
+
+var hello3 :Int = 42;
+
+var hello4 = 42;

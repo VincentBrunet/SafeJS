@@ -1,23 +1,23 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-// Number in AST
-Ast.register("Number", function (node) {
-  // Datas check
-  if (node.ast_datas.value === undefined) {
-    throw Ast.error("NodeMissingData", "value");
-  }
-  // Node logic
-  node.value = node.ast_datas.value;
+// Number ast structure
+module.exports = function Number(jsonNumber) {
+  // Current pass
+  var pass = require("../../pass");
+  // Check if it indeed a Number
+  pass.check.type(jsonNumber, "Number");
+  // Make AST Number node
+  var astNumber = new ast.Number();
+  // Check value
+  pass.check.data(jsonNumber, "Value");
+  // Read value
+  var jsonValue = pass.read.data(jsonNumber, "Value");
+  // Save value
+  astNumber.value = parseFloat(jsonValue);
+  // Save original json
+  astNumber.json = jsonNumber;
   // Done
-  return node;
-});
-
-Ast.predefine("Number", function (value) {
-  return {
-    ast_type: "Number",
-    ast_datas: {
-      value: value,
-    },
-  };
-});
+  return astNumber;
+};
