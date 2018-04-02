@@ -6,3 +6,9 @@ var hello2 :Int;
 var hello3 :Int = 42;
 
 var hello4 = 42;
+
+hello3 = 22;
+
+// Checks
+assert.equals(hello3, 22);
+assert.equals(hello4, 42);

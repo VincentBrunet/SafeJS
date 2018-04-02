@@ -106,7 +106,7 @@ OperationP4 =
             ast_type: "Operation",
             ast_title: op,
             ast_childs: {
-                E1: e,
+                E1: Expressionize(e),
             },
             ast_datas: {
                 op: op,
@@ -128,7 +128,7 @@ OperationP3 =
         ast_type: "Operation",
         ast_title: op,
         ast_childs: {
-            E1: head,
+            E1: Expressionize(head),
         },
         ast_datas: {
             op: op,
@@ -187,8 +187,8 @@ OperationNew =
         ast_type: "Operation",
         ast_title: "new",
         ast_childs: {
-            E1: expression,
-            E2: params,
+            E1: Expressionize(expression),
+            E2: Expressionize(params),
         },
         ast_datas: {
             op: "new",
@@ -219,7 +219,7 @@ OperationDeasync =
         ast_type: "Operation",
         ast_title: op,
         ast_childs: {
-            E1: expression,
+            E1: Expressionize(expression),
         },
         ast_datas: {
             mode: mode,

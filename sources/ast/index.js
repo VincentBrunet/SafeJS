@@ -20,8 +20,8 @@ module.exports = {
 
   /*
   //Enum: require("./expressions/Enum"),
-  Function: require("./expressions/Function"),
   */
+  Function: require("./expressions/Function"),
   Async: require("./expressions/Async"),
   Litteral: require("./expressions/Litteral"),
   Operation: require("./expressions/Operation"),

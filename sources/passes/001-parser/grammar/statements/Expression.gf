@@ -2,13 +2,7 @@
 Expression "Expression" =
     content: ExpressionContent
 {
-    return ast({
-        ast_type: "Expression",
-        ast_title: "()",
-        ast_childs: {
-            Content: content,
-        },
-    });
+    return Expressionize(content);
 }
 
 ExpressionContent =
@@ -17,7 +11,7 @@ ExpressionContent =
         / ExpressionSimple
     )
 {
-    return content;
+    return Expressionize(content);
 };
 
 ExpressionSimple =
@@ -30,7 +24,7 @@ ExpressionSimple =
         / Native
     )
 {
-    return content;
+    return Expressionize(content);
 }
 
 Native =

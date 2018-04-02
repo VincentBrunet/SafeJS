@@ -1,8 +1,18 @@
 
 var hello1 = [42, 45];
 
-var hello2 :Array<Number> = [42, 45];
+var hello2 :Array<Number> = [42, 45,];
 
 var hello3 = 23 + 12;
 
-var hello4 :Float = 23 * 12.3;
+var hello4 :Number = 23 * 12.3;
+
+var hello5 :Array<Number> = [];
+
+hello1 = [22];
+
+// Checks
+assert.equal(hello1[0], 22);
+assert.equal(hello2[1], 45);
+assert.equal(hello3, 35);
+assert.equel(hello4, 282.9);

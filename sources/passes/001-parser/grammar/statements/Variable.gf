@@ -13,6 +13,10 @@ Variable "Variable" =
     if (type) {
         t = type[1];
     }
+    var isConst = false;
+    if (mode == "let") {
+        isConst = true;
+    }
     return ast({
         ast_type: "Variable",
         ast_title: mode,
@@ -22,7 +26,7 @@ Variable "Variable" =
             Expression: val,
         },
         ast_datas: {
-            mode: mode,
+            Const: isConst,
         },
     });
 }

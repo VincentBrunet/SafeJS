@@ -20,7 +20,7 @@ Function "Function" =
         ast_type: "Function",
         ast_title: "fn",
         ast_childs: {
-            Name: name,
+            Identifier: name,
             Type: type,
             Params: params,
             Block: block,
@@ -48,8 +48,8 @@ FunctionParams "Function Params" =
     });
 }
 
-FunctionParam = 
-    name :Identifier
+FunctionParam =
+    name :Identifier?
     p_type :(_ Typed)?
     p_variadic: (_ "...")?
 {
@@ -64,11 +64,11 @@ FunctionParam =
     return ast({
         ast_type: "FunctionParam",
         ast_childs: {
-            Name: name,
+            Identifier: name,
             Type: type,
         },
         ast_datas: {
-            variadic: variadic,
+            Variadic: variadic,
         },
     });
 }

@@ -16,8 +16,8 @@
                 ast_type: "Operation",
                 ast_title: op,
                 ast_childs: {
-                    E1: e1,
-                    E2: e2,
+                    E1: Expressionize(e1),
+                    E2: Expressionize(e2),
                 },
                 ast_datas: {
                     op: op,
@@ -41,11 +41,26 @@
             ast_type: "Operation",
             ast_title: op,
             ast_childs: {
-                E1: e1,
-                E2: e2,
+                E1: Expressionize(e1),
+                E2: Expressionize(e2),
             },
             ast_datas: {
                 op: op,
+            },
+        });
+    }
+    function Expressionize(content) {
+        if (!content) {
+            return content;
+        }
+        if (content.ast_type == "Expression") {
+            return content;
+        }
+        return ast({
+            ast_type: "Expression",
+            ast_title: "()",
+            ast_childs: {
+                Content: content,
             },
         });
     }

@@ -25,8 +25,8 @@ module.exports = {
 
     /*
     //Enum: require("./expressions/Enum"),
-    Function: require("./expressions/Function"),
     */
+    Function: require("./expressions/Function"),
     Async: require("./expressions/Async"),
     Litteral: require("./expressions/Litteral"),
     Operation: require("./expressions/Operation"),
@@ -78,19 +78,56 @@ module.exports = {
   check: {
 
     type: function (currentJson, expectedType) {
-      // TODO
-    },
-
-    child: function (currentJson, expectedName) {
-      // TODO
+      if (!currentJson) {
+        throw "Undefined node!";
+      }
+      var currentType = currentJson.ast_type;
+      if (utils._.isArray(expectedType)) {
+        if (utils._.indexOf(expectedType, currentType) < 0) {
+          throw "Type not within allowed types: " + currentType + " -> " + expectedType;
+        }
+      }
+      else {
+        if (currentType != expectedType) {
+          throw "Not matching type: " + currentType + " -> " + expectedType;
+        }
+      }
     },
 
     childList: function (currentJson) {
-      // TODO
+      if (!currentJson) {
+        throw "Undefined node!";
+      }
+      if (!currentJson.ast_childs) {
+        throw "Node has no childs";
+      }
+      if (!utils._.isArray(currentJson.ast_childs)) {
+        throw "Node does not have a list of child";
+      }
+    },
+
+    child: function (currentJson, expectedName) {
+      if (!currentJson) {
+        throw "Undefined node!";
+      }
+      if (!currentJson.ast_childs) {
+        throw "Node has no childs";
+      }
+      if (!currentJson.ast_childs[expectedName]) {
+        throw "Node does not have a child: " + expectedName;
+      }
     },
 
     data: function (currentJson, expectedName) {
-      // TODO
+      if (!currentJson) {
+        throw "Undefined node!";
+      }
+      if (!currentJson.ast_datas) {
+        throw "Node has no data";
+      }
+      if (currentJson.ast_datas[expectedName] == null || currentJson.ast_datas[expectedName] == undefined) {
+        throw "Node does not have data: " + expectedName;
+      }
     },
 
   },
