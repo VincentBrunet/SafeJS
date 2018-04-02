@@ -1,24 +1,35 @@
+// Utils
 var utils = require("../../../../utils");
-var Ast = require("../Ast");
+var ast = require("../../../../ast");
 
-Ast.register("Operation", function (node) {
-  // Childs check
-  var node_e1 = node.ast_childs.E1;
-  var node_e2 = node.ast_childs.E2;
-  if (!node_e1) {
-    throw Ast.error("NodeMissingChild", "Expression(1)");
+// Operation ast structure
+module.exports = function Operation(jsonOperation) {
+  // Current pass
+  var pass = require("../../pass");
+  // Check if it indeed a Operation
+  pass.check.type(jsonOperation, "Operation");
+  // Make AST Operation node
+  var astOperation = new ast.Operation();
+  // Check operator
+  pass.check.data(jsonOperation, "op");
+  // Read operator
+  var jsonOperator = pass.read.data(jsonOperation, "op");
+  // Save operator
+  astOperation.operator = jsonOperator;
+  // Check first expression
+  pass.check.child(jsonOperation, "E1");
+  var jsonExpression1 = pass.read.child(jsonOperation, "E1");
+  astOperation.expression1 = pass.make.Expression(jsonExpression1);
+  astOperation.expression1.parent = astOperation;
+  // Optionally read second expression
+  if (pass.read.hasChild(jsonOperation, "E2")) {
+    var jsonExpression2 = pass.read.child(jsonOperation, "E2");
+    astOperation.expression2 = pass.make.Expression(jsonExpression2);
+    astOperation.expression2.parent = astOperation;
   }
-  // Datas check
-  if (!node.ast_datas.op) {
-    throw Ast.error("NodeMissingData", "op");
-  }
-  node.op = node.ast_datas.op;
-  // Node logic
-  node.e1 = Ast.node("Expression", Ast.predefined("Expression", node_e1));
-  node.e2 = undefined;
-  if (node_e2) {
-    node.e2 = Ast.node("Expression", Ast.predefined("Expression", node_e2));
-  }
+  // Save original json
+  astOperation.json = jsonOperation;
   // Done
-  return node;
-});
+  return astOperation;
+};
+

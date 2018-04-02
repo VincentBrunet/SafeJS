@@ -174,7 +174,7 @@ OperationP2 =
     });
 }
 
-OperationNew = 
+OperationNew =
     "new"
     __ expression :(OperationP1)
     p_params :(_ "(" _ OperationPTuple _ ")")?

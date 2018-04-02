@@ -21,7 +21,7 @@ module.exports = function Array(jsonArray) {
     // Mark as child
     astExpression.parent = astArray;
     // Save Expression
-    astArray.Expressions.push(astExpression);
+    astArray.expressions.push(astExpression);
   });
   // Save original json
   astArray.json = jsonArray;

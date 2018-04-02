@@ -29,8 +29,8 @@ module.exports = {
     */
     Async: require("./expressions/Async"),
     Litteral: require("./expressions/Litteral"),
-    /*
     Operation: require("./expressions/Operation"),
+    /*
     Class: require("./expressions/Class"),
     */
 

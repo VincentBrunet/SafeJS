@@ -9,7 +9,7 @@ module.exports = function (jsonExpression) {
   // Possible Expressions content types
   var contentTypes = {
     "Litteral": pass.make.Litteral,
-    "Function": pass.make.Function,
+    //"Function": pass.make.Function,
     "Async": pass.make.Async,
     //"Class": pass.make.Class,
     "Operation": pass.make.Operation,
@@ -36,4 +36,3 @@ module.exports = function (jsonExpression) {
   // Done
   return astExpression;
 };
-

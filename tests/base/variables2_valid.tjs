@@ -1,0 +1,8 @@
+
+var hello1 = [42, 45];
+
+var hello2 :Array<Number> = [42, 45];
+
+var hello3 = 23 + 12;
+
+var hello4 :Float = 23 * 12.3;

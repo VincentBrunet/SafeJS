@@ -21,7 +21,7 @@ module.exports = function Tuple(jsonTuple) {
     // Mark as child
     astExpression.parent = astTuple;
     // Save Expression
-    astTuple.Expressions.push(astExpression);
+    astTuple.expressions.push(astExpression);
   });
   // Save original json
   astTuple.json = jsonTuple;
