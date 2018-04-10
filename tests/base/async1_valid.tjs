@@ -1,9 +1,10 @@
+//import Tjs
 
 fn get :@String (url :String)
 {
     return async :String
     {
-        setTimeout(fn ()
+        Tjs.Wait(fn ()
         {
             if (true)
             {

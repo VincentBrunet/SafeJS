@@ -1,10 +1,19 @@
+//import Tjs
 
 fn rand()
 {
     return async
     {
-        setTimeout(fn () {
-            resolve 42;
+        Tjs.Wait(fn ()
+        {
+            if (true)
+            {
+                resolve 42;
+            }
+            else
+            {
+                reject "Woops";
+            }
         });
     }
 }
