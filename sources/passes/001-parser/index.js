@@ -3,8 +3,6 @@ var utils = require("../../utils");
 
 // PEG lib used for parsing
 var peg = require("pegjs");
-var peg_utils = require('pegjs-util');
-var peg_tracer = require('pegjs-backtrace');
 var peg_generated = require("./generated");
 
 /**
@@ -31,7 +29,7 @@ module.exports = function (session, filename, next) {
         return s;
       }
       // Actually do the parsing
-      parsed = peg_utils.parse(peg_generated, content, {
+      parsed = peg_generated.parse(content, {
         startRule: "Block",
         cache: true,
         tracer: {
@@ -57,21 +55,20 @@ module.exports = function (session, filename, next) {
             }
           },
         },
-        makeAST: function (line, column, offset, args) {
-          var arg = args[0];
-          arg.ast_pos = {
-            line: line,
-            column: column,
-            offset: offset,
-          };
-          if (arg.ast_childs) {
-            utils._.each(arg.ast_childs, function (ast_child) {
-              if (ast_child) {
-                ast_child.ast_parent = arg;
+        util: {
+          makeAST: function (location, options) {
+            return function (arg) {
+              arg.ast_pos = location();
+              if (arg.ast_childs) {
+                utils._.each(arg.ast_childs, function (ast_child) {
+                  if (ast_child) {
+                    ast_child.ast_parent = arg;
+                  }
+                });
               }
-            });
-          }
-          return arg;
+              return arg;
+            }
+          },
         },
       });
     }
@@ -81,14 +78,8 @@ module.exports = function (session, filename, next) {
       error.content = content;
       return next(false, undefined, error, "ParsingException");
     }
-    // On parsing error
-    if (parsed.error) {
-      parsed.error.filename = filename;
-      parsed.error.content = content;
-      return next(false, undefined, parsed.error, "ParsingError");
-    }
     // On parsing success
-    var rawParsed = parsed.ast;
+    var rawParsed = parsed;
     return next(true, rawParsed);
   });
 }
