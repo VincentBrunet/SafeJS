@@ -12,6 +12,7 @@ var grammars = [
   grammarPrefix + "/statements/Loop.gf",
   grammarPrefix + "/statements/Return.gf",
   grammarPrefix + "/statements/Resolve.gf",
+  grammarPrefix + "/statements/Reject.gf",
   grammarPrefix + "/statements/Throw.gf",
   grammarPrefix + "/statements/TryCatch.gf",
   grammarPrefix + "/statements/Break.gf",

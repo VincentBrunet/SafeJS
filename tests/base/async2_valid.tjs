@@ -1,0 +1,29 @@
+
+fn rand()
+{
+    return async
+    {
+        setTimeout(fn () {
+            resolve 42;
+        });
+    }
+}
+
+var prom: @Int = rand();
+var prom2: @Int = rand();
+var prom3: @Int = rand();
+
+var test = @prom;
+
+var test2 = @prom + @prom3 + test;
+
+var test3 = @prom || @prom2;
+
+var test4 = @prom && @prom2 && @prom3;
+
+test = 22;
+
+assert.equal(test, 22);
+assert.equal(test2, 42 + 42 + 42);
+assert.equal(test3, true);
+assert.equal(test4, true);

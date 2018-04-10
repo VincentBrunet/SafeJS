@@ -16,6 +16,7 @@ module.exports = function (jsonStatement) {
     "For": pass.make.For,
     "Repeat": pass.make.Repeat,
     "Resolve": pass.make.Resolve,
+    "Reject": pass.make.Reject,
     "Return": pass.make.Return,
     "Throw": pass.make.Throw,
     "TryCatch": pass.make.TryCatch,

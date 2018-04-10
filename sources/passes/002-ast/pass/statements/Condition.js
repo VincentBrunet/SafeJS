@@ -27,7 +27,7 @@ module.exports = function Condition(jsonCondition) {
   astCondition.ifBlock = pass.make.Block(jsonIfBlock);
   astCondition.ifBlock.parent = astCondition;
   // Loop over optional else ifs
-  var jsonElseIfs = pass.read.child("ElseIfs");
+  var jsonElseIfs = pass.read.child(jsonCondition, "ElseIfs");
   utils._.each(jsonElseIfs, function (jsonElseIf) {
     // Check if "ElseIf" has both expression and block
     pass.check.child(jsonElseIf, "Expression");

@@ -24,7 +24,7 @@ module.exports = function Dict(jsonDict) {
     // Save Expression
     astDict.Expressions.push(astExpression);
   });
-*/
+  */
   // Save original json
   astDict.json = jsonDict;
   // Done

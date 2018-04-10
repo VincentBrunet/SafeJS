@@ -52,9 +52,12 @@ Condition "Condition" =
     p_else :(_ Else)?
 {
     var condIf = p_if;
-    var condElseIfs = [];
+    var condElseIfs;
     var condElse;
     p_elseIf.forEach(function (elseIf) {
+        if (!condElseIfs) {
+            condElseIfs = [];
+        }
         condElseIfs.push(elseIf[1]);
     });
     if (p_else) {

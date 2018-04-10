@@ -15,6 +15,7 @@ Statement =
         / TryCatch
         / Return
         / Resolve
+        / Reject
         / Throw
         / Break
         / Continue

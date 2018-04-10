@@ -13,6 +13,7 @@ Litteral "Litteral" =
 {
     return ast({
         ast_type: "Litteral",
+        ast_title: "$",
         ast_childs: {
             Content: content,
         },

@@ -16,6 +16,7 @@ module.exports = {
     For: require("./statements/For"),
     Repeat: require("./statements/Repeat"),
     Resolve: require("./statements/Resolve"),
+    Reject: require("./statements/Reject"),
 
     Variable: require("./statements/Variable"),
     Return: require("./statements/Return"),
@@ -45,6 +46,7 @@ module.exports = {
     String: require("./atomics/String"),
     Boolean: require("./atomics/Boolean"),
     //Undefined: require("./atomics/Undefined"),
+
   },
 
   read: {

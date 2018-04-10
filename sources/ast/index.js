@@ -12,6 +12,7 @@ module.exports = {
   For: require("./statements/For"),
   Repeat: require("./statements/Repeat"),
   Resolve: require("./statements/Resolve"),
+  Reject: require("./statements/Reject"),
   Variable: require("./statements/Variable"),
   Return: require("./statements/Return"),
   Throw: require("./statements/Throw"),
