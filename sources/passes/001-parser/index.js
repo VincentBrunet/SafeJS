@@ -33,23 +33,31 @@ module.exports = function (session, filename, next) {
         cache: true,
         tracer: {
           trace: function(event) {
-            return;
+            //return;
             if (event.type == "rule.enter") {
               trace_d += 1;
               console.log(trace_pp(), "EN".grey, event.rule.grey);
             }
             if (event.type == "rule.fail") {
-              console.log(trace_pp(), "FA".yellow, event.rule.yellow,
+              console.log(trace_pp(), "FA".red, event.rule.yellow,
                 // event.location.start.line + ":" + event.location.start.column,
                 event.location.end.line + ":" + event.location.end.column
               );
               trace_d -= 1;
             }
             if (event.type == "rule.match") {
-              console.log(trace_pp(), "OK".green, event.rule.green, event.result.ast_type.yellow,
-                event.location.start.line + ":" + event.location.start.column,
-                event.location.end.line + ":" + event.location.end.column
-              );
+              if (event.result) {
+                console.log(trace_pp(), "OK".green, event.rule.green, event.result.ast_type.yellow,
+                  event.location.start.line + ":" + event.location.start.column,
+                  event.location.end.line + ":" + event.location.end.column
+                );
+              }
+              else {
+                console.log(trace_pp(), "OK".green, event.rule.green,
+                  event.location.start.line + ":" + event.location.start.column,
+                  event.location.end.line + ":" + event.location.end.column
+                );
+              }
               trace_d -= 1;
             }
           },
@@ -58,7 +66,6 @@ module.exports = function (session, filename, next) {
           makeAST: function (location, options) {
             return function (arg) {
               arg.ast_pos = location();
-              console.log("Ast", arg.ast_type);
               if (arg.ast_childs) {
                 utils._.each(arg.ast_childs, function (ast_child) {
                   if (ast_child) {
