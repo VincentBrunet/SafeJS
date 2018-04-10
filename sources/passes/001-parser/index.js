@@ -2,7 +2,6 @@
 var utils = require("../../utils");
 
 // PEG lib used for parsing
-var peg = require("pegjs");
 var peg_generated = require("./generated");
 
 /**

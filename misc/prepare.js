@@ -1,7 +1,8 @@
 var peg = require("pegjs");
 var utils = require("../sources/utils");
-var parserPassPrefix = "sources/passes/001-parser";
-var grammarPrefix = parserPassPrefix + "/grammar";
+
+var grammarPrefixPath = "sources/passes/001-parser";
+var grammarPrefix = grammarPrefixPath + "/grammar";
 var grammars = [
   grammarPrefix + "/top-level/Globals.gf",
   grammarPrefix + "/top-level/Block.gf",
@@ -36,6 +37,7 @@ var grammars = [
   grammarPrefix + "/atomics/Null.gf",
   grammarPrefix + "/atomics/Undefined.gf",
 ];
+
 utils.files.readSeq(grammars, function(success, contents, trace) {
   if (!success) {
     console.log("Read Trace", trace);
