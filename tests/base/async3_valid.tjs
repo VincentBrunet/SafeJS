@@ -37,6 +37,14 @@ catch (e :String)
 {
     v4 = 90;
 }
+catch (e :Number)
+{
+    v4 = 91;
+}
+catch (e)
+{
+    v4 = 92;
+}
 
 assert.equal(v1, 88);
 assert.equal(v2, 2);
