@@ -25,6 +25,15 @@ fn func6 (myInt :Int, myString :String) {
     return myString;
 }
 
+var func8 = fn func7 (myInt :Int, depth :Int)
+{
+    if (depth > 0)
+    {
+        return func7(myInt - 1, depth - 1);
+    }
+    return myInt;
+}
+
 // Checks
 assert.equal(func1(), 98);
 assert.equal(func2(999), 999);
@@ -32,6 +41,8 @@ assert.equal(func3(1, 2), 3);
 assert.equal(func4(1, 2), 2);
 assert.equal(func5(42, "Hello"), 22);
 assert.equal(func6(42, "Hello"), "Hello");
+assert.equal(func7(31, -1), 31);
+assert.equal(func8(88, 2), 86);
 assert.equal(fn () {
     return 100 - value;
 }(), 1);
