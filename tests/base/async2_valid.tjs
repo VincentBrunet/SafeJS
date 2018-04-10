@@ -18,9 +18,9 @@ fn rand()
     }
 }
 
-var prom: @Int = rand();
-var prom2: @Int = rand();
-var prom3: @Int = rand();
+var prom: @Number = rand();
+var prom2: @Number = rand();
+var prom3: @Number = rand();
 
 var test = @prom;
 
