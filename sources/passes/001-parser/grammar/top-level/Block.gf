@@ -27,23 +27,29 @@ Block =
 Delimiter =
     $(__n/__s) _
 {
+    /*
     return ast({
         ast_type: "Delimiter",
     });
+    */
 }
 __n "Line Break"
   = ___* [\n\r]+ Comment*
 {
+    /*
     return ast({
         ast_type: "Whitespace",
     });
+    */
 }
 __s "';'"
   = ___* ";"+ Comment*
 {
+    /*
     return ast({
         ast_type: "Statement End",
     });
+    */
 }
 ___
   = (Comment/[ \t])+

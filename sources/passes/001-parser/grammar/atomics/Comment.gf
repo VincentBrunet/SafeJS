@@ -4,11 +4,13 @@ CommentOneLine =
     content :[^\r^\n]*
     ("\n"/"\r"/!.)
 {
+    /*
     var value = content.join("");
     return ast({
         ast_type: "CommentOneLine",
         ast_title: value,
     });
+    */
 }
 
 CommentMultiLine =
@@ -28,18 +30,22 @@ CommentMultiLine =
         return true;
     })*
 {
+    /*
     var value = content;
     return ast({
         ast_type: "CommentMultiLine",
         ast_title: value,
     });
+    */
 }
 
 Comment =
     CommentOneLine / CommentMultiLine
 {
+    /*
     return ast({
         ast_type: "Comment",
         ast_title: "",
     });
+    */
 }

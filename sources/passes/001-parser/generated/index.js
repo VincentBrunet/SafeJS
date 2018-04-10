@@ -211,25 +211,31 @@ function peg$parse(input, options) {
           });
       },
       peg$c1 = function() {
+          /*
           return ast({
               ast_type: "Delimiter",
           });
+          */
       },
       peg$c2 = peg$otherExpectation("Line Break"),
       peg$c3 = /^[\n\r]/,
       peg$c4 = peg$classExpectation(["\n", "\r"], false, false),
       peg$c5 = function() {
+          /*
           return ast({
               ast_type: "Whitespace",
           });
+          */
       },
       peg$c6 = peg$otherExpectation("';'"),
       peg$c7 = ";",
       peg$c8 = peg$literalExpectation(";", false),
       peg$c9 = function() {
+          /*
           return ast({
               ast_type: "Statement End",
           });
+          */
       },
       peg$c10 = /^[ \t]/,
       peg$c11 = peg$classExpectation([" ", "\t"], false, false),
@@ -1111,11 +1117,13 @@ function peg$parse(input, options) {
       peg$c281 = peg$literalExpectation("\r", false),
       peg$c282 = peg$anyExpectation(),
       peg$c283 = function(content) {
+          /*
           var value = content.join("");
           return ast({
               ast_type: "CommentOneLine",
               ast_title: value,
           });
+          */
       },
       peg$c284 = "/*",
       peg$c285 = peg$literalExpectation("/*", false),
@@ -1135,17 +1143,21 @@ function peg$parse(input, options) {
               return true;
           },
       peg$c290 = function(_array, content) {
+          /*
           var value = content;
           return ast({
               ast_type: "CommentMultiLine",
               ast_title: value,
           });
+          */
       },
       peg$c291 = function() {
+          /*
           return ast({
               ast_type: "Comment",
               ast_title: "",
           });
+          */
       },
       peg$c292 = peg$otherExpectation("Null"),
       peg$c293 = "null",

@@ -52,7 +52,7 @@ utils.files.readSeq(grammars, function(success, contents, trace) {
       cache: true,
       trace: true,
     });
-    utils.files.write(parserPassPrefix + "/generated/index.js", parser, function(success, res, trace) {
+    utils.files.write(grammarPrefixPath + "/generated/index.js", parser, function(success, res, trace) {
       if (!success) {
         console.log("Write Trace", trace);
       } else {

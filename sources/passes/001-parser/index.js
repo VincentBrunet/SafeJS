@@ -58,6 +58,7 @@ module.exports = function (session, filename, next) {
           makeAST: function (location, options) {
             return function (arg) {
               arg.ast_pos = location();
+              console.log("Ast", arg.ast_type);
               if (arg.ast_childs) {
                 utils._.each(arg.ast_childs, function (ast_child) {
                   if (ast_child) {

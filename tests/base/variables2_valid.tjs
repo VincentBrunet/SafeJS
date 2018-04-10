@@ -1,7 +1,7 @@
 
 var hello1 = [42, 45];
 
-var hello2 :Array<Number> = [42, 45,];
+var hello2 :Array<Number> = [42, 45, 88 + 1];
 
 var hello3 = 23 + 12;
 
