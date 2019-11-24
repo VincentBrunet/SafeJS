@@ -50,7 +50,7 @@ utils.files.readSeq(grammars, function(success, contents, trace) {
       format: "commonjs",
       optimize: "speed",
       cache: true,
-      trace: true,
+      trace: false,
     });
     utils.files.write(grammarPrefixPath + "/generated/index.js", parser, function(success, res, trace) {
       if (!success) {

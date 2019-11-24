@@ -12,26 +12,37 @@ fn get :@String (url :String)
             }
             else
             {
-                reject "NOPE";
+                rejecte "NOPE";
             }
         });
     }
 }
 
+fn getWait :String (url :String)
+{
+    return @get(url);
+}
+
 var get1 = @get("URL1");
+var get1s = getWait("URL1s");
+
+assert.equal(get1, "URL1");
+assert.equal(get1s, "URL1s");
 
 var get2 :String = @get("URL2");
+var get2s :String = getWait("URL2s");
+
+assert.equal(get2, "URL2");
+assert.equal(get2s, "URL2s");
 
 var get3 = get("URL3");
-
 var get4Async = get("URL4");
 var get4 = null;
-if (@get4Async)
+if (@get4Async != null)
 {
     get4 = @get4Async;
 }
 
-assert.equal(get1, "URL1");
 assert.equal(get2, "URL2");
 assert.equal(@get3, "URL3");
 assert.equal(get4, "URL4");

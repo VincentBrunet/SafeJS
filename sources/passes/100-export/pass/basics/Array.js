@@ -9,7 +9,7 @@ Export.register("Array", function (node) {
     var els = [];
     utils._.each(node.elements, function (element) {
       if (element.isAsync) {
-        els.push("[1," + Export.node("Expression", element) + "]");        
+        els.push("[1," + Export.node("Expression", element) + "]");
       }
       else {
         els.push("[0," + Export.node("Expression", element) + "]");

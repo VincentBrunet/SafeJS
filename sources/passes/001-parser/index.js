@@ -33,7 +33,6 @@ module.exports = function (session, filename, next) {
         cache: true,
         tracer: {
           trace: function(event) {
-            //return;
             if (event.type == "rule.enter") {
               trace_d += 1;
               console.log(trace_pp(), "EN".grey, event.rule.grey);
